@@ -14,8 +14,18 @@
     <Manifest>
       <DTSPackages>
         <DtsPackage FormatVersion="8">
+          <Name>Package_Integracion_Matriculas_CRM365.dtsx</Name>
+          <FullPath>Package_Integracion_Matriculas_CRM365.dtsx</FullPath>
+          <References />
+        </DtsPackage>
+        <DtsPackage FormatVersion="8">
           <Name>Package_Integracion_Meet.dtsx</Name>
           <FullPath>Package_Integracion_Meet.dtsx</FullPath>
+          <References />
+        </DtsPackage>
+        <DtsPackage FormatVersion="8">
+          <Name>Package_Integracion_Parentesco_CRM2015.dtsx</Name>
+          <FullPath>Package_Integracion_Parentesco_CRM2015.dtsx</FullPath>
           <References />
         </DtsPackage>
       </DTSPackages>

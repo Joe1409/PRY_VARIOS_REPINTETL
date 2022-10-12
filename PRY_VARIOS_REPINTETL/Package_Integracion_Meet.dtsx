@@ -12,11 +12,22 @@
   DTS:LocaleID="10250"
   DTS:ObjectName="Package_Integracion_Meet"
   DTS:PackageType="5"
-  DTS:VersionBuild="45"
-  DTS:VersionGUID="{582CE4CD-5267-4B2D-B741-761205AF8BB7}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="54"
+  DTS:VersionGUID="{679BA553-3D2B-4E9E-AF02-1387B3E496E9}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Conn_BANNER]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9d6549ac-e639-4547-b39e-03b5da6ef7f1}"
+      DTS:ObjectName="Conn_BANNER">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.10.3.7/UPCDEVL;User ID=SASPA_DATATRANSFER;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Conn_CRM365]"
       DTS:CreationName="OLEDB"
@@ -24,11 +35,10 @@
       DTS:ObjectName="Conn_CRM365">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=10.10.2.2;User ID=ISINTCRMCOM;Initial Catalog=UPC_MSCRM;Provider=SQLNCLI11.1;Auto Translate=False;">
+          DTS:ConnectionString="Data Source=10.10.2.99;User ID=ISINTCRMCOM;Initial Catalog=UPCDESA_MSCRM;Provider=SQLNCLI11.1;Auto Translate=False;">
           <DTS:Password
             DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAGZAsTIL5CEaBHK0rz3ke0QAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD4msFb3kEYdnMIP/Q80qn3JzrnOqC1tDIDLda3f52STAAAAAAOgAAAAAIAACAAAACHESLCRu1DrDv+dUliMSRLl15nfuhLV6zf9XZWE9oXIzAAAADKfCKZ+ZR3j3uNTJQqw3p9vaPCrk3m6yJ/edLFNsxnoMIFW+zst942QbjEVQZcll1AAAAA3AFUkEB2finE64WBDkV71eiydq1xMLzuHInvbl27UR3fxgmSh6YCGkXbekMXDnGfPHbhJJZzSSVO9wyYqfje2w</DTS:Password>
+            Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -46,8 +56,7 @@
             DTS:UsePassiveMode="True">
             <DTS:Property
               DTS:Name="ServerPassword"
-              Sensitive="1"
-              Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAGZAsTIL5CEaBHK0rz3ke0QAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADbiG4sbKgWLrMB9/H8jqTNeLGVoFLlTFd2DkCkbfOl8QAAAAAOgAAAAAIAACAAAAAYdOuZ+NySr22bLnu8F+F7g0mX8ff6l1oQklxlUnx4iBAAAABwPKz4xANUv2XrPn5uvbX9QAAAANRUM8BIaD+hlxcGBw60mAT8u7b6wSz3QTldOzcrzca52pLNkxOz+0OH6ejhaPN2BddKl00WpO5h3EpOPqmZApM</DTS:Property>
+              Sensitive="1"></DTS:Property>
           </DTS:FtpConnection>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
@@ -62,8 +71,7 @@
           DTS:ConnectionString="Data Source=172.36.0.23;User ID=Isintcrmcom;Initial Catalog=REPINTETL;Application Name=SSIS-Package_Ingles_WeTalk-{785AD69C-A1ED-4416-8DD7-0E56CAB85ADA}172.36.0.23.REPINTETL.Isintcrmcom;">
           <DTS:Password
             DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAGZAsTIL5CEaBHK0rz3ke0QAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABPLwMDoio4iCTEza0aCuD2CmKfsau4uBNC1ekuWFULEQAAAAAOgAAAAAIAACAAAACG9Ps8Rj2afFEroUjFFaZnctslMNKYhFCSyEKIBOOtqSAAAACwC6ngFlns3LphYisYXXqJk9zEcHTQpgCRB3pkYBbM50AAAAA15xxTuHbGDwzWQ9NKkfvf/PipqVlhkWk2pJfLPSFPQLmFSASAYMUF9dAz0VolOJHACvKwZg4LaO8vlZmugMBa</DTS:Password>
+            Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -74,26 +82,10 @@
       DTS:ObjectName="Conn_SOCRATES_MO">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=SVRDESE2.upc.edu.pe/DESE2.upc.edu.pe;User ID=ISINTCRMCOM;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+          DTS:ConnectionString="Data Source=SVRDESE2.upc.edu.pe/DESE2.upc.edu.pe;User ID=PROVZATGEI01;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
           <DTS:Password
             DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAGZAsTIL5CEaBHK0rz3ke0QAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACMy5Awy+LY1vAPXf+PZNIH63dgB1O1G9zX2M11ia3J2AAAAAAOgAAAAAIAACAAAACK4lV/BwnM3+TLlcQNoChWTO6iCzwPBnD5zPPn6zreciAAAADVJ7VxxUy5AUx3K1UASLTVtthP+Cz52IGb0Io4a4U3QkAAAAApac50z0XVb1qDtSPKmb5NnmMOsZ44Z9aPk+BaxdeQlqRsq9DoaXWWYU780f/QNXdQr1IQjsH+P8cQ7GW+9wCc</DTS:Password>
-        </DTS:ConnectionManager>
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[Conn_SOCRATES_SI]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{8F8116D1-8347-41B5-BA57-2D18CB0D6D51}"
-      DTS:ObjectName="Conn_SOCRATES_SI">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=SVRDESI2.upc.edu.pe/DESI2.upc.edu.pe;User ID=ISINTCRMCOM;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAGZAsTIL5CEaBHK0rz3ke0QAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAADPMho9YLs70VxrWDmhJAi3Dlm1dDxIKgIOR3Ftevo5ZgAAAAAOgAAAAAIAACAAAADfwwmPCG/H1dZG8pzzcTGlkfLdztsNHhDI2ugkVYxPsyAAAADQMzlVF080BmpcnY4PzHX7ZHhSOJF47Rvob/XEHMr0Q0AAAABGNCBkaJ0vvTdTmHfO1mIuagVrAxrjiyFpelmdoM61ALOS+PNTZTWq1ycY6ddmNlVhfN0NHNAMok84ULMfDXsE</DTS:Password>
+            Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -199,7 +191,7 @@
       DTS:CreationName=""
       DTS:DTSID="{46E5C301-9C84-4FB0-A327-B5618601E094}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="&quot;&#xA;Select x.ContactId, x.FirstName, x.MiddleName, x.LastName, x.BirthDate, x.Genero, &#xA;&#x9;&#x9;x.CRM_TipoDocumentoName, x.CRM_NroDocumento, x.Telephone1, x.Telephone2, x.Telephone3, &#xA;&#x9;&#x9;x.EmailAddress1, x.EmailAddress2, x.EmailAddress3, &#xA;&#x9;&#x9;x.Tipo_Apoderado, x.FullName_Apoderado, x.CRM_TipoDocumentoName_Apoderado, x.CRM_NroDocumento_Apoderado&#xA;From (&#xA;&#x9;&#x9;Select c.ContactId, &#xA;&#x9;&#x9;&#x9;&#x9;c.FirstName, &#xA;&#x9;&#x9;&#x9;&#x9;c.MiddleName, &#xA;&#x9;&#x9;&#x9;&#x9;c.LastName, &#xA;&#x9;&#x9;&#x9;&#x9;c.BirthDate, &#xA;&#x9;&#x9;&#x9;&#x9;SUBSTRING(sm.VALUE,1,50) As Genero,&#xA;&#x9;&#x9;&#x9;&#x9;c.CRM_TIPODOCUMENTONAME, &#xA;&#x9;&#x9;&#x9;&#x9;c.CRM_NRODOCUMENTO, &#xA;&#x9;&#x9;&#x9;&#x9;c.TELEPHONE1, &#xA;&#x9;&#x9;&#x9;&#x9;c.TELEPHONE2, &#xA;&#x9;&#x9;&#x9;&#x9;c.TELEPHONE3,&#xA;&#x9;&#x9;&#x9;&#x9;c.EMAILADDRESS1, &#xA;&#x9;&#x9;&#x9;&#x9;c.EMAILADDRESS2, &#xA;&#x9;&#x9;&#x9;&#x9;c.EMAILADDRESS3,&#xA;&#x9;&#x9;&#x9;&#x9;cn.Record2RoleIdName As Tipo_Apoderado,&#xA;&#x9;&#x9;&#x9;&#x9;SUBSTRING(cn.Record2IdName,1,500) As FullName_Apoderado,&#xA;&#x9;&#x9;&#x9;&#x9;c2.CRM_TIPODOCUMENTONAME As CRM_TIPODOCUMENTONAME_APODERADO,&#xA;&#x9;&#x9;&#x9;&#x9;c2.CRM_NRODOCUMENTO As CRM_NRODOCUMENTO_APODERADO,&#xA;&#x9;&#x9;&#x9;&#x9;ROW_NUMBER() Over(Partition By c.contactid Order By Case When Record2RoleIdName = 'Apoderado' Then 1 &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; When Record2RoleIdName = 'Padre' Then 2&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; When Record2RoleIdName = 'Madre' Then 3&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;End Asc) As PrioridadApoderado&#xA;&#x9;&#x9;From Contact c&#xA;&#x9;&#x9;&#x9;&#x9;Left Join StringMap sm On c.GENDERCODE = sm.ATTRIBUTEVALUE And sm.ATTRIBUTENAME = 'gendercode' &#xA;&#x9;&#x9;&#x9;&#x9;Left Join Connection cn On c.contactid = cn.Record1Id And cn.Record2RoleIdName in ('Apoderado','Padre','Madre')&#xA;&#x9;&#x9;&#x9;&#x9;Left Join Contact c2 On cn.Record2Id = c2.contactid&#xA;&#x9;&#x9;where  c.ContactId in (&#xA;&quot;&#xA;+&#xA;&#xA; @[User::v_ListaPersonasParaCRM365] &#xA;&#xA;+&#xA;&quot;)&#xA;) x&#xA;&quot;"
+      DTS:Expression="&quot;&#xA;Select x.ContactId, x.FirstName, x.MiddleName, x.LastName, x.BirthDate, x.Genero, &#xA;&#x9;&#x9;x.CRM_TipoDocumentoName, x.CRM_NroDocumento, x.Telephone1, x.Telephone2, x.Telephone3, &#xA;&#x9;&#x9;x.EmailAddress1, x.EmailAddress2, x.EmailAddress3, &#xA;&#x9;&#x9;x.Tipo_Apoderado, x.FullName_Apoderado, x.CRM_TipoDocumentoName_Apoderado, x.CRM_NroDocumento_Apoderado&#xA;From (&#xA;&#x9;&#x9;Select c.ContactId, &#xA;&#x9;&#x9;&#x9;&#x9;c.FirstName, &#xA;&#x9;&#x9;&#x9;&#x9;c.MiddleName, &#xA;&#x9;&#x9;&#x9;&#x9;c.LastName, &#xA;&#x9;&#x9;&#x9;&#x9;c.BirthDate, &#xA;&#x9;&#x9;&#x9;&#x9;SUBSTRING(sm.VALUE,1,50) As Genero,&#xA;&#x9;&#x9;&#x9;&#x9;c.CRM_TIPODOCUMENTONAME, &#xA;&#x9;&#x9;&#x9;&#x9;c.CRM_NRODOCUMENTO, &#xA;&#x9;&#x9;&#x9;&#x9;c.TELEPHONE1, &#xA;&#x9;&#x9;&#x9;&#x9;c.TELEPHONE2, &#xA;&#x9;&#x9;&#x9;&#x9;c.TELEPHONE3,&#xA;&#x9;&#x9;&#x9;&#x9;c.EMAILADDRESS1, &#xA;&#x9;&#x9;&#x9;&#x9;c.EMAILADDRESS2, &#xA;&#x9;&#x9;&#x9;&#x9;c.EMAILADDRESS3,&#xA;&#x9;&#x9;&#x9;&#x9;cn.Record2RoleIdName As Tipo_Apoderado,&#xA;&#x9;&#x9;&#x9;&#x9;SUBSTRING(cn.Record2IdName,1,500) As FullName_Apoderado,&#xA;&#x9;&#x9;&#x9;&#x9;c2.CRM_TIPODOCUMENTONAME As CRM_TIPODOCUMENTONAME_APODERADO,&#xA;&#x9;&#x9;&#x9;&#x9;c2.CRM_NRODOCUMENTO As CRM_NRODOCUMENTO_APODERADO,&#xA;&#x9;&#x9;&#x9;&#x9;ROW_NUMBER() Over(Partition By c.contactid Order By Case When Record2RoleIdName = 'Apoderado' Then 1 &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; When Record2RoleIdName = 'Padre' Then 2&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; When Record2RoleIdName = 'Madre' Then 3&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;End Asc) As PrioridadApoderado&#xA;&#x9;&#x9;From Contact c&#xA;&#x9;&#x9;&#x9;&#x9;Left Join StringMap sm On c.GENDERCODE = sm.ATTRIBUTEVALUE And sm.ATTRIBUTENAME = 'gendercode' &#xA;&#x9;&#x9;&#x9;&#x9;Left Join Connection cn On c.contactid = cn.Record1Id And cn.Record2RoleIdName in ('Apoderado','Padre','Madre')&#xA;&#x9;&#x9;&#x9;&#x9;Left Join Contact c2 On cn.Record2Id = c2.contactid&#xA;&#x9;&#x9;where  c.ContactId in (&#xA;&quot;&#xA;+&#xA;&#xA; @[User::v_ListaPersonasParaCRM365] &#xA;&#xA;+&#xA;&quot;)&#xA;) x&#xA;&#xA;&#xA;Where x.PrioridadApoderado = 1&quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="v_QueryPersonasParaCRM365">
@@ -239,7 +231,9 @@ From (
 		where  c.ContactId in (
 )
 ) x
-</DTS:VariableValue>
+
+
+Where x.PrioridadApoderado = 1</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -255,7 +249,7 @@ From (
       DTS:CreationName=""
       DTS:DTSID="{BAE4E898-FE52-41C2-BB9F-FA33FC634000}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="&quot;&#xA;        SELECT A.FECHA_CREACION AS FEC_CREACION,&#xA;               A.COD_LINEA_NEGOCIO,&#xA;               A.GUID_CRM_ALUM,&#xA;               A.SEC_ALUM AS SEC_ALUMNO,&#xA;               T.COD_ALUMNO,&#xA;               ME.NOMBRE AS DES_MODALIDAD_ESTUDIO,&#xA;               T.COD_PRODUC_MAT AS COD_PRODUCTO,&#xA;               PR.DESCRIPCION AS DES_CARRERA, &#xA;               T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,&#xA;               L.DESCRIPCION AS DES_LOCAL,&#xA;               ROW_NUMBER() OVER (PARTITION BY T.COD_ALUMNO ORDER BY ID DESC) AS MAXIMA_MAT&#xA;            FROM WSACTDATOS.AD_ALUMNO            A,&#xA;                 MATRICULA@PRODSI2               T,&#xA;                 MODALIDAD_ESTUD@PRODSI2         ME,&#xA;                 PRODUCTO@PRODSI2                PR,&#xA;                 LOCAL@PRODSI2                   L         &#xA;           WHERE A.COD_LINEA_NEGOCIO = 'E' &#xA;             AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO&#xA;             AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO&#xA;             AND T.COD_PRODUC_MAT = PR.COD_PRODUCTO&#xA;             AND PR.ES_CARRERA = 'SI'&#xA;             AND T.COD_LINEA_NEGOCIO = ME.COD_LINEA_NEGOCIO(+)&#xA;             AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  &#xA;             AND T.COD_LOCAL = L.COD_LOCAL(+)          &#xA;             AND T.COD_LINEA_NEGOCIO = 'E'&#xA;             &quot;"
+      DTS:Expression="&quot;&#xA;        SELECT A.FECHA_CREACION AS FEC_CREACION,&#xA;               A.COD_LINEA_NEGOCIO,&#xA;               A.GUID_CRM_ALUM,&#xA;               A.SEC_ALUM AS SEC_ALUMNO,&#xA;               T.COD_ALUMNO,&#xA;               ME.NOMBRE AS DES_MODALIDAD_ESTUDIO,&#xA;               T.COD_PRODUC_MAT AS COD_PRODUCTO,&#xA;               PR.DESCRIPCION AS DES_CARRERA, &#xA;               T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,&#xA;               L.DESCRIPCION AS DES_LOCAL,&#xA;               ROW_NUMBER() OVER (PARTITION BY A.GUID_CRM_ALUM, A.SEC_ALUM ORDER BY T.ID DESC) AS MAXIMA_MAT&#xA;            FROM WSACTDATOS.AD_ALUMNO            A,&#xA;                 MATRICULA@PRODSI2               T,&#xA;                 MODALIDAD_ESTUD@PRODSI2         ME,&#xA;                 PRODUCTO@PRODSI2                PR,&#xA;                 LOCAL@PRODSI2                   L         &#xA;           WHERE A.COD_LINEA_NEGOCIO = 'E' &#xA;             AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO&#xA;             AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO&#xA;             AND T.COD_PRODUC_MAT = PR.COD_PRODUCTO&#xA;             AND PR.ES_CARRERA = 'SI'&#xA;             AND T.COD_LINEA_NEGOCIO = ME.COD_LINEA_NEGOCIO(+)&#xA;             AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  &#xA;             AND T.COD_LOCAL = L.COD_LOCAL(+)          &#xA;             AND T.COD_LINEA_NEGOCIO = 'E'&#xA;             &quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="v_SelectReporteAlumnoE">
@@ -271,7 +265,7 @@ From (
                PR.DESCRIPCION AS DES_CARRERA, 
                T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,
                L.DESCRIPCION AS DES_LOCAL,
-               ROW_NUMBER() OVER (PARTITION BY T.COD_ALUMNO ORDER BY ID DESC) AS MAXIMA_MAT
+               ROW_NUMBER() OVER (PARTITION BY A.GUID_CRM_ALUM, A.SEC_ALUM ORDER BY T.ID DESC) AS MAXIMA_MAT
             FROM WSACTDATOS.AD_ALUMNO            A,
                  MATRICULA@PRODSI2               T,
                  MODALIDAD_ESTUD@PRODSI2         ME,
@@ -292,7 +286,7 @@ From (
       DTS:CreationName=""
       DTS:DTSID="{85DC8DFF-EFEE-4D02-BB6B-6373A26D186A}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="&quot;&#xA;        SELECT A.FECHA_CREACION AS FEC_CREACION,&#xA;               A.COD_LINEA_NEGOCIO,&#xA;               A.GUID_CRM_ALUM,&#xA;               A.SEC_ALUM AS SEC_ALUMNO,&#xA;               T.COD_ALUMNO,&#xA;               ME.NOMBRE AS DES_MODALIDAD_ESTUDIO,&#xA;               T.COD_PRODUC_MAT AS COD_PRODUCTO,&#xA;               PR.DESCRIPCION AS DES_CARRERA, &#xA;               T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,&#xA;               L.DESCRIPCION AS DES_LOCAL,&#xA;               ROW_NUMBER() OVER (PARTITION BY T.COD_ALUMNO ORDER BY ID DESC) AS MAXIMA_MAT&#xA;            FROM WSACTDATOS.AD_ALUMNO    A,&#xA;                 MATRICULA               T,&#xA;                 MODALIDAD_ESTUD         ME,&#xA;                 PRODUCTO                PR,&#xA;                 LOCAL                   L         &#xA;           WHERE A.COD_LINEA_NEGOCIO = 'U' &#xA;             AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO&#xA;             AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO&#xA;             AND T.COD_PRODUC_MAT = PR.COD_PRODUCTO&#xA;             AND PR.ES_CARRERA = 'SI'&#xA;             AND T.COD_LINEA_NEGOCIO = ME.COD_LINEA_NEGOCIO(+)&#xA;             AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  &#xA;             AND T.COD_LOCAL = L.COD_LOCAL(+)          &#xA;             AND T.COD_LINEA_NEGOCIO = 'U'&#xA;             AND NVL(T.COD_MODAL_EST, 'AC') IN ('AC', 'FC')&#xA;             &quot;"
+      DTS:Expression="&quot;&#xA;        SELECT A.FECHA_CREACION AS FEC_CREACION,&#xA;               A.COD_LINEA_NEGOCIO,&#xA;               A.GUID_CRM_ALUM,&#xA;               A.SEC_ALUM AS SEC_ALUMNO,&#xA;               T.COD_ALUMNO,&#xA;               ME.NOMBRE AS DES_MODALIDAD_ESTUDIO,&#xA;               T.COD_PRODUC_MAT AS COD_PRODUCTO,&#xA;               PR.DESCRIPCION AS DES_CARRERA, &#xA;               T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,&#xA;               L.DESCRIPCION AS DES_LOCAL,&#xA;               ROW_NUMBER() OVER (PARTITION BY A.GUID_CRM_ALUM, A.SEC_ALUM ORDER BY T.ID DESC) AS MAXIMA_MAT&#xA;            FROM WSACTDATOS.AD_ALUMNO    A,&#xA;                 MATRICULA               T,&#xA;                 MODALIDAD_ESTUD         ME,&#xA;                 PRODUCTO                PR,&#xA;                 LOCAL                   L         &#xA;           WHERE A.COD_LINEA_NEGOCIO = 'U' &#xA;             AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO&#xA;             AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO&#xA;             AND T.COD_PRODUC_MAT = PR.COD_PRODUCTO&#xA;             AND PR.ES_CARRERA = 'SI'&#xA;             AND T.COD_LINEA_NEGOCIO = ME.COD_LINEA_NEGOCIO(+)&#xA;             AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  &#xA;             AND T.COD_LOCAL = L.COD_LOCAL(+)          &#xA;             AND T.COD_LINEA_NEGOCIO = 'U'&#xA;             AND NVL(T.COD_MODAL_EST, 'AC') IN ('AC', 'FC')&#xA;             &quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="v_SelectReporteAlumnoU">
@@ -308,7 +302,7 @@ From (
                PR.DESCRIPCION AS DES_CARRERA, 
                T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,
                L.DESCRIPCION AS DES_LOCAL,
-               ROW_NUMBER() OVER (PARTITION BY T.COD_ALUMNO ORDER BY ID DESC) AS MAXIMA_MAT
+               ROW_NUMBER() OVER (PARTITION BY A.GUID_CRM_ALUM, A.SEC_ALUM ORDER BY T.ID DESC) AS MAXIMA_MAT
             FROM WSACTDATOS.AD_ALUMNO    A,
                  MATRICULA               T,
                  MODALIDAD_ESTUD         ME,
@@ -1835,11 +1829,11 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
                   </outputs>
                 </component>
                 <component
-                  refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT"
+                  refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT"
                   componentClassID="Microsoft.ManagedComponentHost"
                   contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
                   description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
-                  name="STGA_SOC_AD_VERIFICA_NOT"
+                  name="STG_SOC_AD_VERIFICA_NOT"
                   usesDispositions="true"
                   version="2">
                   <properties>
@@ -1870,7 +1864,7 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
                   </properties>
                   <connections>
                     <connection
-                      refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Connections[IDbConnection]"
+                      refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Connections[IDbConnection]"
                       connectionManagerID="Package.ConnectionManagers[Conn_REPINTETL]"
                       connectionManagerRefId="Package.ConnectionManagers[Conn_REPINTETL]"
                       description="Managed connection manager"
@@ -1878,137 +1872,137 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
                   </connections>
                   <inputs>
                     <input
-                      refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input]"
+                      refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input]"
                       errorRowDisposition="FailComponent"
                       hasSideEffects="true"
                       name="ADO NET Destination Input">
                       <inputColumns>
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[ID_VERIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[ID_VERIFICACION]"
                           cachedDataType="numeric"
                           cachedName="ID_VERIFICACION"
                           cachedPrecision="10"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[ID_VERIFICACION]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[ID_VERIFICACION]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT.Outputs[OLE DB Source Output].Columns[ID_VERIFICACION]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[DESC_VERIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[DESC_VERIFICACION]"
                           cachedDataType="wstr"
                           cachedLength="4"
                           cachedName="DESC_VERIFICACION"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[DESC_VERIFICACION]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[DESC_VERIFICACION]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT.Outputs[OLE DB Source Output].Columns[DESC_VERIFICACION]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[COD_USUARIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[COD_USUARIO]"
                           cachedDataType="wstr"
                           cachedLength="20"
                           cachedName="COD_USUARIO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[COD_USUARIO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[COD_USUARIO]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT.Outputs[OLE DB Source Output].Columns[COD_USUARIO]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[COD_LINEA_NEGOCIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[COD_LINEA_NEGOCIO]"
                           cachedDataType="wstr"
                           cachedLength="1"
                           cachedName="COD_LINEA_NEGOCIO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[COD_LINEA_NEGOCIO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[COD_LINEA_NEGOCIO]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT.Outputs[OLE DB Source Output].Columns[COD_LINEA_NEGOCIO]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[MEDIO_ENVIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[MEDIO_ENVIO]"
                           cachedDataType="wstr"
                           cachedLength="4"
                           cachedName="MEDIO_ENVIO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[MEDIO_ENVIO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[MEDIO_ENVIO]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT.Outputs[OLE DB Source Output].Columns[MEDIO_ENVIO]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[ESTADO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[ESTADO]"
                           cachedDataType="wstr"
                           cachedLength="1"
                           cachedName="ESTADO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[ESTADO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[ESTADO]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT.Outputs[OLE DB Source Output].Columns[ESTADO]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[USUARIO_CREACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[USUARIO_CREACION]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="USUARIO_CREACION"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[USUARIO_CREACION]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[USUARIO_CREACION]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT.Outputs[OLE DB Source Output].Columns[USUARIO_CREACION]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[FECHA_CREACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[FECHA_CREACION]"
                           cachedDataType="dbTimeStamp"
                           cachedName="FECHA_CREACION"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_CREACION]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_CREACION]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT.Outputs[OLE DB Source Output].Columns[FECHA_CREACION]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[USUARIO_MODIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[USUARIO_MODIFICACION]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="USUARIO_MODIFICACION"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[USUARIO_MODIFICACION]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[USUARIO_MODIFICACION]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT.Outputs[OLE DB Source Output].Columns[USUARIO_MODIFICACION]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[FECHA_MODIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[FECHA_MODIFICACION]"
                           cachedDataType="dbTimeStamp"
                           cachedName="FECHA_MODIFICACION"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_MODIFICACION]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_MODIFICACION]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT.Outputs[OLE DB Source Output].Columns[FECHA_MODIFICACION]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[FEC_CARGA]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].Columns[FEC_CARGA]"
                           cachedDataType="dbTimeStamp"
                           cachedName="FEC_CARGA"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FEC_CARGA]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FEC_CARGA]"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\Derived Column.Outputs[Derived Column Output].Columns[FEC_CARGA]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[ID_VERIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[ID_VERIFICACION]"
                           dataType="i4"
                           name="ID_VERIFICACION" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[DESC_VERIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[DESC_VERIFICACION]"
                           dataType="wstr"
                           length="4"
                           name="DESC_VERIFICACION" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[COD_USUARIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[COD_USUARIO]"
                           dataType="wstr"
                           length="20"
                           name="COD_USUARIO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[COD_LINEA_NEGOCIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[COD_LINEA_NEGOCIO]"
                           dataType="wstr"
                           length="1"
                           name="COD_LINEA_NEGOCIO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[MEDIO_ENVIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[MEDIO_ENVIO]"
                           dataType="wstr"
                           length="4"
                           name="MEDIO_ENVIO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[ESTADO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[ESTADO]"
                           dataType="wstr"
                           length="1"
                           name="ESTADO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[USUARIO_CREACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[USUARIO_CREACION]"
                           dataType="wstr"
                           length="50"
                           name="USUARIO_CREACION" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_CREACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_CREACION]"
                           dataType="dbTimeStamp"
                           name="FECHA_CREACION" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[USUARIO_MODIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[USUARIO_MODIFICACION]"
                           dataType="wstr"
                           length="50"
                           name="USUARIO_MODIFICACION" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_MODIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_MODIFICACION]"
                           dataType="dbTimeStamp"
                           name="FECHA_MODIFICACION" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FEC_CARGA]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input].ExternalColumns[FEC_CARGA]"
                           dataType="dbTimeStamp"
                           name="FEC_CARGA" />
                       </externalMetadataColumns>
@@ -2016,22 +2010,22 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
                   </inputs>
                   <outputs>
                     <output
-                      refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Outputs[ADO NET Destination Error Output]"
+                      refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Outputs[ADO NET Destination Error Output]"
                       exclusionGroup="1"
                       isErrorOut="true"
                       name="ADO NET Destination Error Output"
-                      synchronousInputId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input]">
+                      synchronousInputId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input]">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
                           name="ErrorCode"
                           specialFlags="1" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                       </outputColumns>
@@ -2043,7 +2037,7 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
               <paths>
                 <path
                   refId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT.Paths[Derived Column Output]"
-                  endId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input]"
+                  endId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT.Inputs[ADO NET Destination Input]"
                   name="Derived Column Output"
                   startId="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\Derived Column.Outputs[Derived Column Output]" />
                 <path
@@ -3643,20 +3637,20 @@ WHERE MAXIMA_MAT = 1</property>
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Sequence Container\SQLT - FCT_REPORTE_ALUMNO"
+          DTS:refId="Package\Sequence Container\SQLT - HOD_REPORTE_ALUMNO"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
           DTS:DTSID="{9AB043B2-0758-4AA1-92C8-412B0E5F35FD}"
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
-          DTS:ObjectName="SQLT - FCT_REPORTE_ALUMNO"
+          DTS:ObjectName="SQLT - HOD_REPORTE_ALUMNO"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
           DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{785AD69C-A1ED-4416-8DD7-0E56CAB85ADA}"
-              SQLTask:SqlStatementSource="Insert Into meet.FCT_REPORTE_ALUMNO&#xA;(&#xA;&#x9;  [FEC_CREACION]&#xA;      ,[COD_LINEA_NEGOCIO]&#xA;      ,[GUID_CRM_ALUM]&#xA;      ,[SEC_ALUMNO]&#xA;      ,[COD_ALUMNO]&#xA;      ,[DES_MODALIDAD_ESTUDIO]&#xA;      ,[COD_PRODUCTO]&#xA;      ,[DES_CARRERA]&#xA;      ,[NUM_CICLO_ALUMNO]&#xA;      ,[DES_LOCAL]&#xA;      ,[FirstName]&#xA;      ,[MiddleName]&#xA;      ,[LastName]&#xA;      ,[BirthDate]&#xA;      ,[Genero]&#xA;      ,[CRM_TipoDocumentoName]&#xA;      ,[CRM_NroDocumento]&#xA;      ,[Telephone1]&#xA;      ,[Telephone2]&#xA;      ,[Telephone3]&#xA;      ,[EmailAddress1]&#xA;      ,[EmailAddress2]&#xA;      ,[EmailAddress3]&#xA;      ,[Tipo_Apoderado]&#xA;      ,[FullName_Apoderado]&#xA;      ,[CRM_TipoDocumentoName_Apoderado]&#xA;      ,[CRM_NroDocumento_Apoderado]&#xA;      ,[Fec_Carga]&#xA;)&#xA;Select a.FEC_CREACION, a.COD_LINEA_NEGOCIO, a.GUID_CRM_ALUM, a.SEC_ALUMNO, a.COD_ALUMNO, a.DES_MODALIDAD_ESTUDIO, a.COD_PRODUCTO,&#xA;&#x9;&#x9;a.DES_CARRERA, a.NUM_CICLO_ALUMNO, a.DES_LOCAL,&#xA;&#x9;&#x9;b.FirstName, b.MiddleName, b.LastName, b.BirthDate, b.Genero, &#xA;&#x9;&#x9;b.CRM_TipoDocumentoName, b.CRM_NroDocumento, b.Telephone1, b.Telephone2, b.Telephone3, &#xA;&#x9;&#x9;b.EmailAddress1, b.EmailAddress2, b.EmailAddress3, &#xA;&#x9;&#x9;b.Tipo_Apoderado, b.FullName_Apoderado, b.CRM_TipoDocumentoName_Apoderado, b.CRM_NroDocumento_Apoderado,&#xA;&#x9;&#x9;GETDATE() As Fec_Carga&#xA;From meet.STG_SOC_AD_ALUMNO_MATRICULA a&#xA;&#x9; Left Join meet.STG_CRM365_CONTACT b On a.GUID_CRM_ALUM = b.ContactId&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="&#xA;Delete a&#xA;From meet.HOD_REPORTE_ALUMNO a&#xA;&#x9; Inner Join meet.STG_SOC_AD_ALUMNO_MATRICULA b On a.GUID_CRM_ALUM = b.GUID_CRM_ALUM And a.SEC_ALUMNO = b.SEC_ALUMNO&#xA;&#xA;Insert Into meet.HOD_REPORTE_ALUMNO&#xA;(&#xA;&#x9;  [FEC_CREACION]&#xA;      ,[COD_LINEA_NEGOCIO]&#xA;      ,[GUID_CRM_ALUM]&#xA;      ,[SEC_ALUMNO]&#xA;      ,[COD_ALUMNO]&#xA;      ,[DES_MODALIDAD_ESTUDIO]&#xA;      ,[COD_PRODUCTO]&#xA;      ,[DES_CARRERA]&#xA;      ,[NUM_CICLO_ALUMNO]&#xA;      ,[DES_LOCAL]&#xA;      ,[FirstName]&#xA;      ,[MiddleName]&#xA;      ,[LastName]&#xA;      ,[BirthDate]&#xA;      ,[Genero]&#xA;      ,[CRM_TipoDocumentoName]&#xA;      ,[CRM_NroDocumento]&#xA;      ,[Telephone1]&#xA;      ,[Telephone2]&#xA;      ,[Telephone3]&#xA;      ,[EmailAddress1]&#xA;      ,[EmailAddress2]&#xA;      ,[EmailAddress3]&#xA;      ,[Tipo_Apoderado]&#xA;      ,[FullName_Apoderado]&#xA;      ,[CRM_TipoDocumentoName_Apoderado]&#xA;      ,[CRM_NroDocumento_Apoderado]&#xA;      ,[Fec_Carga]&#xA;)&#xA;Select a.FEC_CREACION, a.COD_LINEA_NEGOCIO, a.GUID_CRM_ALUM, a.SEC_ALUMNO, a.COD_ALUMNO, a.DES_MODALIDAD_ESTUDIO, a.COD_PRODUCTO,&#xA;&#x9;&#x9;a.DES_CARRERA, a.NUM_CICLO_ALUMNO, a.DES_LOCAL,&#xA;&#x9;&#x9;b.FirstName, b.MiddleName, b.LastName, b.BirthDate, b.Genero, &#xA;&#x9;&#x9;b.CRM_TipoDocumentoName, b.CRM_NroDocumento, b.Telephone1, b.Telephone2, b.Telephone3, &#xA;&#x9;&#x9;b.EmailAddress1, b.EmailAddress2, b.EmailAddress3, &#xA;&#x9;&#x9;b.Tipo_Apoderado, b.FullName_Apoderado, b.CRM_TipoDocumentoName_Apoderado, b.CRM_NroDocumento_Apoderado,&#xA;&#x9;&#x9;GETDATE() As Fec_Carga&#xA;From meet.STG_SOC_AD_ALUMNO_MATRICULA a&#xA;&#x9; Left Join meet.STG_CRM365_CONTACT b On a.GUID_CRM_ALUM = b.ContactId&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
@@ -3729,7 +3723,7 @@ WHERE MAXIMA_MAT = 1</property>
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{785AD69C-A1ED-4416-8DD7-0E56CAB85ADA}"
-              SQLTask:SqlStatementSource="TRUNCATE TABLE MEET.STG_SOC_AD_ALUMNO_MATRICULA" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="TRUNCATE TABLE MEET.STG_SOC_AD_ALUMNO_MATRICULA&#xA;&#xA;TRUNCATE TABLE MEET.STG_CRM365_CONTACT" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
@@ -3797,7 +3791,7 @@ WHERE MAXIMA_MAT = 1</property>
           DTS:From="Package\Sequence Container\DFT - STG_CRM365_CONTACT"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 7"
-          DTS:To="Package\Sequence Container\SQLT - FCT_REPORTE_ALUMNO" />
+          DTS:To="Package\Sequence Container\SQLT - HOD_REPORTE_ALUMNO" />
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 8]"
           DTS:CreationName=""
@@ -3872,6 +3866,36 @@ WHERE MAXIMA_MAT = 1</property>
               VSTAMinorVersion="0"
               Language="CSharp"
               ReadOnlyVariables="System::ErrorCode,System::ErrorDescription,System::PackageName,System::StartTime,User::v_EmailFrom,User::v_EmailPassword,User::v_EmailPort,User::v_EmailServer,User::v_EmailTo,User::v_EmailUserName">
+              <ProjectItem
+                Name="Properties\AssemblyInfo.cs"
+                Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
+[assembly: AssemblyCopyright("Copyright @  2020")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
               <ProjectItem
                 Name="Properties\Resources.resx"
                 Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
@@ -3991,38 +4015,6 @@ WHERE MAXIMA_MAT = 1</property>
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
 </root>]]></ProjectItem>
-              <ProjectItem
-                Name="ST_69d6d152e5144e64810aa18473465210.csproj"
-                Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?><Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProductVersion>8.0.30703</ProductVersion><SchemaVersion>2.0</SchemaVersion><ProjectGuid>{f26050a9-b30a-4374-993f-1ce54c5a6675}</ProjectGuid><OutputType>Library</OutputType><AppDesignerFolder>Properties</AppDesignerFolder><RootNamespace>ST_98d1ec56638e441cbf98e98c3cabfa7e</RootNamespace><AssemblyName>ST_69d6d152e5144e64810aa18473465210</AssemblyName><TargetFrameworkVersion>v4.7</TargetFrameworkVersion><FileAlignment>512</FileAlignment><ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch><TargetFrameworkProfile></TargetFrameworkProfile></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Debug' "><DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>.\bin\Debug\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>DEBUG;TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Release' "><DebugSymbols>false</DebugSymbols><Optimize>true</Optimize><OutputPath>.\bin\Release\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><ItemGroup><Reference Include="System" /><Reference Include="System.Data" /><Reference Include="System.Windows.Forms" /><Reference Include="System.Xml" /><Reference Include="Microsoft.SqlServer.ManagedDTS, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.ScriptTask, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /></ItemGroup><ItemGroup><AppDesigner Include="Properties\" /><Compile Include="Properties\AssemblyInfo.cs"><SubType>Code</SubType></Compile><EmbeddedResource Include="Properties\Resources.resx"><Generator>ResXFileCodeGenerator</Generator><LastGenOutput>Resources.Designer.cs</LastGenOutput></EmbeddedResource><Compile Include="Properties\Resources.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Resources.resx</DependentUpon></Compile><None Include="Properties\Settings.settings"><Generator>SettingsSingleFileGenerator</Generator><LastGenOutput>Settings.Designer.cs</LastGenOutput></None><Compile Include="Properties\Settings.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Settings.settings</DependentUpon></Compile><Compile Include="ScriptMain.cs"><SubType>Code</SubType></Compile></ItemGroup><!-- Include the build rules for a C# project.--><Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /><ProjectExtensions><VisualStudio><FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}"><ProjectProperties HostName="ScriptTask" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" /><Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex=""></Host><ProjectClient><HostIdentifier>SSIS_ST150</HostIdentifier></ProjectClient></FlavorProperties></VisualStudio></ProjectExtensions></Project>]]></ProjectItem>
-              <ProjectItem
-                Name="Properties\Settings.Designer.cs"
-                Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
-// <auto-generated>
-//     This code was generated by a tool.
-//
-//     Changes to this file may cause incorrect behavior and will be lost if
-//     the code is regenerated.
-// </auto-generated>
-//------------------------------------------------------------------------------
-
-[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Settings.get_Default():ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Sett" +
-    "ings")]
-
-namespace ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties {
-    
-    
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
-        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-        private static Settings defaultInstance = new Settings();
-        
-        public static Settings Default {
-            get {
-                return defaultInstance;
-            }
-        }
-    }
-}]]></ProjectItem>
               <ProjectItem
                 Name="ScriptMain.cs"
                 Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
@@ -4178,65 +4170,6 @@ namespace ST_98d1ec56638e441cbf98e98c3cabfa7e
 	}
 }]]></ProjectItem>
               <ProjectItem
-                Name="Project"
-                Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
-<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
-  <msb:PropertyGroup>
-    <msb:CodeName>ST_980b082b80f84ded8c77db20cc2f4677</msb:CodeName>
-    <msb:Language>msBuild</msb:Language>
-    <msb:DisplayName>ST_980b082b80f84ded8c77db20cc2f4677</msb:DisplayName>
-    <msb:ProjectId>{FE999FBC-7CB8-4CD2-97EE-A0DFB749D427}</msb:ProjectId>
-  </msb:PropertyGroup>
-  <msb:ItemGroup>
-    <msb:Project Include="ST_69d6d152e5144e64810aa18473465210.csproj" />
-    <msb:File Include="Properties\Settings.settings" />
-    <msb:File Include="Properties\AssemblyInfo.cs" />
-    <msb:File Include="Properties\Resources.resx" />
-    <msb:File Include="Properties\Resources.Designer.cs" />
-    <msb:File Include="Properties\Settings.Designer.cs" />
-    <msb:File Include="ScriptMain.cs" />
-  </msb:ItemGroup>
-</c:Project>]]></ProjectItem>
-              <ProjectItem
-                Name="Properties\AssemblyInfo.cs"
-                Encoding="UTF8"><![CDATA[using System.Reflection;
-using System.Runtime.CompilerServices;
-
-//
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-//
-[assembly: AssemblyTitle("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
-[assembly: AssemblyCopyright("Copyright @  2020")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-//
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-
-[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
-              <ProjectItem
-                Name="Properties\Settings.settings"
-                Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
-</SettingsFile>]]></ProjectItem>
-              <ProjectItem
                 Name="Properties\Resources.Designer.cs"
                 Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
 // <auto-generated>
@@ -4304,6 +4237,67 @@ namespace ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties {
         }
     }
 }]]></ProjectItem>
+              <ProjectItem
+                Name="Project"
+                Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:CodeName>ST_980b082b80f84ded8c77db20cc2f4677</msb:CodeName>
+    <msb:Language>msBuild</msb:Language>
+    <msb:DisplayName>ST_980b082b80f84ded8c77db20cc2f4677</msb:DisplayName>
+    <msb:ProjectId>{FE999FBC-7CB8-4CD2-97EE-A0DFB749D427}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="ST_69d6d152e5144e64810aa18473465210.csproj" />
+    <msb:File Include="Properties\Settings.settings" />
+    <msb:File Include="Properties\AssemblyInfo.cs" />
+    <msb:File Include="Properties\Resources.resx" />
+    <msb:File Include="Properties\Resources.Designer.cs" />
+    <msb:File Include="Properties\Settings.Designer.cs" />
+    <msb:File Include="ScriptMain.cs" />
+  </msb:ItemGroup>
+</c:Project>]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\Settings.Designer.cs"
+                Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Settings.get_Default():ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Sett" +
+    "ings")]
+
+namespace ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\Settings.settings"
+                Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
+              <ProjectItem
+                Name="ST_69d6d152e5144e64810aa18473465210.csproj"
+                Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?><Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProductVersion>8.0.30703</ProductVersion><SchemaVersion>2.0</SchemaVersion><ProjectGuid>{f26050a9-b30a-4374-993f-1ce54c5a6675}</ProjectGuid><OutputType>Library</OutputType><AppDesignerFolder>Properties</AppDesignerFolder><RootNamespace>ST_98d1ec56638e441cbf98e98c3cabfa7e</RootNamespace><AssemblyName>ST_69d6d152e5144e64810aa18473465210</AssemblyName><TargetFrameworkVersion>v4.7</TargetFrameworkVersion><FileAlignment>512</FileAlignment><ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch><TargetFrameworkProfile></TargetFrameworkProfile></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Debug' "><DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>.\bin\Debug\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>DEBUG;TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Release' "><DebugSymbols>false</DebugSymbols><Optimize>true</Optimize><OutputPath>.\bin\Release\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><ItemGroup><Reference Include="System" /><Reference Include="System.Data" /><Reference Include="System.Windows.Forms" /><Reference Include="System.Xml" /><Reference Include="Microsoft.SqlServer.ManagedDTS, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.ScriptTask, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /></ItemGroup><ItemGroup><AppDesigner Include="Properties\" /><Compile Include="Properties\AssemblyInfo.cs"><SubType>Code</SubType></Compile><EmbeddedResource Include="Properties\Resources.resx"><Generator>ResXFileCodeGenerator</Generator><LastGenOutput>Resources.Designer.cs</LastGenOutput></EmbeddedResource><Compile Include="Properties\Resources.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Resources.resx</DependentUpon></Compile><None Include="Properties\Settings.settings"><Generator>SettingsSingleFileGenerator</Generator><LastGenOutput>Settings.Designer.cs</LastGenOutput></None><Compile Include="Properties\Settings.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Settings.settings</DependentUpon></Compile><Compile Include="ScriptMain.cs"><SubType>Code</SubType></Compile></ItemGroup><!-- Include the build rules for a C# project.--><Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /><ProjectExtensions><VisualStudio><FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}"><ProjectProperties HostName="ScriptTask" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" /><Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex=""></Host><ProjectClient><HostIdentifier>SSIS_ST150</HostIdentifier></ProjectClient></FlavorProperties></VisualStudio></ProjectExtensions></Project>]]></ProjectItem>
               <BinaryItem
                 Name="ST_980b082b80f84ded8c77db20cc2f4677.dll">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
@@ -4536,6 +4530,10 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           Id="Package\Sequence Container\ET - Arma Select AD_ALUMNO"
           TopLeft="75,309" />
         <NodeLayout
+          Size="254,42"
+          Id="Package\Sequence Container\SQLT - HOD_REPORTE_ALUMNO"
+          TopLeft="494,16" />
+        <NodeLayout
           Size="251,42"
           Id="Package\Sequence Container\SQLT - Lista de GUID de Personas"
           TopLeft="434,151" />
@@ -4753,19 +4751,15 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="251,42"
-          Id="Package\Sequence Container\SQLT - FCT_REPORTE_ALUMNO"
-          TopLeft="494,16" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 7]"
           TopLeft="600.5,81">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="19,-23"
+              EndConnector="20.5,-23"
               Start="0,0"
-              End="19,-15.5">
+              End="20.5,-15.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -4776,13 +4770,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
                     Point2="0,-11.5"
                     Point3="4,-11.5" />
                   <mssgle:LineSegment
-                    End="15,-11.5" />
+                    End="16.5,-11.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="15,-11.5"
-                    Point2="19,-11.5"
-                    Point3="19,-15.5" />
+                    Point1="16.5,-11.5"
+                    Point2="20.5,-11.5"
+                    Point3="20.5,-15.5" />
                   <mssgle:LineSegment
-                    End="19,-15.5" />
+                    End="20.5,-15.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5043,6 +5037,10 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="138,42"
+          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact"
+          TopLeft="311,53" />
+        <NodeLayout
           Size="210,42"
           Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT"
           TopLeft="314,315" />
@@ -5050,32 +5048,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           Size="158,42"
           Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column"
           TopLeft="336,195" />
-        <EdgeLayout
-          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT.Paths[Derived Column Output]"
-          TopLeft="417,237">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,78"
-              Start="0,0"
-              End="0,70.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,70.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="138,42"
-          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact"
-          TopLeft="311,53" />
         <EdgeLayout
           Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT.Paths[OLE DB Source Output]"
           TopLeft="380,95">
@@ -5110,9 +5082,39 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT.Paths[Derived Column Output]"
+          TopLeft="417,237">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,78"
+              Start="0,0"
+              End="0,70.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,70.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT">
     <Properties>
@@ -5125,7 +5127,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     design-time-name="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="158,42"
           Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\Derived Column"
@@ -5157,9 +5159,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5181,9 +5181,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -5209,14 +5207,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     design-time-name="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="244,42"
           Id="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT"
           TopLeft="175,87" />
         <NodeLayout
-          Size="246,42"
-          Id="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT"
+          Size="239,42"
+          Id="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT"
           TopLeft="151,336" />
         <NodeLayout
           Size="158,42"
@@ -5253,9 +5251,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5264,9 +5260,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-112,90"
+              EndConnector="-115.5,90"
               Start="0,0"
-              End="-112,82.5">
+              End="-115.5,82.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -5277,21 +5273,19 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
                     Point2="0,45"
                     Point3="-4,45" />
                   <mssgle:LineSegment
-                    End="-108,45" />
+                    End="-111.5,45" />
                   <mssgle:CubicBezierSegment
-                    Point1="-108,45"
-                    Point2="-112,45"
-                    Point3="-112,49" />
+                    Point1="-111.5,45"
+                    Point2="-115.5,45"
+                    Point3="-115.5,49" />
                   <mssgle:LineSegment
-                    End="-112,82.5" />
+                    End="-115.5,82.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -5311,15 +5305,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STGA_SOC_AD_VERIFICA_NOT">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact">
+    design-time-name="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
