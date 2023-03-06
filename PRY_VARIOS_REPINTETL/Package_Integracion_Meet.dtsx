@@ -8,13 +8,13 @@
   DTS:DTSID="{C702B13A-9826-48E3-B91F-9EF4FFB4A144}"
   DTS:EnableConfig="True"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="15.0.2000.121"
+  DTS:LastModifiedProductVersion="16.0.845.0"
   DTS:LocaleID="10250"
   DTS:ObjectName="Package_Integracion_Meet"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="54"
-  DTS:VersionGUID="{679BA553-3D2B-4E9E-AF02-1387B3E496E9}">
+  DTS:VersionBuild="62"
+  DTS:VersionGUID="{910174A4-8AC5-4247-97A1-F3DBB958ED5E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -25,7 +25,13 @@
       DTS:ObjectName="Conn_BANNER">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=10.10.3.7/UPCDEVL;User ID=SASPA_DATATRANSFER;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;" />
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=10.10.3.7/UPCCERT;User ID=SASPA_DATATRANSFER;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -35,7 +41,9 @@
       DTS:ObjectName="Conn_CRM365">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=10.10.2.99;User ID=ISINTCRMCOM;Initial Catalog=UPCDESA_MSCRM;Provider=SQLNCLI11.1;Auto Translate=False;">
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=10.10.2.106;User ID=ISINTCRMCOM;Initial Catalog=UPCCERT_MSCRM;Provider=SQLNCLI11.1;Auto Translate=False;">
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"></DTS:Password>
@@ -68,7 +76,7 @@
       DTS:ObjectName="Conn_REPINTETL">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=172.36.0.23;User ID=Isintcrmcom;Initial Catalog=REPINTETL;Application Name=SSIS-Package_Ingles_WeTalk-{785AD69C-A1ED-4416-8DD7-0E56CAB85ADA}172.36.0.23.REPINTETL.Isintcrmcom;">
+          DTS:ConnectionString="Data Source=172.36.0.22;User ID=Isintcrmcom;Initial Catalog=REPINTETL;Application Name=SSIS-Package_Ingles_WeTalk-{785AD69C-A1ED-4416-8DD7-0E56CAB85ADA}172.36.0.23.REPINTETL.Isintcrmcom;">
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"></DTS:Password>
@@ -82,11 +90,23 @@
       DTS:ObjectName="Conn_SOCRATES_MO">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=SVRDESE2.upc.edu.pe/DESE2.upc.edu.pe;User ID=PROVZATGEI01;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=SVRDESOE.upc.edu.pe/DESOE.upc.edu.pe;User ID=ISINTCRMCOM;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Log_Package_Integracion_Matriculas_CRM365.log]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{ac95b9ca-d05b-4cc7-bc93-889def84a614}"
+      DTS:ObjectName="Log_Package_Integracion_Matriculas_CRM365.log">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\DATOS\PRY_VARIOS_REPINTETL\PRY_VARIOS_REPINTETL\Logs\Log_Package_Integracion_Matriculas_CRM365.log" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -97,6 +117,16 @@
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectionString="C:\DATOS\PRY_VARIOS_REPINTETL\PRY_VARIOS_REPINTETL\Logs\Log_Package_Integracion_Meet.log" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Log_Package_Integracion_Parentesco_CRM2015.log]"
+      DTS:CreationName="FILE"
+      DTS:DTSID="{9112517d-7fb0-40b7-a827-096e4d2a9897}"
+      DTS:ObjectName="Log_Package_Integracion_Parentesco_CRM2015.log">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="C:\DATOS\PRY_VARIOS_REPINTETL\PRY_VARIOS_REPINTETL\Logs\Log_Package_Integracion_Parentesco_CRM2015.log" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -249,7 +279,7 @@ Where x.PrioridadApoderado = 1</DTS:VariableValue>
       DTS:CreationName=""
       DTS:DTSID="{BAE4E898-FE52-41C2-BB9F-FA33FC634000}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="&quot;&#xA;        SELECT A.FECHA_CREACION AS FEC_CREACION,&#xA;               A.COD_LINEA_NEGOCIO,&#xA;               A.GUID_CRM_ALUM,&#xA;               A.SEC_ALUM AS SEC_ALUMNO,&#xA;               T.COD_ALUMNO,&#xA;               ME.NOMBRE AS DES_MODALIDAD_ESTUDIO,&#xA;               T.COD_PRODUC_MAT AS COD_PRODUCTO,&#xA;               PR.DESCRIPCION AS DES_CARRERA, &#xA;               T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,&#xA;               L.DESCRIPCION AS DES_LOCAL,&#xA;               ROW_NUMBER() OVER (PARTITION BY A.GUID_CRM_ALUM, A.SEC_ALUM ORDER BY T.ID DESC) AS MAXIMA_MAT&#xA;            FROM WSACTDATOS.AD_ALUMNO            A,&#xA;                 MATRICULA@PRODSI2               T,&#xA;                 MODALIDAD_ESTUD@PRODSI2         ME,&#xA;                 PRODUCTO@PRODSI2                PR,&#xA;                 LOCAL@PRODSI2                   L         &#xA;           WHERE A.COD_LINEA_NEGOCIO = 'E' &#xA;             AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO&#xA;             AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO&#xA;             AND T.COD_PRODUC_MAT = PR.COD_PRODUCTO&#xA;             AND PR.ES_CARRERA = 'SI'&#xA;             AND T.COD_LINEA_NEGOCIO = ME.COD_LINEA_NEGOCIO(+)&#xA;             AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  &#xA;             AND T.COD_LOCAL = L.COD_LOCAL(+)          &#xA;             AND T.COD_LINEA_NEGOCIO = 'E'&#xA;             &quot;"
+      DTS:Expression="&quot;&#xA;        SELECT A.FECHA_CREACION AS FEC_CREACION,&#xA;               A.COD_LINEA_NEGOCIO,&#xA;               A.GUID_CRM_ALUM,&#xA;               A.SEC_ALUM AS SEC_ALUMNO,&#xA;               T.COD_ALUMNO,&#xA;               ME.NOMBRE AS DES_MODALIDAD_ESTUDIO,&#xA;               T.COD_PRODUC_MAT AS COD_PRODUCTO,&#xA;               PR.DESCRIPCION AS DES_CARRERA, &#xA;               T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,&#xA;               L.DESCRIPCION AS DES_LOCAL,&#xA;               RE.EMAIL_PRINCIPAL AS DES_EMAIL_RESP_ECONOMICO,&#xA;               RE.CELULAR AS DES_CELULAR_RESP_ECONOMICO,&#xA;               ROW_NUMBER() OVER (PARTITION BY A.GUID_CRM_ALUM, A.SEC_ALUM ORDER BY T.ID DESC) AS MAXIMA_MAT&#xA;            FROM WSACTDATOS.AD_ALUMNO            A,&#xA;                 MATRICULA@PRODSI2               T,&#xA;                 MODALIDAD_ESTUD@PRODSI2         ME,&#xA;                 PRODUCTO@PRODSI2                PR,&#xA;                 LOCAL@PRODSI2                   L,&#xA;                 WSACTDATOS.AD_RESP_ECONOMICO   RE         &#xA;           WHERE A.COD_LINEA_NEGOCIO = 'E' &#xA;             AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO&#xA;             AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO&#xA;             AND T.COD_PRODUC_MAT = PR.COD_PRODUCTO&#xA;             AND PR.ES_CARRERA = 'SI'&#xA;             AND T.COD_LINEA_NEGOCIO = ME.COD_LINEA_NEGOCIO(+)&#xA;             AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  &#xA;             AND T.COD_LOCAL = L.COD_LOCAL(+)          &#xA;             AND T.COD_LINEA_NEGOCIO = 'E'&#xA;             AND A.GUID_CRM_ALUM = RE.GUID_CRM_ALUM(+)&#xA;             AND A.SEC_ALUM = RE.SEC_ALUM(+)&#xA;             &quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="v_SelectReporteAlumnoE">
@@ -265,12 +295,15 @@ Where x.PrioridadApoderado = 1</DTS:VariableValue>
                PR.DESCRIPCION AS DES_CARRERA, 
                T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,
                L.DESCRIPCION AS DES_LOCAL,
+               RE.EMAIL_PRINCIPAL AS DES_EMAIL_RESP_ECONOMICO,
+               RE.CELULAR AS DES_CELULAR_RESP_ECONOMICO,
                ROW_NUMBER() OVER (PARTITION BY A.GUID_CRM_ALUM, A.SEC_ALUM ORDER BY T.ID DESC) AS MAXIMA_MAT
             FROM WSACTDATOS.AD_ALUMNO            A,
                  MATRICULA@PRODSI2               T,
                  MODALIDAD_ESTUD@PRODSI2         ME,
                  PRODUCTO@PRODSI2                PR,
-                 LOCAL@PRODSI2                   L         
+                 LOCAL@PRODSI2                   L,
+                 WSACTDATOS.AD_RESP_ECONOMICO   RE         
            WHERE A.COD_LINEA_NEGOCIO = 'E' 
              AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO
              AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO
@@ -280,19 +313,21 @@ Where x.PrioridadApoderado = 1</DTS:VariableValue>
              AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  
              AND T.COD_LOCAL = L.COD_LOCAL(+)          
              AND T.COD_LINEA_NEGOCIO = 'E'
+             AND A.GUID_CRM_ALUM = RE.GUID_CRM_ALUM(+)
+             AND A.SEC_ALUM = RE.SEC_ALUM(+)
              </DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
       DTS:DTSID="{85DC8DFF-EFEE-4D02-BB6B-6373A26D186A}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="&quot;&#xA;        SELECT A.FECHA_CREACION AS FEC_CREACION,&#xA;               A.COD_LINEA_NEGOCIO,&#xA;               A.GUID_CRM_ALUM,&#xA;               A.SEC_ALUM AS SEC_ALUMNO,&#xA;               T.COD_ALUMNO,&#xA;               ME.NOMBRE AS DES_MODALIDAD_ESTUDIO,&#xA;               T.COD_PRODUC_MAT AS COD_PRODUCTO,&#xA;               PR.DESCRIPCION AS DES_CARRERA, &#xA;               T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,&#xA;               L.DESCRIPCION AS DES_LOCAL,&#xA;               ROW_NUMBER() OVER (PARTITION BY A.GUID_CRM_ALUM, A.SEC_ALUM ORDER BY T.ID DESC) AS MAXIMA_MAT&#xA;            FROM WSACTDATOS.AD_ALUMNO    A,&#xA;                 MATRICULA               T,&#xA;                 MODALIDAD_ESTUD         ME,&#xA;                 PRODUCTO                PR,&#xA;                 LOCAL                   L         &#xA;           WHERE A.COD_LINEA_NEGOCIO = 'U' &#xA;             AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO&#xA;             AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO&#xA;             AND T.COD_PRODUC_MAT = PR.COD_PRODUCTO&#xA;             AND PR.ES_CARRERA = 'SI'&#xA;             AND T.COD_LINEA_NEGOCIO = ME.COD_LINEA_NEGOCIO(+)&#xA;             AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  &#xA;             AND T.COD_LOCAL = L.COD_LOCAL(+)          &#xA;             AND T.COD_LINEA_NEGOCIO = 'U'&#xA;             AND NVL(T.COD_MODAL_EST, 'AC') IN ('AC', 'FC')&#xA;             &quot;"
+      DTS:Expression="&quot;&#xA;            SELECT A.FECHA_CREACION AS FEC_CREACION,&#xA;               A.COD_LINEA_NEGOCIO,&#xA;               A.GUID_CRM_ALUM,&#xA;               A.SEC_ALUM AS SEC_ALUMNO,&#xA;               T.COD_ALUMNO,&#xA;               ME.NOMBRE AS DES_MODALIDAD_ESTUDIO,&#xA;               T.COD_PRODUC_MAT AS COD_PRODUCTO,&#xA;               PR.DESCRIPCION AS DES_CARRERA, &#xA;               T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,&#xA;               L.DESCRIPCION AS DES_LOCAL,&#xA;               RE.EMAIL_PRINCIPAL AS DES_EMAIL_RESP_ECONOMICO,&#xA;               RE.CELULAR AS DES_CELULAR_RESP_ECONOMICO,&#xA;               ROW_NUMBER() OVER (PARTITION BY A.GUID_CRM_ALUM, A.SEC_ALUM ORDER BY T.ID DESC) AS MAXIMA_MAT&#xA;            FROM WSACTDATOS.AD_ALUMNO           A,&#xA;                 MATRICULA                      T,&#xA;                 MODALIDAD_ESTUD                ME,&#xA;                 PRODUCTO                       PR,&#xA;                 LOCAL                          L,&#xA;                 WSACTDATOS.AD_RESP_ECONOMICO   RE&#xA;           WHERE A.COD_LINEA_NEGOCIO = 'U' &#xA;             AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO&#xA;             AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO&#xA;             AND T.COD_PRODUC_MAT = PR.COD_PRODUCTO&#xA;             AND PR.ES_CARRERA = 'SI'&#xA;             AND T.COD_LINEA_NEGOCIO = ME.COD_LINEA_NEGOCIO(+)&#xA;             AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  &#xA;             AND T.COD_LOCAL = L.COD_LOCAL(+)          &#xA;             AND T.COD_LINEA_NEGOCIO = 'U'&#xA;             AND NVL(T.COD_MODAL_EST, 'AC') IN ('AC', 'FC')&#xA;             AND A.GUID_CRM_ALUM = RE.GUID_CRM_ALUM(+)&#xA;             AND A.SEC_ALUM = RE.SEC_ALUM(+)&#xA;             &quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="v_SelectReporteAlumnoU">
       <DTS:VariableValue
         DTS:DataType="8">
-        SELECT A.FECHA_CREACION AS FEC_CREACION,
+            SELECT A.FECHA_CREACION AS FEC_CREACION,
                A.COD_LINEA_NEGOCIO,
                A.GUID_CRM_ALUM,
                A.SEC_ALUM AS SEC_ALUMNO,
@@ -302,12 +337,15 @@ Where x.PrioridadApoderado = 1</DTS:VariableValue>
                PR.DESCRIPCION AS DES_CARRERA, 
                T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,
                L.DESCRIPCION AS DES_LOCAL,
+               RE.EMAIL_PRINCIPAL AS DES_EMAIL_RESP_ECONOMICO,
+               RE.CELULAR AS DES_CELULAR_RESP_ECONOMICO,
                ROW_NUMBER() OVER (PARTITION BY A.GUID_CRM_ALUM, A.SEC_ALUM ORDER BY T.ID DESC) AS MAXIMA_MAT
-            FROM WSACTDATOS.AD_ALUMNO    A,
-                 MATRICULA               T,
-                 MODALIDAD_ESTUD         ME,
-                 PRODUCTO                PR,
-                 LOCAL                   L         
+            FROM WSACTDATOS.AD_ALUMNO           A,
+                 MATRICULA                      T,
+                 MODALIDAD_ESTUD                ME,
+                 PRODUCTO                       PR,
+                 LOCAL                          L,
+                 WSACTDATOS.AD_RESP_ECONOMICO   RE
            WHERE A.COD_LINEA_NEGOCIO = 'U' 
              AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO
              AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO
@@ -318,6 +356,8 @@ Where x.PrioridadApoderado = 1</DTS:VariableValue>
              AND T.COD_LOCAL = L.COD_LOCAL(+)          
              AND T.COD_LINEA_NEGOCIO = 'U'
              AND NVL(T.COD_MODAL_EST, 'AC') IN ('AC', 'FC')
+             AND A.GUID_CRM_ALUM = RE.GUID_CRM_ALUM(+)
+             AND A.SEC_ALUM = RE.SEC_ALUM(+)
              </DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
@@ -1532,7 +1572,7 @@ Where x.PrioridadApoderado = 1</DTS:VariableValue>
                       dataType="System.String"
                       description="The SQL command to be executed."
                       name="SqlCommand"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT ID_VERIFICACION,
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT ID_VERIFICACION,
         DESC_VERIFICACION,
         COD_USUARIO,
         COD_LINEA_NEGOCIO,
@@ -2162,7 +2202,7 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
                       dataType="System.String"
                       description="The SQL command to be executed."
                       name="SqlCommand"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">Select x.ContactId, x.FirstName, x.MiddleName, x.LastName, x.BirthDate, x.Genero, 
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">Select x.ContactId, x.FirstName, x.MiddleName, x.LastName, x.BirthDate, x.Genero, 
 		x.CRM_TipoDocumentoName, x.CRM_NroDocumento, x.Telephone1, x.Telephone2, x.Telephone3, 
 		x.EmailAddress1, x.EmailAddress2, x.EmailAddress3, 
 		x.Tipo_Apoderado, x.FullName_Apoderado, x.CRM_TipoDocumentoName_Apoderado, x.CRM_NroDocumento_Apoderado
@@ -2987,19 +3027,7 @@ From (
                       dataType="System.String"
                       description="The SQL command to be executed."
                       name="SqlCommand"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  FEC_CREACION,
-        COD_LINEA_NEGOCIO,
-        GUID_CRM_ALUM,
-        SEC_ALUMNO,
-        COD_ALUMNO,
-        DES_MODALIDAD_ESTUDIO,
-        COD_PRODUCTO,
-        DES_CARRERA,
-        NUM_CICLO_ALUMNO,
-        DES_LOCAL        
-FROM (
-        
-        SELECT A.FECHA_CREACION AS FEC_CREACION,
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT A.FECHA_CREACION AS FEC_CREACION,
                A.COD_LINEA_NEGOCIO,
                A.GUID_CRM_ALUM,
                A.SEC_ALUM AS SEC_ALUMNO,
@@ -3009,40 +3037,14 @@ FROM (
                PR.DESCRIPCION AS DES_CARRERA, 
                T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,
                L.DESCRIPCION AS DES_LOCAL,
-               ROW_NUMBER() OVER (PARTITION BY T.COD_ALUMNO ORDER BY ID DESC) AS MAXIMA_MAT
-            FROM WSACTDATOS.AD_ALUMNO    A,
-                 MATRICULA               T,
-                 MODALIDAD_ESTUD         ME,
-                 PRODUCTO                PR,
-                 LOCAL                   L         
-           WHERE A.COD_LINEA_NEGOCIO = 'U' 
-             AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO
-             AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO
-             AND T.COD_PRODUC_MAT = PR.COD_PRODUCTO
-             AND PR.ES_CARRERA = 'SI'
-             AND T.COD_LINEA_NEGOCIO = ME.COD_LINEA_NEGOCIO(+)
-             AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  
-             AND T.COD_LOCAL = L.COD_LOCAL(+)          
-             AND T.COD_LINEA_NEGOCIO = 'U'
-             AND NVL(T.COD_MODAL_EST, 'AC') IN ('AC', 'FC')
-
-UNION
-        SELECT A.FECHA_CREACION AS FEC_CREACION,
-               A.COD_LINEA_NEGOCIO,
-               A.GUID_CRM_ALUM,
-               A.SEC_ALUM AS SEC_ALUMNO,
-               T.COD_ALUMNO,
-               ME.NOMBRE AS DES_MODALIDAD_ESTUDIO,
-               T.COD_PRODUC_MAT AS COD_PRODUCTO,
-               PR.DESCRIPCION AS DES_CARRERA, 
-               T.CICLO_ALUMNO AS NUM_CICLO_ALUMNO,
-               L.DESCRIPCION AS DES_LOCAL,
-               ROW_NUMBER() OVER (PARTITION BY T.COD_ALUMNO ORDER BY ID DESC) AS MAXIMA_MAT
+               RE.EMAIL_PRINCIPAL AS DES_EMAIL_RESP_ECONOMICO,
+               RE.CELULAR AS DES_CELULAR_RESP_ECONOMICO
             FROM WSACTDATOS.AD_ALUMNO            A,
                  MATRICULA@PRODSI2               T,
                  MODALIDAD_ESTUD@PRODSI2         ME,
                  PRODUCTO@PRODSI2                PR,
-                 LOCAL@PRODSI2                   L         
+                 LOCAL@PRODSI2                   L,
+                 WSACTDATOS.AD_RESP_ECONOMICO   RE         
            WHERE A.COD_LINEA_NEGOCIO = 'E' 
              AND SUBSTR(A.USUARIO_CREACION,2,10) = T.COD_ALUMNO
              AND T.COD_LINEA_NEGOCIO = PR.COD_LINEA_NEGOCIO
@@ -3052,9 +3054,8 @@ UNION
              AND T.COD_MODAL_EST = ME.COD_MODAL_EST(+)                  
              AND T.COD_LOCAL = L.COD_LOCAL(+)          
              AND T.COD_LINEA_NEGOCIO = 'E'
-             
-)
-WHERE MAXIMA_MAT = 1</property>
+             AND A.GUID_CRM_ALUM = RE.GUID_CRM_ALUM(+)
+             AND A.SEC_ALUM = RE.SEC_ALUM(+)</property>
                     <property
                       dataType="System.String"
                       description="The variable that contains the SQL command to be executed."
@@ -3189,6 +3190,26 @@ WHERE MAXIMA_MAT = 1</property>
                           lineageId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].Columns[DES_LOCAL]"
                           name="DES_LOCAL"
                           truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].Columns[DES_EMAIL_RESP_ECONOMICO]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].ExternalColumns[DES_EMAIL_RESP_ECONOMICO]"
+                          length="100"
+                          lineageId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].Columns[DES_EMAIL_RESP_ECONOMICO]"
+                          name="DES_EMAIL_RESP_ECONOMICO"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].Columns[DES_CELULAR_RESP_ECONOMICO]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].ExternalColumns[DES_CELULAR_RESP_ECONOMICO]"
+                          length="50"
+                          lineageId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].Columns[DES_CELULAR_RESP_ECONOMICO]"
+                          name="DES_CELULAR_RESP_ECONOMICO"
+                          truncationRowDisposition="FailComponent" />
                       </outputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -3241,6 +3262,16 @@ WHERE MAXIMA_MAT = 1</property>
                           dataType="wstr"
                           length="50"
                           name="DES_LOCAL" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].ExternalColumns[DES_EMAIL_RESP_ECONOMICO]"
+                          dataType="wstr"
+                          length="100"
+                          name="DES_EMAIL_RESP_ECONOMICO" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].ExternalColumns[DES_CELULAR_RESP_ECONOMICO]"
+                          dataType="wstr"
+                          length="50"
+                          name="DES_CELULAR_RESP_ECONOMICO" />
                       </externalMetadataColumns>
                     </output>
                     <output
@@ -3307,6 +3338,18 @@ WHERE MAXIMA_MAT = 1</property>
                           length="50"
                           lineageId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Error Output].Columns[DES_LOCAL]"
                           name="DES_LOCAL" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Error Output].Columns[DES_EMAIL_RESP_ECONOMICO]"
+                          dataType="wstr"
+                          length="100"
+                          lineageId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Error Output].Columns[DES_EMAIL_RESP_ECONOMICO]"
+                          name="DES_EMAIL_RESP_ECONOMICO" />
+                        <outputColumn
+                          refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Error Output].Columns[DES_CELULAR_RESP_ECONOMICO]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Error Output].Columns[DES_CELULAR_RESP_ECONOMICO]"
+                          name="DES_CELULAR_RESP_ECONOMICO" />
                         <outputColumn
                           refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                           dataType="i4"
@@ -3516,6 +3559,20 @@ WHERE MAXIMA_MAT = 1</property>
                           externalMetadataColumnId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA.Inputs[ADO NET Destination Input].ExternalColumns[DES_LOCAL]"
                           lineageId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].Columns[DES_LOCAL]" />
                         <inputColumn
+                          refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA.Inputs[ADO NET Destination Input].Columns[DES_EMAIL_RESP_ECONOMICO]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="DES_EMAIL_RESP_ECONOMICO"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA.Inputs[ADO NET Destination Input].ExternalColumns[DES_EMAIL_RESP_ECONOMICO]"
+                          lineageId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].Columns[DES_EMAIL_RESP_ECONOMICO]" />
+                        <inputColumn
+                          refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA.Inputs[ADO NET Destination Input].Columns[DES_CELULAR_RESP_ECONOMICO]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="DES_CELULAR_RESP_ECONOMICO"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA.Inputs[ADO NET Destination Input].ExternalColumns[DES_CELULAR_RESP_ECONOMICO]"
+                          lineageId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA.Outputs[OLE DB Source Output].Columns[DES_CELULAR_RESP_ECONOMICO]" />
+                        <inputColumn
                           refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA.Inputs[ADO NET Destination Input].Columns[FEC_CARGA]"
                           cachedDataType="dbTimeStamp"
                           cachedName="FEC_CARGA"
@@ -3576,6 +3633,16 @@ WHERE MAXIMA_MAT = 1</property>
                           refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA.Inputs[ADO NET Destination Input].ExternalColumns[FEC_CARGA]"
                           dataType="dbTimeStamp"
                           name="FEC_CARGA" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA.Inputs[ADO NET Destination Input].ExternalColumns[DES_EMAIL_RESP_ECONOMICO]"
+                          dataType="wstr"
+                          length="100"
+                          name="DES_EMAIL_RESP_ECONOMICO" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA.Inputs[ADO NET Destination Input].ExternalColumns[DES_CELULAR_RESP_ECONOMICO]"
+                          dataType="wstr"
+                          length="50"
+                          name="DES_CELULAR_RESP_ECONOMICO" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -3633,7 +3700,7 @@ WHERE MAXIMA_MAT = 1</property>
           <DTS:Variables />
           <DTS:ObjectData>
             <ExpressionTask
-              Expression="@[User::v_SelectReporteAlumno] = &#xA;&quot;&#xA;SELECT  FEC_CREACION,&#xA;        COD_LINEA_NEGOCIO,&#xA;        GUID_CRM_ALUM,&#xA;        SEC_ALUMNO,&#xA;        COD_ALUMNO,&#xA;        DES_MODALIDAD_ESTUDIO,&#xA;        COD_PRODUCTO,&#xA;        DES_CARRERA,&#xA;        NUM_CICLO_ALUMNO,&#xA;        DES_LOCAL        &#xA;FROM (&#xA;&quot; &#xA;+&#xA; @[User::v_SelectReporteAlumnoU]&#xA;+&#xA; @[User::v_Where] &#xA;+&#xA;&quot; UNION &quot;&#xA;+&#xA; @[User::v_SelectReporteAlumnoE]&#xA;+&#xA; @[User::v_Where]&#xA;+&#xA;&quot;)&#xA;WHERE MAXIMA_MAT = 1&quot;" />
+              Expression="@[User::v_SelectReporteAlumno] = &#xA;&quot;&#xA;SELECT  FEC_CREACION,&#xA;        COD_LINEA_NEGOCIO,&#xA;        GUID_CRM_ALUM,&#xA;        SEC_ALUMNO,&#xA;        COD_ALUMNO,&#xA;        DES_MODALIDAD_ESTUDIO,&#xA;        COD_PRODUCTO,&#xA;        DES_CARRERA,&#xA;        NUM_CICLO_ALUMNO,&#xA;        DES_LOCAL,&#xA;&#x9;&#x9;DES_EMAIL_RESP_ECONOMICO,&#xA;&#x9;&#x9;DES_CELULAR_RESP_ECONOMICO&#xA;FROM (&#xA;&quot; &#xA;+&#xA; @[User::v_SelectReporteAlumnoU]&#xA;+&#xA; @[User::v_Where] &#xA;+&#xA;&quot; UNION &quot;&#xA;+&#xA; @[User::v_SelectReporteAlumnoE]&#xA;+&#xA; @[User::v_Where]&#xA;+&#xA;&quot;)&#xA;WHERE MAXIMA_MAT = 1&quot;" />
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
@@ -5035,7 +5102,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     design-time-name="Package\Sequence Container\DFT - STG_CRM365_CONTACT">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="138,42"
           Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact"
@@ -5079,7 +5146,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5101,7 +5170,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -5129,17 +5200,17 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="158,42"
-          Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\Derived Column"
-          TopLeft="276,209" />
+          Size="276,42"
+          Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA"
+          TopLeft="250,348" />
         <NodeLayout
           Size="214,42"
           Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA"
           TopLeft="249,100" />
         <NodeLayout
-          Size="276,42"
-          Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA"
-          TopLeft="217,355" />
+          Size="158,42"
+          Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\Derived Column"
+          TopLeft="276,209" />
         <EdgeLayout
           Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA.Paths[OLE DB Source Output]"
           TopLeft="355.5,142">
@@ -5168,14 +5239,26 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,104"
+              EndConnector="33,97"
               Start="0,0"
-              End="0,96.5">
+              End="33,89.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,96.5" />
+                    End="0,44.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,44.5"
+                    Point2="0,48.5"
+                    Point3="4,48.5" />
+                  <mssgle:LineSegment
+                    End="29,48.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="29,48.5"
+                    Point2="33,48.5"
+                    Point3="33,52.5" />
+                  <mssgle:LineSegment
+                    End="33,89.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5188,7 +5271,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA">
+    design-time-name="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -5196,7 +5279,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA">
+    design-time-name="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -5207,7 +5290,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     design-time-name="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="244,42"
           Id="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\SOCRATES AD_VERIFICA_NOT"
@@ -5251,7 +5334,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5285,7 +5370,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
