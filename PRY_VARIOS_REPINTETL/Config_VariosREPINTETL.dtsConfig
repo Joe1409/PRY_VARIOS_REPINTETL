@@ -28,4 +28,5 @@
 <Configuration ConfiguredType="Property" Path="\Package.Connections[Conn_CRM2015].Properties[Password]" ValueType="String"><ConfiguredValue>yeC6u#ac</ConfiguredValue></Configuration>
 <Configuration ConfiguredType="Property" Path="\Package.Connections[Conn_CRM2015].Properties[ServerName]" ValueType="String"><ConfiguredValue>10.10.0.211</ConfiguredValue></Configuration>
 <Configuration ConfiguredType="Property" Path="\Package.Connections[Conn_CRM2015].Properties[UserName]" ValueType="String"><ConfiguredValue>usrdevbdicrm2015</ConfiguredValue></Configuration>
+<Configuration ConfiguredType="Property" Path="\Package.Connections[Log_Package_Integracion_Venta_Seguros.log].Properties[ConnectionString]" ValueType="String"><ConfiguredValue>C:\DATOS\PRY_VARIOS_REPINTETL\PRY_VARIOS_REPINTETL\Logs\Log_Package_Integracion_Venta_Seguros.log</ConfiguredValue></Configuration>
 </DTSConfiguration>
