@@ -13,8 +13,8 @@
   DTS:ObjectName="Package_Integracion_Meet"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="66"
-  DTS:VersionGUID="{348E14E4-BA72-48AD-9CD2-6E76108FCA4B}">
+  DTS:VersionBuild="65"
+  DTS:VersionGUID="{67FBF487-B148-475A-94DE-791FE8CE79CD}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -43,11 +43,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=10.10.0.211;User ID=usrdevbdicrm2015;Initial Catalog=CRMDEV01_MSCRM;Provider=SQLNCLI11.1;Auto Translate=False;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"></DTS:Password>
-        </DTS:ConnectionManager>
+          DTS:ConnectionString="Data Source=10.10.0.211;User ID=usrdevbdicrm2015;Initial Catalog=CRMDEV01_MSCRM;Provider=SQLNCLI11.1;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -2116,13 +2112,13 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL"
+          DTS:refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT"
           DTS:CreationName="Microsoft.Pipeline"
           DTS:Description="Data Flow Task"
           DTS:DTSID="{EAD387AD-A706-4546-987D-4F01DF92329B}"
           DTS:ExecutableType="Microsoft.Pipeline"
           DTS:LocaleID="-1"
-          DTS:ObjectName="DFT - STG_CRM365_CONTACT_FULL"
+          DTS:ObjectName="DFT - STG_CRM365_CONTACT"
           DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
           <DTS:Variables />
           <DTS:ObjectData>
@@ -2130,7 +2126,7 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
               version="1">
               <components>
                 <component
-                  refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column"
+                  refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column"
                   componentClassID="Microsoft.DerivedColumn"
                   contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
                   description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
@@ -2138,7 +2134,7 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
                   usesDispositions="true">
                   <inputs>
                     <input
-                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Inputs[Derived Column Input]"
+                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Inputs[Derived Column Input]"
                       description="Input to the Derived Column Transformation"
                       name="Derived Column Input">
                       <externalMetadataColumns />
@@ -2146,19 +2142,19 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
                   </inputs>
                   <outputs>
                     <output
-                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Outputs[Derived Column Output]"
+                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Outputs[Derived Column Output]"
                       description="Default Output of the Derived Column Transformation"
                       exclusionGroup="1"
                       name="Derived Column Output"
-                      synchronousInputId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Inputs[Derived Column Input]">
+                      synchronousInputId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Inputs[Derived Column Input]">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Outputs[Derived Column Output].Columns[FEC_CARGA]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Outputs[Derived Column Output].Columns[Fec_Carga]"
                           dataType="dbTimeStamp"
                           errorOrTruncationOperation="Computation"
                           errorRowDisposition="FailComponent"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Outputs[Derived Column Output].Columns[FEC_CARGA]"
-                          name="FEC_CARGA"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Outputs[Derived Column Output].Columns[Fec_Carga]"
+                          name="Fec_Carga"
                           truncationRowDisposition="FailComponent">
                           <properties>
                             <property
@@ -2178,23 +2174,23 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
                       <externalMetadataColumns />
                     </output>
                     <output
-                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Outputs[Derived Column Error Output]"
+                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Outputs[Derived Column Error Output]"
                       description="Error Output of the Derived Column Transformation"
                       exclusionGroup="1"
                       isErrorOut="true"
                       name="Derived Column Error Output"
-                      synchronousInputId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Inputs[Derived Column Input]">
+                      synchronousInputId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Inputs[Derived Column Input]">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
                           name="ErrorCode"
                           specialFlags="1" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                       </outputColumns>
@@ -2203,12 +2199,13 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
                   </outputs>
                 </component>
                 <component
-                  refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact"
+                  refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact"
                   componentClassID="Microsoft.OLEDBSource"
                   contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
                   description="OLE DB Source"
                   name="Lee Contact"
                   usesDispositions="true"
+                  validateExternalMetadata="False"
                   version="7">
                   <properties>
                     <property
@@ -2227,37 +2224,43 @@ FROM WSACTDATOS.AD_VERIFICA_NOT</property>
                       dataType="System.String"
                       description="The SQL command to be executed."
                       name="SqlCommand"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">Select c.ContactId, 
-		c.FirstName, 
-		c.MiddleName, 
-		c.LastName, 
-		c.BirthDate, 
-		SUBSTRING(sm.VALUE,1,50) As Genero,
-		c.CRM_TIPODOCUMENTONAME, 
-		c.CRM_NRODOCUMENTO, 
-		c.TELEPHONE1, 
-		c.TELEPHONE2, 
-		c.TELEPHONE3,
-		c.EMAILADDRESS1, 
-		c.EMAILADDRESS2, 
-		c.EMAILADDRESS3,
-		cn.Record2RoleIdName As Tipo_Apoderado,
-		SUBSTRING(cn.Record2IdName,1,500) As FullName_Apoderado,
-		c2.CRM_TIPODOCUMENTONAME As CRM_TIPODOCUMENTONAME_APODERADO,
-		c2.CRM_NRODOCUMENTO As CRM_NRODOCUMENTO_APODERADO,
-		ROW_NUMBER() Over(Partition By c.contactid Order By Case When Record2RoleIdName = 'Apoderado' Then 1 
-																	When Record2RoleIdName = 'Padre' Then 2
-																	When Record2RoleIdName = 'Madre' Then 3
-															End Asc) As PrioridadApoderado
-								
-From Contact c
-		Left Join StringMap sm On c.GENDERCODE = sm.ATTRIBUTEVALUE And sm.ATTRIBUTENAME = 'gendercode' 
-		Left Join Connection cn On c.contactid = cn.Record1Id And cn.Record2RoleIdName in ('Apoderado','Padre','Madre')
-		Left Join Contact c2 On cn.Record2Id = c2.contactid</property>
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">Select x.ContactId, x.FirstName, x.MiddleName, x.LastName, x.BirthDate, x.Genero, 
+		x.CRM_TipoDocumentoName, x.CRM_NroDocumento, x.Telephone1, x.Telephone2, x.Telephone3, 
+		x.EmailAddress1, x.EmailAddress2, x.EmailAddress3, 
+		x.Tipo_Apoderado, x.FullName_Apoderado, x.CRM_TipoDocumentoName_Apoderado, x.CRM_NroDocumento_Apoderado
+From (
+		Select c.ContactId, 
+				c.FirstName, 
+				c.MiddleName, 
+				c.LastName, 
+				c.BirthDate, 
+				SUBSTRING(sm.VALUE,1,50) As Genero,
+				c.CRM_TIPODOCUMENTONAME, 
+				c.CRM_NRODOCUMENTO, 
+				c.TELEPHONE1, 
+				c.TELEPHONE2, 
+				c.TELEPHONE3,
+				c.EMAILADDRESS1, 
+				c.EMAILADDRESS2, 
+				c.EMAILADDRESS3,
+				cn.Record2RoleIdName As Tipo_Apoderado,
+				SUBSTRING(cn.Record2IdName,1,500) As FullName_Apoderado,
+				c2.CRM_TIPODOCUMENTONAME As CRM_TIPODOCUMENTONAME_APODERADO,
+				c2.CRM_NRODOCUMENTO As CRM_NRODOCUMENTO_APODERADO,
+				ROW_NUMBER() Over(Partition By c.contactid Order By Case When Record2RoleIdName = 'Apoderado' Then 1 
+																		 When Record2RoleIdName = 'Padre' Then 2
+																		 When Record2RoleIdName = 'Madre' Then 3
+																	End Asc) As PrioridadApoderado
+		From Contact c
+				Left Join StringMap sm On c.GENDERCODE = sm.ATTRIBUTEVALUE And sm.ATTRIBUTENAME = 'gendercode' 
+				Left Join Connection cn On c.contactid = cn.Record1Id And cn.Record2RoleIdName in ('Apoderado','Padre','Madre')
+				Left Join Contact c2 On cn.Record2Id = c2.contactid
+		where  c.CRM_NRODOCUMENTO = '44510376'
+		)x</property>
                     <property
                       dataType="System.String"
                       description="The variable that contains the SQL command to be executed."
-                      name="SqlCommandVariable"></property>
+                      name="SqlCommandVariable">User::v_QueryPersonasParaCRM365</property>
                     <property
                       dataType="System.Int32"
                       description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -2270,7 +2273,7 @@ From Contact c
                       dataType="System.Int32"
                       description="Specifies the mode used to access the database."
                       name="AccessMode"
-                      typeConverter="AccessMode">2</property>
+                      typeConverter="AccessMode">3</property>
                     <property
                       dataType="System.String"
                       description="The mappings between the parameters in the SQL command and variables."
@@ -2278,7 +2281,7 @@ From Contact c
                   </properties>
                   <connections>
                     <connection
-                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Connections[OleDbConnection]"
+                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Connections[OleDbConnection]"
                       connectionManagerID="Package.ConnectionManagers[Conn_CRM365]"
                       connectionManagerRefId="Package.ConnectionManagers[Conn_CRM365]"
                       description="The OLE DB runtime connection used to access the database."
@@ -2286,419 +2289,401 @@ From Contact c
                   </connections>
                   <outputs>
                     <output
-                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output]"
+                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output]"
                       name="OLE DB Source Output">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[ContactId]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[ContactId]"
                           dataType="guid"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[ContactId]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[ContactId]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[ContactId]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[ContactId]"
                           name="ContactId"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[FirstName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[FirstName]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[FirstName]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[FirstName]"
                           name="FirstName"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[MiddleName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[MiddleName]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[MiddleName]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[MiddleName]"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[MiddleName]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[MiddleName]"
                           name="MiddleName"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[LastName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[LastName]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[LastName]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[LastName]"
                           name="LastName"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[BirthDate]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[BirthDate]"
                           dataType="dbTimeStamp"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[BirthDate]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[BirthDate]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[BirthDate]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[BirthDate]"
                           name="BirthDate"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[Genero]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Genero]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Genero]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Genero]"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[Genero]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Genero]"
                           name="Genero"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TIPODOCUMENTONAME]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TipoDocumentoName]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_TIPODOCUMENTONAME]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_TipoDocumentoName]"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TIPODOCUMENTONAME]"
-                          name="CRM_TIPODOCUMENTONAME"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TipoDocumentoName]"
+                          name="CRM_TipoDocumentoName"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NRODOCUMENTO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NroDocumento]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_NRODOCUMENTO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_NroDocumento]"
                           length="20"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NRODOCUMENTO]"
-                          name="CRM_NRODOCUMENTO"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NroDocumento]"
+                          name="CRM_NroDocumento"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[TELEPHONE1]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Telephone1]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[TELEPHONE1]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Telephone1]"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[TELEPHONE1]"
-                          name="TELEPHONE1"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Telephone1]"
+                          name="Telephone1"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[TELEPHONE2]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Telephone2]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[TELEPHONE2]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Telephone2]"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[TELEPHONE2]"
-                          name="TELEPHONE2"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Telephone2]"
+                          name="Telephone2"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[TELEPHONE3]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Telephone3]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[TELEPHONE3]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Telephone3]"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[TELEPHONE3]"
-                          name="TELEPHONE3"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Telephone3]"
+                          name="Telephone3"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[EMAILADDRESS1]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[EmailAddress1]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EMAILADDRESS1]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress1]"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[EMAILADDRESS1]"
-                          name="EMAILADDRESS1"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[EmailAddress1]"
+                          name="EmailAddress1"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[EMAILADDRESS2]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[EmailAddress2]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EMAILADDRESS2]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress2]"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[EMAILADDRESS2]"
-                          name="EMAILADDRESS2"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[EmailAddress2]"
+                          name="EmailAddress2"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[EMAILADDRESS3]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[EmailAddress3]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EMAILADDRESS3]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress3]"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[EMAILADDRESS3]"
-                          name="EMAILADDRESS3"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[EmailAddress3]"
+                          name="EmailAddress3"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[Tipo_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Tipo_Apoderado]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Tipo_Apoderado]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Tipo_Apoderado]"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[Tipo_Apoderado]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Tipo_Apoderado]"
                           name="Tipo_Apoderado"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[FullName_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[FullName_Apoderado]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[FullName_Apoderado]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[FullName_Apoderado]"
                           length="500"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[FullName_Apoderado]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[FullName_Apoderado]"
                           name="FullName_Apoderado"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TIPODOCUMENTONAME_APODERADO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TipoDocumentoName_Apoderado]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_TIPODOCUMENTONAME_APODERADO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_TipoDocumentoName_Apoderado]"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TIPODOCUMENTONAME_APODERADO]"
-                          name="CRM_TIPODOCUMENTONAME_APODERADO"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TipoDocumentoName_Apoderado]"
+                          name="CRM_TipoDocumentoName_Apoderado"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NRODOCUMENTO_APODERADO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NroDocumento_Apoderado]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_NRODOCUMENTO_APODERADO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_NroDocumento_Apoderado]"
                           length="20"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NRODOCUMENTO_APODERADO]"
-                          name="CRM_NRODOCUMENTO_APODERADO"
-                          truncationRowDisposition="FailComponent" />
-                        <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[PrioridadApoderado]"
-                          dataType="i8"
-                          errorOrTruncationOperation="Conversion"
-                          errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[PrioridadApoderado]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[PrioridadApoderado]"
-                          name="PrioridadApoderado"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NroDocumento_Apoderado]"
+                          name="CRM_NroDocumento_Apoderado"
                           truncationRowDisposition="FailComponent" />
                       </outputColumns>
                       <externalMetadataColumns
                         isUsed="True">
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[ContactId]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[ContactId]"
                           dataType="guid"
                           name="ContactId" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[FirstName]"
                           dataType="wstr"
                           length="50"
                           name="FirstName" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[MiddleName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[MiddleName]"
                           dataType="wstr"
                           length="50"
                           name="MiddleName" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[LastName]"
                           dataType="wstr"
                           length="50"
                           name="LastName" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[BirthDate]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[BirthDate]"
                           dataType="dbTimeStamp"
                           name="BirthDate" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Genero]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Genero]"
                           dataType="wstr"
                           length="50"
                           name="Genero" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_TIPODOCUMENTONAME]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_TipoDocumentoName]"
                           dataType="wstr"
                           length="100"
-                          name="CRM_TIPODOCUMENTONAME" />
+                          name="CRM_TipoDocumentoName" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_NRODOCUMENTO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_NroDocumento]"
                           dataType="wstr"
                           length="20"
-                          name="CRM_NRODOCUMENTO" />
+                          name="CRM_NroDocumento" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[TELEPHONE1]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Telephone1]"
                           dataType="wstr"
                           length="50"
-                          name="TELEPHONE1" />
+                          name="Telephone1" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[TELEPHONE2]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Telephone2]"
                           dataType="wstr"
                           length="50"
-                          name="TELEPHONE2" />
+                          name="Telephone2" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[TELEPHONE3]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Telephone3]"
                           dataType="wstr"
                           length="50"
-                          name="TELEPHONE3" />
+                          name="Telephone3" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EMAILADDRESS1]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress1]"
                           dataType="wstr"
                           length="100"
-                          name="EMAILADDRESS1" />
+                          name="EmailAddress1" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EMAILADDRESS2]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress2]"
                           dataType="wstr"
                           length="100"
-                          name="EMAILADDRESS2" />
+                          name="EmailAddress2" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EMAILADDRESS3]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[EmailAddress3]"
                           dataType="wstr"
                           length="100"
-                          name="EMAILADDRESS3" />
+                          name="EmailAddress3" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Tipo_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[Tipo_Apoderado]"
                           dataType="wstr"
                           length="100"
                           name="Tipo_Apoderado" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[FullName_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[FullName_Apoderado]"
                           dataType="wstr"
                           length="500"
                           name="FullName_Apoderado" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_TIPODOCUMENTONAME_APODERADO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_TipoDocumentoName_Apoderado]"
                           dataType="wstr"
                           length="100"
-                          name="CRM_TIPODOCUMENTONAME_APODERADO" />
+                          name="CRM_TipoDocumentoName_Apoderado" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_NRODOCUMENTO_APODERADO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[CRM_NroDocumento_Apoderado]"
                           dataType="wstr"
                           length="20"
-                          name="CRM_NRODOCUMENTO_APODERADO" />
-                        <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].ExternalColumns[PrioridadApoderado]"
-                          dataType="i8"
-                          name="PrioridadApoderado" />
+                          name="CRM_NroDocumento_Apoderado" />
                       </externalMetadataColumns>
                     </output>
                     <output
-                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output]"
+                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output]"
                       isErrorOut="true"
                       name="OLE DB Source Error Output">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ContactId]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ContactId]"
                           dataType="guid"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ContactId]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ContactId]"
                           name="ContactId" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[FirstName]"
                           dataType="wstr"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[FirstName]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[FirstName]"
                           name="FirstName" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[MiddleName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[MiddleName]"
                           dataType="wstr"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[MiddleName]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[MiddleName]"
                           name="MiddleName" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[LastName]"
                           dataType="wstr"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[LastName]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[LastName]"
                           name="LastName" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[BirthDate]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[BirthDate]"
                           dataType="dbTimeStamp"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[BirthDate]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[BirthDate]"
                           name="BirthDate" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Genero]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Genero]"
                           dataType="wstr"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Genero]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Genero]"
                           name="Genero" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_TIPODOCUMENTONAME]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_TipoDocumentoName]"
                           dataType="wstr"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_TIPODOCUMENTONAME]"
-                          name="CRM_TIPODOCUMENTONAME" />
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_TipoDocumentoName]"
+                          name="CRM_TipoDocumentoName" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_NRODOCUMENTO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_NroDocumento]"
                           dataType="wstr"
                           length="20"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_NRODOCUMENTO]"
-                          name="CRM_NRODOCUMENTO" />
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_NroDocumento]"
+                          name="CRM_NroDocumento" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[TELEPHONE1]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Telephone1]"
                           dataType="wstr"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[TELEPHONE1]"
-                          name="TELEPHONE1" />
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Telephone1]"
+                          name="Telephone1" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[TELEPHONE2]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Telephone2]"
                           dataType="wstr"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[TELEPHONE2]"
-                          name="TELEPHONE2" />
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Telephone2]"
+                          name="Telephone2" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[TELEPHONE3]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Telephone3]"
                           dataType="wstr"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[TELEPHONE3]"
-                          name="TELEPHONE3" />
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Telephone3]"
+                          name="Telephone3" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EMAILADDRESS1]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EmailAddress1]"
                           dataType="wstr"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EMAILADDRESS1]"
-                          name="EMAILADDRESS1" />
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EmailAddress1]"
+                          name="EmailAddress1" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EMAILADDRESS2]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EmailAddress2]"
                           dataType="wstr"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EMAILADDRESS2]"
-                          name="EMAILADDRESS2" />
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EmailAddress2]"
+                          name="EmailAddress2" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EMAILADDRESS3]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EmailAddress3]"
                           dataType="wstr"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EMAILADDRESS3]"
-                          name="EMAILADDRESS3" />
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[EmailAddress3]"
+                          name="EmailAddress3" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Tipo_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Tipo_Apoderado]"
                           dataType="wstr"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Tipo_Apoderado]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[Tipo_Apoderado]"
                           name="Tipo_Apoderado" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[FullName_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[FullName_Apoderado]"
                           dataType="wstr"
                           length="500"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[FullName_Apoderado]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[FullName_Apoderado]"
                           name="FullName_Apoderado" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_TIPODOCUMENTONAME_APODERADO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_TipoDocumentoName_Apoderado]"
                           dataType="wstr"
                           length="100"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_TIPODOCUMENTONAME_APODERADO]"
-                          name="CRM_TIPODOCUMENTONAME_APODERADO" />
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_TipoDocumentoName_Apoderado]"
+                          name="CRM_TipoDocumentoName_Apoderado" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_NRODOCUMENTO_APODERADO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_NroDocumento_Apoderado]"
                           dataType="wstr"
                           length="20"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_NRODOCUMENTO_APODERADO]"
-                          name="CRM_NRODOCUMENTO_APODERADO" />
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[CRM_NroDocumento_Apoderado]"
+                          name="CRM_NroDocumento_Apoderado" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[PrioridadApoderado]"
-                          dataType="i8"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[PrioridadApoderado]"
-                          name="PrioridadApoderado" />
-                        <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                           name="ErrorCode"
                           specialFlags="1" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                       </outputColumns>
@@ -2707,11 +2692,11 @@ From Contact c
                   </outputs>
                 </component>
                 <component
-                  refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL"
+                  refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT"
                   componentClassID="Microsoft.ManagedComponentHost"
                   contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
                   description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
-                  name="STG_CRM365_CONTACT_FULL"
+                  name="STG_CRM365_CONTACT"
                   usesDispositions="true"
                   version="2">
                   <properties>
@@ -2720,7 +2705,7 @@ From Contact c
                       description="The Destination database table name."
                       expressionType="Notify"
                       name="TableOrViewName"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"meet"."STG_CRM365_CONTACT_FULL"</property>
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"meet"."STG_CRM365_CONTACT"</property>
                     <property
                       dataType="System.Int32"
                       description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
@@ -2742,7 +2727,7 @@ From Contact c
                   </properties>
                   <connections>
                     <connection
-                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Connections[IDbConnection]"
+                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Connections[IDbConnection]"
                       connectionManagerID="Package.ConnectionManagers[Conn_REPINTETL]"
                       connectionManagerRefId="Package.ConnectionManagers[Conn_REPINTETL]"
                       description="Managed connection manager"
@@ -2750,244 +2735,234 @@ From Contact c
                   </connections>
                   <inputs>
                     <input
-                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input]"
+                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input]"
                       errorRowDisposition="FailComponent"
                       hasSideEffects="true"
                       name="ADO NET Destination Input">
                       <inputColumns>
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[ContactId]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[ContactId]"
                           cachedDataType="guid"
                           cachedName="ContactId"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[ContactId]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[ContactId]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[ContactId]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[ContactId]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[FirstName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[FirstName]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="FirstName"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[FirstName]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[FirstName]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[FirstName]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[FirstName]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[MiddleName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[MiddleName]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="MiddleName"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[MiddleName]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[MiddleName]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[MiddleName]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[MiddleName]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[LastName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[LastName]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="LastName"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[LastName]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[LastName]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[LastName]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[LastName]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[BirthDate]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[BirthDate]"
                           cachedDataType="dbTimeStamp"
                           cachedName="BirthDate"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[BirthDate]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[BirthDate]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[BirthDate]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[BirthDate]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[Genero]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[Genero]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="Genero"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Genero]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[Genero]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Genero]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Genero]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[CRM_TIPODOCUMENTONAME]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[CRM_TipoDocumentoName]"
                           cachedDataType="wstr"
                           cachedLength="100"
-                          cachedName="CRM_TIPODOCUMENTONAME"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Crm_TipoDocumentoName]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TIPODOCUMENTONAME]" />
+                          cachedName="CRM_TipoDocumentoName"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Crm_TipoDocumentoName]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TipoDocumentoName]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[CRM_NRODOCUMENTO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[CRM_NroDocumento]"
                           cachedDataType="wstr"
                           cachedLength="20"
-                          cachedName="CRM_NRODOCUMENTO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Crm_NroDocumento]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NRODOCUMENTO]" />
+                          cachedName="CRM_NroDocumento"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Crm_NroDocumento]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NroDocumento]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[TELEPHONE1]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[Telephone1]"
                           cachedDataType="wstr"
                           cachedLength="50"
-                          cachedName="TELEPHONE1"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Telephone1]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[TELEPHONE1]" />
+                          cachedName="Telephone1"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Telephone1]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Telephone1]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[TELEPHONE2]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[Telephone2]"
                           cachedDataType="wstr"
                           cachedLength="50"
-                          cachedName="TELEPHONE2"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Telephone2]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[TELEPHONE2]" />
+                          cachedName="Telephone2"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Telephone2]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Telephone2]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[TELEPHONE3]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[Telephone3]"
                           cachedDataType="wstr"
                           cachedLength="50"
-                          cachedName="TELEPHONE3"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Telephone3]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[TELEPHONE3]" />
+                          cachedName="Telephone3"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Telephone3]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Telephone3]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[EMAILADDRESS1]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[EmailAddress1]"
                           cachedDataType="wstr"
                           cachedLength="100"
-                          cachedName="EMAILADDRESS1"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress1]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[EMAILADDRESS1]" />
+                          cachedName="EmailAddress1"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress1]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[EmailAddress1]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[EMAILADDRESS2]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[EmailAddress2]"
                           cachedDataType="wstr"
                           cachedLength="100"
-                          cachedName="EMAILADDRESS2"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress2]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[EMAILADDRESS2]" />
+                          cachedName="EmailAddress2"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress2]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[EmailAddress2]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[EMAILADDRESS3]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[EmailAddress3]"
                           cachedDataType="wstr"
                           cachedLength="100"
-                          cachedName="EMAILADDRESS3"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress3]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[EMAILADDRESS3]" />
+                          cachedName="EmailAddress3"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress3]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[EmailAddress3]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[Tipo_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[Tipo_Apoderado]"
                           cachedDataType="wstr"
                           cachedLength="100"
                           cachedName="Tipo_Apoderado"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Tipo_Apoderado]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[Tipo_Apoderado]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Tipo_Apoderado]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[Tipo_Apoderado]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[FullName_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[FullName_Apoderado]"
                           cachedDataType="wstr"
                           cachedLength="500"
                           cachedName="FullName_Apoderado"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[FullName_Apoderado]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[FullName_Apoderado]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[FullName_Apoderado]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[FullName_Apoderado]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[CRM_TIPODOCUMENTONAME_APODERADO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[CRM_TipoDocumentoName_Apoderado]"
                           cachedDataType="wstr"
                           cachedLength="100"
-                          cachedName="CRM_TIPODOCUMENTONAME_APODERADO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Crm_TipoDocumentoName_Apoderado]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TIPODOCUMENTONAME_APODERADO]" />
+                          cachedName="CRM_TipoDocumentoName_Apoderado"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Crm_TipoDocumentoName_Apoderado]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_TipoDocumentoName_Apoderado]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[CRM_NRODOCUMENTO_APODERADO]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[CRM_NroDocumento_Apoderado]"
                           cachedDataType="wstr"
                           cachedLength="20"
-                          cachedName="CRM_NRODOCUMENTO_APODERADO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Crm_NroDocumento_Apoderado]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NRODOCUMENTO_APODERADO]" />
+                          cachedName="CRM_NroDocumento_Apoderado"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Crm_NroDocumento_Apoderado]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output].Columns[CRM_NroDocumento_Apoderado]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[PrioridadApoderado]"
-                          cachedDataType="i8"
-                          cachedName="PrioridadApoderado"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[PrioridadApoderado]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output].Columns[PrioridadApoderado]" />
-                        <inputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].Columns[FEC_CARGA]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].Columns[Fec_Carga]"
                           cachedDataType="dbTimeStamp"
-                          cachedName="FEC_CARGA"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Fec_Carga]"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Outputs[Derived Column Output].Columns[FEC_CARGA]" />
+                          cachedName="Fec_Carga"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Fec_Carga]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Outputs[Derived Column Output].Columns[Fec_Carga]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[ContactId]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[ContactId]"
                           dataType="guid"
                           name="ContactId" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[FirstName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[FirstName]"
                           dataType="wstr"
                           length="50"
                           name="FirstName" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[MiddleName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[MiddleName]"
                           dataType="wstr"
                           length="50"
                           name="MiddleName" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[LastName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[LastName]"
                           dataType="wstr"
                           length="50"
                           name="LastName" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[BirthDate]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[BirthDate]"
                           dataType="dbTimeStamp"
                           name="BirthDate" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Genero]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Genero]"
                           dataType="wstr"
                           length="50"
                           name="Genero" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Crm_TipoDocumentoName]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Crm_TipoDocumentoName]"
                           dataType="wstr"
                           length="100"
                           name="Crm_TipoDocumentoName" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Crm_NroDocumento]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Crm_NroDocumento]"
                           dataType="wstr"
                           length="20"
                           name="Crm_NroDocumento" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Telephone1]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Telephone1]"
                           dataType="wstr"
                           length="50"
                           name="Telephone1" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Telephone2]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Telephone2]"
                           dataType="wstr"
                           length="50"
                           name="Telephone2" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Telephone3]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Telephone3]"
                           dataType="wstr"
                           length="50"
                           name="Telephone3" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress1]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress1]"
                           dataType="wstr"
                           length="100"
                           name="EMailAddress1" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress2]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress2]"
                           dataType="wstr"
                           length="100"
                           name="EMailAddress2" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress3]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[EMailAddress3]"
                           dataType="wstr"
                           length="100"
                           name="EMailAddress3" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Tipo_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Tipo_Apoderado]"
                           dataType="wstr"
                           length="100"
                           name="Tipo_Apoderado" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[FullName_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[FullName_Apoderado]"
                           dataType="wstr"
                           length="500"
                           name="FullName_Apoderado" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Crm_TipoDocumentoName_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Crm_TipoDocumentoName_Apoderado]"
                           dataType="wstr"
                           length="100"
                           name="Crm_TipoDocumentoName_Apoderado" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Crm_NroDocumento_Apoderado]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Crm_NroDocumento_Apoderado]"
                           dataType="wstr"
                           length="20"
                           name="Crm_NroDocumento_Apoderado" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[PrioridadApoderado]"
-                          dataType="i4"
-                          name="PrioridadApoderado" />
-                        <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input].ExternalColumns[Fec_Carga]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input].ExternalColumns[Fec_Carga]"
                           dataType="dbTimeStamp"
                           name="Fec_Carga" />
                       </externalMetadataColumns>
@@ -2995,22 +2970,22 @@ From Contact c
                   </inputs>
                   <outputs>
                     <output
-                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Outputs[ADO NET Destination Error Output]"
+                      refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Outputs[ADO NET Destination Error Output]"
                       exclusionGroup="1"
                       isErrorOut="true"
                       name="ADO NET Destination Error Output"
-                      synchronousInputId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input]">
+                      synchronousInputId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input]">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
                           name="ErrorCode"
                           specialFlags="1" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                          refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                          lineageId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                       </outputColumns>
@@ -3021,15 +2996,15 @@ From Contact c
               </components>
               <paths>
                 <path
-                  refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL.Paths[Derived Column Output]"
-                  endId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL.Inputs[ADO NET Destination Input]"
+                  refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT.Paths[Derived Column Output]"
+                  endId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT.Inputs[ADO NET Destination Input]"
                   name="Derived Column Output"
-                  startId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Outputs[Derived Column Output]" />
+                  startId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Outputs[Derived Column Output]" />
                 <path
-                  refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL.Paths[OLE DB Source Output]"
-                  endId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column.Inputs[Derived Column Input]"
+                  refId="Package\Sequence Container\DFT - STG_CRM365_CONTACT.Paths[OLE DB Source Output]"
+                  endId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column.Inputs[Derived Column Input]"
                   name="OLE DB Source Output"
-                  startId="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact.Outputs[OLE DB Source Output]" />
+                  startId="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact.Outputs[OLE DB Source Output]" />
               </paths>
             </pipeline>
           </DTS:ObjectData>
@@ -3768,20 +3743,25 @@ From Contact c
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Sequence Container\SQLT - STG_CRM365_CONTACT"
+          DTS:refId="Package\Sequence Container\SQLT - Lista de GUID de Personas"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
-          DTS:DTSID="{1c4e4100-d889-467e-9d3d-3d01b6581d00}"
+          DTS:DTSID="{38ED2BBE-7E17-4247-8A63-2932212568AF}"
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
-          DTS:ObjectName="SQLT - STG_CRM365_CONTACT"
+          DTS:ObjectName="SQLT - Lista de GUID de Personas"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
           DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{785AD69C-A1ED-4416-8DD7-0E56CAB85ADA}"
-              SQLTask:SqlStatementSource="&#xA;TRUNCATE TABLE meet.STG_CRM365_CONTACT&#xA;&#xA;Insert Into meet.STG_CRM365_CONTACT&#xA;(&#xA;&#x9;ContactId&#xA;      ,FirstName&#xA;      ,MiddleName&#xA;      ,LastName&#xA;      ,BirthDate&#xA;      ,Genero&#xA;      ,Crm_TipoDocumentoName&#xA;      ,Crm_NroDocumento&#xA;      ,Telephone1&#xA;      ,Telephone2&#xA;      ,Telephone3&#xA;      ,EMailAddress1&#xA;      ,EMailAddress2&#xA;      ,EMailAddress3&#xA;      ,Tipo_Apoderado&#xA;      ,FullName_Apoderado&#xA;      ,Crm_TipoDocumentoName_Apoderado&#xA;      ,Crm_NroDocumento_Apoderado&#xA;      ,Fec_Carga&#xA;)&#xA;SELECT a.ContactId&#xA;      ,a.FirstName&#xA;      ,a.MiddleName&#xA;      ,a.LastName&#xA;      ,a.BirthDate&#xA;      ,a.Genero&#xA;      ,a.Crm_TipoDocumentoName&#xA;      ,a.Crm_NroDocumento&#xA;      ,a.Telephone1&#xA;      ,a.Telephone2&#xA;      ,a.Telephone3&#xA;      ,a.EMailAddress1&#xA;      ,a.EMailAddress2&#xA;      ,a.EMailAddress3&#xA;      ,a.Tipo_Apoderado&#xA;      ,a.FullName_Apoderado&#xA;      ,a.Crm_TipoDocumentoName_Apoderado&#xA;      ,a.Crm_NroDocumento_Apoderado&#xA;      ,GETDATE() AS Fec_Carga&#xA;From meet.STG_CRM365_CONTACT_FULL a&#xA;&#x9;&#x9;Inner Join meet.STG_SOC_AD_ALUMNO_MATRICULA b On a.ContactId = ltrim(rtrim(b.GUID_CRM_ALUM))&#xA;Where a.PrioridadApoderado = 1" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="Select STUFF((&#xA;&#x9;&#x9;&#x9;&#x9;select distinct ',' + ''''+ ltrim(rtrim(GUID_CRM_ALUM)) + ''''&#xA;&#x9;&#x9;&#x9;&#x9;from meet.STG_SOC_AD_ALUMNO_MATRICULA&#xA;&#x9;&#x9;&#x9;&#x9;FOR XML PATH(''))&#xA;&#x9;&#x9;&#x9;&#x9;,1,1,'') As ListaPersonasParaCRM365"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::v_ListaPersonasParaCRM365" />
+            </SQLTask:SqlTaskData>
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
@@ -3880,19 +3860,27 @@ From Contact c
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 5]"
           DTS:CreationName=""
-          DTS:DTSID="{2A2137B8-2DC7-4438-BBAE-8D373DDD762C}"
+          DTS:DTSID="{E67D69B7-93BC-42CE-BBB3-DD4C165D10AE}"
           DTS:From="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 5"
-          DTS:To="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL" />
+          DTS:To="Package\Sequence Container\SQLT - Lista de GUID de Personas" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 6]"
+          DTS:CreationName=""
+          DTS:DTSID="{A00F442F-C82F-424D-913A-8C1600078623}"
+          DTS:From="Package\Sequence Container\SQLT - Lista de GUID de Personas"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 6"
+          DTS:To="Package\Sequence Container\DFT - STG_CRM365_CONTACT" />
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 7]"
           DTS:CreationName=""
-          DTS:DTSID="{DAEE6773-1680-473E-A08C-8EE162BAB623}"
-          DTS:From="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL"
+          DTS:DTSID="{F534772E-724C-4ADE-8A72-F041A48C7F6E}"
+          DTS:From="Package\Sequence Container\DFT - STG_CRM365_CONTACT"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 7"
-          DTS:To="Package\Sequence Container\SQLT - STG_CRM365_CONTACT" />
+          DTS:To="Package\Sequence Container\SQLT - HOD_REPORTE_ALUMNO" />
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 8]"
           DTS:CreationName=""
@@ -3901,14 +3889,6 @@ From Contact c
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 8"
           DTS:To="Package\Sequence Container\ET - Arma Select AD_ALUMNO" />
-        <DTS:PrecedenceConstraint
-          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 9]"
-          DTS:CreationName=""
-          DTS:DTSID="{C82DBE8E-0C0A-4E4F-8D0E-6E33C54702DF}"
-          DTS:From="Package\Sequence Container\SQLT - STG_CRM365_CONTACT"
-          DTS:LogicalAnd="True"
-          DTS:ObjectName="Constraint 9"
-          DTS:To="Package\Sequence Container\SQLT - HOD_REPORTE_ALUMNO" />
       </DTS:PrecedenceConstraints>
     </DTS:Executable>
   </DTS:Executables>
@@ -3976,35 +3956,14 @@ From Contact c
               Language="CSharp"
               ReadOnlyVariables="System::ErrorCode,System::ErrorDescription,System::PackageName,System::StartTime,User::v_EmailFrom,User::v_EmailPassword,User::v_EmailPort,User::v_EmailServer,User::v_EmailTo,User::v_EmailUserName">
               <ProjectItem
-                Name="Properties\AssemblyInfo.cs"
-                Encoding="UTF8"><![CDATA[using System.Reflection;
-using System.Runtime.CompilerServices;
-
-//
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-//
-[assembly: AssemblyTitle("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
-[assembly: AssemblyCopyright("Copyright @  2020")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-//
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-
-[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
+                Name="Properties\Settings.settings"
+                Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
               <ProjectItem
                 Name="Properties\Resources.resx"
                 Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
@@ -4124,6 +4083,35 @@ using System.Runtime.CompilerServices;
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
 </root>]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\Settings.Designer.cs"
+                Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Settings.get_Default():ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Sett" +
+    "ings")]
+
+namespace ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
               <ProjectItem
                 Name="ScriptMain.cs"
                 Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
@@ -4279,6 +4267,59 @@ namespace ST_98d1ec56638e441cbf98e98c3cabfa7e
 	}
 }]]></ProjectItem>
               <ProjectItem
+                Name="Project"
+                Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:CodeName>ST_980b082b80f84ded8c77db20cc2f4677</msb:CodeName>
+    <msb:Language>msBuild</msb:Language>
+    <msb:DisplayName>ST_980b082b80f84ded8c77db20cc2f4677</msb:DisplayName>
+    <msb:ProjectId>{FE999FBC-7CB8-4CD2-97EE-A0DFB749D427}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="ST_69d6d152e5144e64810aa18473465210.csproj" />
+    <msb:File Include="Properties\Settings.settings" />
+    <msb:File Include="Properties\AssemblyInfo.cs" />
+    <msb:File Include="Properties\Resources.resx" />
+    <msb:File Include="Properties\Resources.Designer.cs" />
+    <msb:File Include="Properties\Settings.Designer.cs" />
+    <msb:File Include="ScriptMain.cs" />
+  </msb:ItemGroup>
+</c:Project>]]></ProjectItem>
+              <ProjectItem
+                Name="ST_69d6d152e5144e64810aa18473465210.csproj"
+                Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?><Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProductVersion>8.0.30703</ProductVersion><SchemaVersion>2.0</SchemaVersion><ProjectGuid>{f26050a9-b30a-4374-993f-1ce54c5a6675}</ProjectGuid><OutputType>Library</OutputType><AppDesignerFolder>Properties</AppDesignerFolder><RootNamespace>ST_98d1ec56638e441cbf98e98c3cabfa7e</RootNamespace><AssemblyName>ST_69d6d152e5144e64810aa18473465210</AssemblyName><TargetFrameworkVersion>v4.7</TargetFrameworkVersion><FileAlignment>512</FileAlignment><ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch><TargetFrameworkProfile></TargetFrameworkProfile></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Debug' "><DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>.\bin\Debug\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>DEBUG;TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Release' "><DebugSymbols>false</DebugSymbols><Optimize>true</Optimize><OutputPath>.\bin\Release\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><ItemGroup><Reference Include="System" /><Reference Include="System.Data" /><Reference Include="System.Windows.Forms" /><Reference Include="System.Xml" /><Reference Include="Microsoft.SqlServer.ManagedDTS, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.ScriptTask, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /></ItemGroup><ItemGroup><AppDesigner Include="Properties\" /><Compile Include="Properties\AssemblyInfo.cs"><SubType>Code</SubType></Compile><EmbeddedResource Include="Properties\Resources.resx"><Generator>ResXFileCodeGenerator</Generator><LastGenOutput>Resources.Designer.cs</LastGenOutput></EmbeddedResource><Compile Include="Properties\Resources.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Resources.resx</DependentUpon></Compile><None Include="Properties\Settings.settings"><Generator>SettingsSingleFileGenerator</Generator><LastGenOutput>Settings.Designer.cs</LastGenOutput></None><Compile Include="Properties\Settings.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Settings.settings</DependentUpon></Compile><Compile Include="ScriptMain.cs"><SubType>Code</SubType></Compile></ItemGroup><!-- Include the build rules for a C# project.--><Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /><ProjectExtensions><VisualStudio><FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}"><ProjectProperties HostName="ScriptTask" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" /><Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex=""></Host><ProjectClient><HostIdentifier>SSIS_ST150</HostIdentifier></ProjectClient></FlavorProperties></VisualStudio></ProjectExtensions></Project>]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\AssemblyInfo.cs"
+                Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
+[assembly: AssemblyCopyright("Copyright @  2020")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
+              <ProjectItem
                 Name="Properties\Resources.Designer.cs"
                 Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
 // <auto-generated>
@@ -4346,67 +4387,6 @@ namespace ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties {
         }
     }
 }]]></ProjectItem>
-              <ProjectItem
-                Name="Project"
-                Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
-<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
-  <msb:PropertyGroup>
-    <msb:CodeName>ST_980b082b80f84ded8c77db20cc2f4677</msb:CodeName>
-    <msb:Language>msBuild</msb:Language>
-    <msb:DisplayName>ST_980b082b80f84ded8c77db20cc2f4677</msb:DisplayName>
-    <msb:ProjectId>{FE999FBC-7CB8-4CD2-97EE-A0DFB749D427}</msb:ProjectId>
-  </msb:PropertyGroup>
-  <msb:ItemGroup>
-    <msb:Project Include="ST_69d6d152e5144e64810aa18473465210.csproj" />
-    <msb:File Include="Properties\Settings.settings" />
-    <msb:File Include="Properties\AssemblyInfo.cs" />
-    <msb:File Include="Properties\Resources.resx" />
-    <msb:File Include="Properties\Resources.Designer.cs" />
-    <msb:File Include="Properties\Settings.Designer.cs" />
-    <msb:File Include="ScriptMain.cs" />
-  </msb:ItemGroup>
-</c:Project>]]></ProjectItem>
-              <ProjectItem
-                Name="Properties\Settings.Designer.cs"
-                Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
-// <auto-generated>
-//     This code was generated by a tool.
-//
-//     Changes to this file may cause incorrect behavior and will be lost if
-//     the code is regenerated.
-// </auto-generated>
-//------------------------------------------------------------------------------
-
-[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Settings.get_Default():ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Sett" +
-    "ings")]
-
-namespace ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties {
-    
-    
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
-        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-        private static Settings defaultInstance = new Settings();
-        
-        public static Settings Default {
-            get {
-                return defaultInstance;
-            }
-        }
-    }
-}]]></ProjectItem>
-              <ProjectItem
-                Name="Properties\Settings.settings"
-                Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
-</SettingsFile>]]></ProjectItem>
-              <ProjectItem
-                Name="ST_69d6d152e5144e64810aa18473465210.csproj"
-                Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?><Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProductVersion>8.0.30703</ProductVersion><SchemaVersion>2.0</SchemaVersion><ProjectGuid>{f26050a9-b30a-4374-993f-1ce54c5a6675}</ProjectGuid><OutputType>Library</OutputType><AppDesignerFolder>Properties</AppDesignerFolder><RootNamespace>ST_98d1ec56638e441cbf98e98c3cabfa7e</RootNamespace><AssemblyName>ST_69d6d152e5144e64810aa18473465210</AssemblyName><TargetFrameworkVersion>v4.7</TargetFrameworkVersion><FileAlignment>512</FileAlignment><ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch><TargetFrameworkProfile></TargetFrameworkProfile></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Debug' "><DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>.\bin\Debug\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>DEBUG;TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Release' "><DebugSymbols>false</DebugSymbols><Optimize>true</Optimize><OutputPath>.\bin\Release\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><ItemGroup><Reference Include="System" /><Reference Include="System.Data" /><Reference Include="System.Windows.Forms" /><Reference Include="System.Xml" /><Reference Include="Microsoft.SqlServer.ManagedDTS, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.ScriptTask, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /></ItemGroup><ItemGroup><AppDesigner Include="Properties\" /><Compile Include="Properties\AssemblyInfo.cs"><SubType>Code</SubType></Compile><EmbeddedResource Include="Properties\Resources.resx"><Generator>ResXFileCodeGenerator</Generator><LastGenOutput>Resources.Designer.cs</LastGenOutput></EmbeddedResource><Compile Include="Properties\Resources.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Resources.resx</DependentUpon></Compile><None Include="Properties\Settings.settings"><Generator>SettingsSingleFileGenerator</Generator><LastGenOutput>Settings.Designer.cs</LastGenOutput></None><Compile Include="Properties\Settings.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Settings.settings</DependentUpon></Compile><Compile Include="ScriptMain.cs"><SubType>Code</SubType></Compile></ItemGroup><!-- Include the build rules for a C# project.--><Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /><ProjectExtensions><VisualStudio><FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}"><ProjectProperties HostName="ScriptTask" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" /><Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex=""></Host><ProjectClient><HostIdentifier>SSIS_ST150</HostIdentifier></ProjectClient></FlavorProperties></VisualStudio></ProjectExtensions></Project>]]></ProjectItem>
               <BinaryItem
                 Name="ST_980b082b80f84ded8c77db20cc2f4677.dll">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
@@ -4623,13 +4603,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           Id="Package\Sequence Container\DFT - AD_VERIFICA_NOT"
           TopLeft="89,223" />
         <NodeLayout
-          Size="274,42"
-          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL"
-          TopLeft="450,159" />
+          Size="241,42"
+          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT"
+          TopLeft="480,81" />
         <NodeLayout
           Size="307,42"
           Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA"
-          TopLeft="414,250" />
+          TopLeft="408,230" />
         <NodeLayout
           Size="277,42"
           Id="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT"
@@ -4637,11 +4617,15 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         <NodeLayout
           Size="234,42"
           Id="Package\Sequence Container\ET - Arma Select AD_ALUMNO"
-          TopLeft="70,322" />
+          TopLeft="75,309" />
         <NodeLayout
           Size="254,42"
           Id="Package\Sequence Container\SQLT - HOD_REPORTE_ALUMNO"
-          TopLeft="494,18" />
+          TopLeft="494,16" />
+        <NodeLayout
+          Size="251,42"
+          Id="Package\Sequence Container\SQLT - Lista de GUID de Personas"
+          TopLeft="434,151" />
         <NodeLayout
           Size="281,42"
           Id="Package\Sequence Container\SQLT - TRUNCATE AD_VERIFICA_NOT"
@@ -4649,7 +4633,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         <NodeLayout
           Size="377,42"
           Id="Package\Sequence Container\SQLT - TRUNCATE STG_SOC_AD_ALUMNO_MATRICULA"
-          TopLeft="381,324" />
+          TopLeft="376,306" />
         <NodeLayout
           Size="347,42"
           Id="Package\Sequence Container\SQLT - TRUNCATE STGA_SOC_AD_VERIFICA_NOT"
@@ -4758,18 +4742,18 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
-          TopLeft="304,344">
+          TopLeft="309,328.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="77,0"
+              EndConnector="67,0"
               Start="0,0"
-              End="69.5,0">
+              End="59.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="69.5,0" />
+                    End="59.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4780,112 +4764,18 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 4]"
-          TopLeft="568.5,324">
+          TopLeft="563,306">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,-32"
+              EndConnector="0,-34"
               Start="0,0"
-              End="0,-24.5">
+              End="0,-26.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-24.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 8]"
-          TopLeft="190.75,265">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,57"
-              Start="0,0"
-              End="0,49.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,49.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="249,42"
-          Id="Package\Sequence Container\SQLT - STG_CRM365_CONTACT"
-          TopLeft="488,88" />
-        <EdgeLayout
-          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 7]"
-          TopLeft="587,159">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="25.5,-29"
-              Start="0,0"
-              End="25.5,-21.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-10.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-10.5"
-                    Point2="0,-14.5"
-                    Point3="4,-14.5" />
-                  <mssgle:LineSegment
-                    End="21.5,-14.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="21.5,-14.5"
-                    Point2="25.5,-14.5"
-                    Point3="25.5,-18.5" />
-                  <mssgle:LineSegment
-                    End="25.5,-21.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 9]"
-          TopLeft="612.5,88">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="8.5,-28"
-              Start="0,0"
-              End="8.5,-20.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-10" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-10"
-                    Point2="0,-14"
-                    Point3="4,-14" />
-                  <mssgle:LineSegment
-                    End="4.5,-14" />
-                  <mssgle:CubicBezierSegment
-                    Point1="4.5,-14"
-                    Point2="8.5,-14"
-                    Point3="8.5,-18" />
-                  <mssgle:LineSegment
-                    End="8.5,-20.5" />
+                    End="0,-26.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4896,30 +4786,108 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 5]"
-          TopLeft="567.5,250">
+          TopLeft="560.5,230">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="19.5,-49"
+              EndConnector="0,-37"
               Start="0,0"
-              End="19.5,-41.5">
+              End="0,-29.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-20.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-20.5"
-                    Point2="0,-24.5"
-                    Point3="4,-24.5" />
+                    End="0,-29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 6]"
+          TopLeft="559.5,151">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="41,-28"
+              Start="0,0"
+              End="41,-20.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="15.5,-24.5" />
+                    End="0,-10" />
                   <mssgle:CubicBezierSegment
-                    Point1="15.5,-24.5"
-                    Point2="19.5,-24.5"
-                    Point3="19.5,-28.5" />
+                    Point1="0,-10"
+                    Point2="0,-14"
+                    Point3="4,-14" />
                   <mssgle:LineSegment
-                    End="19.5,-41.5" />
+                    End="37,-14" />
+                  <mssgle:CubicBezierSegment
+                    Point1="37,-14"
+                    Point2="41,-14"
+                    Point3="41,-18" />
+                  <mssgle:LineSegment
+                    End="41,-20.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 7]"
+          TopLeft="600.5,81">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="20.5,-23"
+              Start="0,0"
+              End="20.5,-15.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-7.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-7.5"
+                    Point2="0,-11.5"
+                    Point3="4,-11.5" />
+                  <mssgle:LineSegment
+                    End="16.5,-11.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16.5,-11.5"
+                    Point2="20.5,-11.5"
+                    Point3="20.5,-15.5" />
+                  <mssgle:LineSegment
+                    End="20.5,-15.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 8]"
+          TopLeft="193.25,265">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4931,8 +4899,8 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="846,493"
-          Size="846,536"
+          PanelSize="813,485"
+          Size="813,528"
           Id="Package\Sequence Container"
           TopLeft="261,238" />
         <EdgeLayout
@@ -4963,9 +4931,9 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="51.5,39.666666666666"
+              EndConnector="35,39.666666666666"
               Start="0,0"
-              End="51.5,32.166666666666">
+              End="35,32.166666666666">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -4976,13 +4944,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
                     Point2="0,19.833333333333"
                     Point3="4,19.833333333333" />
                   <mssgle:LineSegment
-                    End="47.5,19.833333333333" />
+                    End="31,19.833333333333" />
                   <mssgle:CubicBezierSegment
-                    Point1="47.5,19.833333333333"
-                    Point2="51.5,19.833333333333"
-                    Point3="51.5,23.833333333333" />
+                    Point1="31,19.833333333333"
+                    Point2="35,19.833333333333"
+                    Point3="35,23.833333333333" />
                   <mssgle:LineSegment
-                    End="51.5,32.166666666666" />
+                    End="35,32.166666666666" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4993,30 +4961,18 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="684,774">
+          TopLeft="669.25,766">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-13,62"
+              EndConnector="0,70"
               Start="0,0"
-              End="-13,54.5">
+              End="0,62.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,27" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,27"
-                    Point2="0,31"
-                    Point3="-4,31" />
-                  <mssgle:LineSegment
-                    End="-9,31" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-9,31"
-                    Point2="-13,31"
-                    Point3="-13,35" />
-                  <mssgle:LineSegment
-                    End="-13,54.5" />
+                    End="0,62.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5034,24 +4990,28 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="NaN,NaN"
+          Size="238,42"
           Id="Package.EventHandlers[OnError]\Envía Correo - Error en Package"
-          TopLeft="NaN,NaN" />
+          TopLeft="480,277" />
         <NodeLayout
-          Size="NaN,NaN"
+          Size="276,42"
           Id="Package.EventHandlers[OnError]\Log Fin de Ejecución - Error en Package"
-          TopLeft="NaN,NaN" />
+          TopLeft="460,116" />
         <EdgeLayout
           Id="Package.EventHandlers[OnError].PrecedenceConstraints[Constraint]"
-          TopLeft="NaN,NaN">
+          TopLeft="598.5,158">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="{assembly:Null}"
+              EndConnector="0,119"
               Start="0,0"
-              End="0,0">
+              End="0,111.5">
               <mssgle:Curve.Segments>
-                <assembly:Null />
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,111.5" />
+                </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
@@ -5161,93 +5121,101 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     </Properties>
   </PipelineComponentMetadata>
   <TaskHost
-    design-time-name="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL">
+    design-time-name="Package\Sequence Container\DFT - STG_CRM365_CONTACT">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="138,42"
-          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact"
-          TopLeft="576,47" />
+          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact"
+          TopLeft="311,53" />
+        <NodeLayout
+          Size="210,42"
+          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT"
+          TopLeft="314,315" />
         <NodeLayout
           Size="158,42"
-          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Derived Column"
-          TopLeft="558,181" />
+          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Derived Column"
+          TopLeft="336,195" />
         <EdgeLayout
-          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL.Paths[OLE DB Source Output]"
-          TopLeft="645,89">
+          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT.Paths[OLE DB Source Output]"
+          TopLeft="380,95">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-8,92"
+              EndConnector="35,100"
               Start="0,0"
-              End="-8,84.5">
+              End="35,92.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,42" />
+                    End="0,46" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,42"
-                    Point2="0,46"
-                    Point3="-4,46" />
+                    Point1="0,46"
+                    Point2="0,50"
+                    Point3="4,50" />
                   <mssgle:LineSegment
-                    End="-4,46" />
+                    End="31,50" />
                   <mssgle:CubicBezierSegment
-                    Point1="-4,46"
-                    Point2="-8,46"
-                    Point3="-8,50" />
+                    Point1="31,50"
+                    Point2="35,50"
+                    Point3="35,54" />
                   <mssgle:LineSegment
-                    End="-8,84.5" />
+                    End="35,92.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="243,42"
-          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL"
-          TopLeft="533,317" />
         <EdgeLayout
-          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL.Paths[Derived Column Output]"
-          TopLeft="637,223">
+          Id="Package\Sequence Container\DFT - STG_CRM365_CONTACT.Paths[Derived Column Output]"
+          TopLeft="417,237">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="17.5,94"
+              EndConnector="0,78"
               Start="0,0"
-              End="17.5,86.5">
+              End="0,70.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,43" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,43"
-                    Point2="0,47"
-                    Point3="4,47" />
-                  <mssgle:LineSegment
-                    End="13.5,47" />
-                  <mssgle:CubicBezierSegment
-                    Point1="13.5,47"
-                    Point2="17.5,47"
-                    Point3="17.5,51" />
-                  <mssgle:LineSegment
-                    End="17.5,86.5" />
+                    End="0,70.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\DFT - STG_CRM365_CONTACT\Lee Contact">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container\DFT - STG_CRM365_CONTACT\STG_CRM365_CONTACT">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA">
     <LayoutInfo>
@@ -5258,13 +5226,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\STG_SOC_AD_ALUMNO_MATRICULA"
           TopLeft="250,348" />
         <NodeLayout
-          Size="158,42"
-          Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\Derived Column"
-          TopLeft="276,209" />
-        <NodeLayout
           Size="214,42"
           Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\AD_ALUMNO MATRICULA"
           TopLeft="249,100" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA\Derived Column"
+          TopLeft="276,209" />
         <EdgeLayout
           Id="Package\Sequence Container\DFT - STG_SOC_AD_ALUMNO_MATRICULA.Paths[OLE DB Source Output]"
           TopLeft="355.5,142">
@@ -5447,22 +5415,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Sequence Container\DFT - STGA_SOC_AD_VERIFICA_NOT\STG_SOC_AD_VERIFICA_NOT">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\Lee Contact">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\DFT - STG_CRM365_CONTACT_FULL\STG_CRM365_CONTACT_FULL">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
