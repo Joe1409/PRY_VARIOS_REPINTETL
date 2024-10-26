@@ -13,8 +13,8 @@
   DTS:ObjectName="Package_Integracion_Matriculas_CRM365"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="155"
-  DTS:VersionGUID="{9358DCF2-9C8E-4701-AEB8-A3A272C51217}">
+  DTS:VersionBuild="166"
+  DTS:VersionGUID="{254F130C-59CB-4596-9295-FAD6F5CF4C29}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -27,7 +27,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=10.10.3.7/UPCDEVL;User ID=SASPA_DATATRANSFER;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+          DTS:ConnectionString="Data Source=10.147.32.143/UPCDEVL;User ID=SASPA_DATATRANSFER;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"></DTS:Password>
@@ -59,7 +59,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=10.10.2.99;User ID=ISINTCRMCOM;Initial Catalog=UPCDESA_MSCRM;Provider=SQLNCLI11.1;Auto Translate=False;">
+          DTS:ConnectionString="Data Source=10.147.177.165;User ID=ISINTCRMCOM;Initial Catalog=UPCDESA_MSCRM;Provider=SQLNCLI11.1;Auto Translate=False;">
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"></DTS:Password>
@@ -92,7 +92,7 @@
       DTS:ObjectName="Conn_REPINTETL">
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=172.36.0.23;User ID=Isintcrmcom;Initial Catalog=REPINTETL;Application Name=SSIS-Package_Ingles_WeTalk-{4467F564-DD90-4DEA-8705-68BE5D7C01F2}172.36.0.23.REPINTETL.Isintcrmcom;">
+          DTS:ConnectionString="Data Source=10.147.162.49;User ID=Isintcrmcom;Initial Catalog=REPINTETL;Application Name=SSIS-Package_Ingles_WeTalk-{4467F564-DD90-4DEA-8705-68BE5D7C01F2}172.36.0.23.REPINTETL.Isintcrmcom;">
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"></DTS:Password>
@@ -272,9 +272,64 @@
       DTS:ObjectName="v_SelectMatriculaBanner">
       <DTS:VariableValue
         DTS:DataType="8">
+
+WITH GORADID_FILTRADO (GORADID_PIDM, GORADID_ADID_CODE, GORADID_ADDITIONAL_ID) AS
+        ( 
+        SELECT X.GORADID_PIDM, X.GORADID_ADID_CODE, X.GORADID_ADDITIONAL_ID
+        FROM (
+                SELECT GORADID_PIDM, GORADID_ADID_CODE, GORADID_ADDITIONAL_ID, 
+                        ROW_NUMBER() OVER(PARTITION BY GORADID_PIDM, GORADID_ADID_CODE 
+                                                ORDER BY GORADID_SURROGATE_ID DESC) ORDEN
+                FROM GORADID
+                WHERE GORADID_ADID_CODE IN (
+                                            1, --Documento Identidad (DNI)
+                                            2, --Carnet de Extranjería (CEX)
+                                            3, --Pasaporte (PASS)
+                                            32, --CID
+                                            6, --Cód. Persona (Sócrates)
+                                            12, --Cód. Persona (CRM)
+                                            8, --Cód. Alumno Pregrado
+                                            9, --Cód. Alumno Postgrado
+                                            33, --Cód. alumno Preuniversitario
+                                            34, --Cód. usuario alumno Preunivers
+                                            14, --Cód. Usuario Alumno Pregrado
+                                            15 --Cód. Usuario Alumno Postgrado
+                                            )
+                ) X
+        WHERE X.ORDEN = 1
+        ),
+    GOREMAL_FILTRADO (GOREMAL_PIDM, GOREMAL_EMAL_CODE, GOREMAL_EMAIL_ADDRESS) AS
+        ( 
+        SELECT X.GOREMAL_PIDM, X.GOREMAL_EMAL_CODE, X.GOREMAL_EMAIL_ADDRESS
+        FROM (
+                SELECT GOREMAL_PIDM, GOREMAL_EMAL_CODE, GOREMAL_EMAIL_ADDRESS, 
+                        ROW_NUMBER() OVER(PARTITION BY GOREMAL_PIDM, GOREMAL_EMAL_CODE 
+                                                ORDER BY GOREMAL_SURROGATE_ID DESC) ORDEN
+                FROM GOREMAL
+                WHERE GOREMAL_STATUS_IND = 'A'
+                AND GOREMAL_EMAL_CODE IN (
+                                            'CIAL', --Correo Institucional Alumno (EPG)
+                                            'CIAU', --Correo Institucional Alumno Pregrado
+                                            'CIAP' --Correo Institucional Alumno Pre universitario
+                                            )
+                ) X
+        WHERE X.ORDEN = 1
+        )
+
 SELECT DISTINCT 
-       TO_NUMBER(ADI2.GORADID_ADDITIONAL_ID) AS COD_PERSONA,
-       SUBSTR(ADID.GORADID_ADDITIONAL_ID, 1,9) AS COD_ALUMNO, 
+       STDN.SGBSTDN_PIDM,
+       TO_NUMBER(ADID_CODPERSONA_SOC.GORADID_ADDITIONAL_ID) AS COD_PERSONA,
+       CASE WHEN ADID_NRODOCUMENTO_DNI.GORADID_ADDITIONAL_ID IS NOT NULL THEN 1 --DNI
+            WHEN ADID_NRODOCUMENTO_CEX.GORADID_ADDITIONAL_ID IS NOT NULL THEN 2 --CEX
+            WHEN ADID_NRODOCUMENTO_PAS.GORADID_ADDITIONAL_ID IS NOT NULL THEN 3 --PAS
+            WHEN ADID_NRODOCUMENTO_CID.GORADID_ADDITIONAL_ID IS NOT NULL THEN 4 --CID
+            ELSE NULL
+       END AS COD_TIPO_DOCUMENTO,
+       COALESCE(ADID_NRODOCUMENTO_DNI.GORADID_ADDITIONAL_ID, ADID_NRODOCUMENTO_CEX.GORADID_ADDITIONAL_ID, ADID_NRODOCUMENTO_PAS.GORADID_ADDITIONAL_ID, ADID_NRODOCUMENTO_CID.GORADID_ADDITIONAL_ID) AS NRO_DOCUMENTO_IDENTIDAD,
+       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN SUBSTR(ADID_CODALUMNO_U.GORADID_ADDITIONAL_ID, 1,9)
+            ELSE SUBSTR(ADID_CODALUMNO_E.GORADID_ADDITIONAL_ID, 1,9)
+       END AS COD_ALUMNO, --CUANDO SE USA EL PREUNIVERSITARIO?       
+       
        SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) AS COD_LINEA_NEGOCIO,
        SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) COD_MODAL_EST,
        SUBSTR(
@@ -295,8 +350,26 @@ SELECT DISTINCT
             WHEN LCUR.SOVLCUR_CAMP_CODE = 'HUB' THEN 'G'
             ELSE NULL
        END AS COD_LOCAL,
-       'EPG' || '-' || SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) || '-' || EQP.COD_PRODUCTO AS COD_PRODUCT_MAT,
+       
+       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'E' THEN 'EPG'
+            WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN 
+                CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) = 'AC' THEN 'PreGrado'
+                     WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) = 'FC' THEN 'EPE'
+                     WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) = 'UK' THEN 'UK'
+                     ELSE 'OTRO'
+                END
+       END || '-' || SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) || '-' || EQP.COD_PRODUCTO AS COD_PRODUCT_MAT,
        a.MINIMA_FECHA AS FEC_MATRICULA,
+       LCUR.SOVLCUR_COLL_CODE AS COD_FACULTAD,
+       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN EMAL_U.GOREMAL_EMAIL_ADDRESS
+            WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'E' THEN EMAL_E.GOREMAL_EMAIL_ADDRESS
+       END AS DES_EMAIL, --CUANDO SE USA EL PREUNIVERSITARIO? 
+       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN ADID_CODUSUARIO_U.GORADID_ADDITIONAL_ID
+            WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'E' THEN ADID_CODUSUARIO_E.GORADID_ADDITIONAL_ID
+       END AS COD_USUARIO, --CUANDO SE USA EL PREUNIVERSITARIO?        
+        STDN.SGBSTDN_STST_CODE AS COD_ESTADO_ALUMNO,
+        STDN.SGBSTDN_STYP_CODE AS COD_TIPO_ALUMNO,
+        STDN.SGBSTDN_ADMT_CODE AS COD_TIPO_INGRESO,
        SYSDATE AS FEC_CARGA
 FROM SGBSTDN STDN
      INNER JOIN SOVLCUR LCUR ON STDN.SGBSTDN_PIDM = LCUR.SOVLCUR_PIDM
@@ -304,17 +377,45 @@ FROM SGBSTDN STDN
                             AND LCUR.SOVLCUR_PIDM      = TSP.SGRSTSP_PIDM
                             AND LCUR.SOVLCUR_KEY_SEQNO = TSP.SGRSTSP_KEY_SEQNO
      INNER JOIN SGRCHRT CHRT ON CHRT.SGRCHRT_PIDM = STDN.SGBSTDN_PIDM
-     INNER JOIN GORADID ADID ON ADID.GORADID_PIDM = STDN.SGBSTDN_PIDM
-     INNER JOIN GORADID ADI2 ON ADI2.GORADID_PIDM = STDN.SGBSTDN_PIDM
      INNER JOIN SMRPRLE PRLE ON PRLE.SMRPRLE_PROGRAM = LCUR.SOVLCUR_PROGRAM
      INNER JOIN UPC_MIGRACION.EQV_PRODUCTO EQP ON LCUR.SOVLCUR_PROGRAM = EQP.COD_PROGRAMA
-     LEFT JOIN (  SELECT SFRSTCR_PIDM,                   
+     INNER JOIN (  SELECT SFRSTCR_PIDM,                   
                          SFRSTCR_STSP_KEY_SEQUENCE,
-                         MIN (SFRSTCR_ACTIVITY_DATE) MINIMA_FECHA,
-                         MIN(SFRSTCR_USER_ID) USUARIO
+                         MIN (SFRSTCR_ACTIVITY_DATE) MINIMA_FECHA
                     FROM SFRSTCR
                   GROUP BY SFRSTCR_PIDM,SFRSTCR_STSP_KEY_SEQUENCE) A ON LCUR.SOVLCUR_PIDM      = A.SFRSTCR_PIDM 
                                                                     AND LCUR.SOVLCUR_KEY_SEQNO = A.SFRSTCR_STSP_KEY_SEQUENCE
+                                                                    AND A.MINIMA_FECHA &gt; TO_DATE('2024-01-01','YYYY-MM-DD')--'FECHA PARAMETRO'                                                                    
+    
+     LEFT JOIN GORADID_FILTRADO ADID_CODALUMNO_U ON ADID_CODALUMNO_U.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODALUMNO_U.GORADID_ADID_CODE = 8 
+     LEFT JOIN GORADID_FILTRADO ADID_CODALUMNO_E ON ADID_CODALUMNO_E.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODALUMNO_E.GORADID_ADID_CODE = 9 
+     LEFT JOIN GORADID_FILTRADO ADID_CODALUMNO_PREU ON ADID_CODALUMNO_PREU.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODALUMNO_PREU.GORADID_ADID_CODE = 33 
+     LEFT JOIN GORADID_FILTRADO ADID_CODPERSONA_SOC ON ADID_CODPERSONA_SOC.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODPERSONA_SOC.GORADID_ADID_CODE = 6 
+     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_DNI ON ADID_NRODOCUMENTO_DNI.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_NRODOCUMENTO_DNI.GORADID_ADID_CODE = 1 
+     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_CEX ON ADID_NRODOCUMENTO_CEX.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_NRODOCUMENTO_CEX.GORADID_ADID_CODE = 2 
+     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_PAS ON ADID_NRODOCUMENTO_PAS.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_NRODOCUMENTO_PAS.GORADID_ADID_CODE = 3 
+     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_CID ON ADID_NRODOCUMENTO_CID.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_NRODOCUMENTO_CID.GORADID_ADID_CODE = 32 
+     LEFT JOIN GORADID_FILTRADO ADID_CODUSUARIO_PREU ON ADID_CODUSUARIO_PREU.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODUSUARIO_PREU.GORADID_ADID_CODE = 34 
+     LEFT JOIN GORADID_FILTRADO ADID_CODUSUARIO_U ON ADID_CODUSUARIO_U.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODUSUARIO_U.GORADID_ADID_CODE = 14 
+     LEFT JOIN GORADID_FILTRADO ADID_CODUSUARIO_E ON ADID_CODUSUARIO_E.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODUSUARIO_E.GORADID_ADID_CODE = 15 
+     LEFT JOIN GOREMAL_FILTRADO EMAL_PREU ON EMAL_PREU.GOREMAL_PIDM = STDN.SGBSTDN_PIDM 
+                                            AND EMAL_PREU.GOREMAL_EMAL_CODE = 'CIAP'
+     LEFT JOIN GOREMAL_FILTRADO EMAL_U ON EMAL_U.GOREMAL_PIDM = STDN.SGBSTDN_PIDM 
+                                            AND EMAL_U.GOREMAL_EMAL_CODE = 'CIAU'
+     LEFT JOIN GOREMAL_FILTRADO EMAL_E ON EMAL_E.GOREMAL_PIDM = STDN.SGBSTDN_PIDM 
+                                            AND EMAL_E.GOREMAL_EMAL_CODE = 'CIAL'
+    
 WHERE STDN.SGBSTDN_TERM_CODE_EFF =  (SELECT MAX (STDN2.SGBSTDN_TERM_CODE_EFF)
                                        FROM SGBSTDN STDN2
                                       WHERE STDN2.SGBSTDN_PIDM = STDN.SGBSTDN_PIDM)
@@ -324,24 +425,79 @@ AND LCUR.SOVLCUR_CURRENT_IND = 'Y'
 AND CHRT.SGRCHRT_TERM_CODE_EFF =   (SELECT MAX (SGRCHRT_TERM_CODE_EFF)
                                    FROM SGRCHRT CHRT2
                                   WHERE CHRT2.SGRCHRT_PIDM = CHRT.SGRCHRT_PIDM)
-AND ADID.GORADID_ADID_CODE = 9
-AND ADI2.GORADID_ADID_CODE = 6
-AND SUBSTR (LCUR.SOVLCUR_PROGRAM, 2, 2)  IN ('MA','DG','ES','PG')
+AND SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) IN ('U','E')
+
+
  AND a.MINIMA_FECHA &gt; TO_DATE('','YYYYMMDD HH24:MI:SS') </DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
       DTS:DTSID="{8D5D0D3E-4799-4F86-863A-E7C0938670F5}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="&quot;&#xA;SELECT DISTINCT &#xA;       TO_NUMBER(ADI2.GORADID_ADDITIONAL_ID) AS COD_PERSONA,&#xA;       SUBSTR(ADID.GORADID_ADDITIONAL_ID, 1,9) AS COD_ALUMNO, &#xA;       SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) AS COD_LINEA_NEGOCIO,&#xA;       SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) COD_MODAL_EST,&#xA;       SUBSTR(&#xA;       CASE&#xA;          WHEN LENGTH (CHRT.SGRCHRT_CHRT_CODE) = 4&#xA;          THEN&#xA;            '20' || REPLACE (SGRCHRT_CHRT_CODE, 'V', '') || '1'&#xA;          ELSE&#xA;             SGRCHRT_CHRT_CODE&#xA;       END, 1,6) AS COD_PERIOD_MAT,&#xA;       CASE WHEN LCUR.SOVLCUR_CAMP_CODE = 'MON' THEN 'A'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'SIS' THEN 'B'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'VIL' THEN 'R'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'SMI' THEN 'F'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'SBO' THEN 'J'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'SOP' THEN NULL&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'STD' THEN 'M'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'HUB' THEN 'G'&#xA;            ELSE NULL&#xA;       END AS COD_LOCAL,&#xA;       'EPG' || '-' || SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) || '-' || EQP.COD_PRODUCTO AS COD_PRODUCT_MAT,&#xA;       a.MINIMA_FECHA AS FEC_MATRICULA,&#xA;       SYSDATE AS FEC_CARGA&#xA;FROM SGBSTDN STDN&#xA;     INNER JOIN SOVLCUR LCUR ON STDN.SGBSTDN_PIDM = LCUR.SOVLCUR_PIDM&#xA;     INNER JOIN SGRSTSP TSP  ON LCUR.SOVLCUR_TERM_CODE = TSP.SGRSTSP_TERM_CODE_EFF&#xA;                            AND LCUR.SOVLCUR_PIDM      = TSP.SGRSTSP_PIDM&#xA;                            AND LCUR.SOVLCUR_KEY_SEQNO = TSP.SGRSTSP_KEY_SEQNO&#xA;     INNER JOIN SGRCHRT CHRT ON CHRT.SGRCHRT_PIDM = STDN.SGBSTDN_PIDM&#xA;     INNER JOIN GORADID ADID ON ADID.GORADID_PIDM = STDN.SGBSTDN_PIDM&#xA;     INNER JOIN GORADID ADI2 ON ADI2.GORADID_PIDM = STDN.SGBSTDN_PIDM&#xA;     INNER JOIN SMRPRLE PRLE ON PRLE.SMRPRLE_PROGRAM = LCUR.SOVLCUR_PROGRAM&#xA;     INNER JOIN UPC_MIGRACION.EQV_PRODUCTO EQP ON LCUR.SOVLCUR_PROGRAM = EQP.COD_PROGRAMA&#xA;     LEFT JOIN (  SELECT SFRSTCR_PIDM,                   &#xA;                         SFRSTCR_STSP_KEY_SEQUENCE,&#xA;                         MIN (SFRSTCR_ACTIVITY_DATE) MINIMA_FECHA,&#xA;                         MIN(SFRSTCR_USER_ID) USUARIO&#xA;                    FROM SFRSTCR&#xA;                  GROUP BY SFRSTCR_PIDM,SFRSTCR_STSP_KEY_SEQUENCE) A ON LCUR.SOVLCUR_PIDM      = A.SFRSTCR_PIDM &#xA;                                                                    AND LCUR.SOVLCUR_KEY_SEQNO = A.SFRSTCR_STSP_KEY_SEQUENCE&#xA;WHERE STDN.SGBSTDN_TERM_CODE_EFF =  (SELECT MAX (STDN2.SGBSTDN_TERM_CODE_EFF)&#xA;                                       FROM SGBSTDN STDN2&#xA;                                      WHERE STDN2.SGBSTDN_PIDM = STDN.SGBSTDN_PIDM)&#xA;AND LCUR.SOVLCUR_LMOD_CODE = 'LEARNER'&#xA;AND LCUR.SOVLCUR_CACT_CODE = 'ACTIVE'&#xA;AND LCUR.SOVLCUR_CURRENT_IND = 'Y'&#xA;AND CHRT.SGRCHRT_TERM_CODE_EFF =   (SELECT MAX (SGRCHRT_TERM_CODE_EFF)&#xA;                                   FROM SGRCHRT CHRT2&#xA;                                  WHERE CHRT2.SGRCHRT_PIDM = CHRT.SGRCHRT_PIDM)&#xA;AND ADID.GORADID_ADID_CODE = 9&#xA;AND ADI2.GORADID_ADID_CODE = 6&#xA;AND SUBSTR (LCUR.SOVLCUR_PROGRAM, 2, 2)  IN ('MA','DG','ES','PG')&#xA;&quot;"
+      DTS:Expression="&quot;&#xA;&#xA;WITH GORADID_FILTRADO (GORADID_PIDM, GORADID_ADID_CODE, GORADID_ADDITIONAL_ID) AS&#xA;        ( &#xA;        SELECT X.GORADID_PIDM, X.GORADID_ADID_CODE, X.GORADID_ADDITIONAL_ID&#xA;        FROM (&#xA;                SELECT GORADID_PIDM, GORADID_ADID_CODE, GORADID_ADDITIONAL_ID, &#xA;                        ROW_NUMBER() OVER(PARTITION BY GORADID_PIDM, GORADID_ADID_CODE &#xA;                                                ORDER BY GORADID_SURROGATE_ID DESC) ORDEN&#xA;                FROM GORADID&#xA;                WHERE GORADID_ADID_CODE IN (&#xA;                                            1, --Documento Identidad (DNI)&#xA;                                            2, --Carnet de Extranjería (CEX)&#xA;                                            3, --Pasaporte (PASS)&#xA;                                            32, --CID&#xA;                                            6, --Cód. Persona (Sócrates)&#xA;                                            12, --Cód. Persona (CRM)&#xA;                                            8, --Cód. Alumno Pregrado&#xA;                                            9, --Cód. Alumno Postgrado&#xA;                                            33, --Cód. alumno Preuniversitario&#xA;                                            34, --Cód. usuario alumno Preunivers&#xA;                                            14, --Cód. Usuario Alumno Pregrado&#xA;                                            15 --Cód. Usuario Alumno Postgrado&#xA;                                            )&#xA;                ) X&#xA;        WHERE X.ORDEN = 1&#xA;        ),&#xA;    GOREMAL_FILTRADO (GOREMAL_PIDM, GOREMAL_EMAL_CODE, GOREMAL_EMAIL_ADDRESS) AS&#xA;        ( &#xA;        SELECT X.GOREMAL_PIDM, X.GOREMAL_EMAL_CODE, X.GOREMAL_EMAIL_ADDRESS&#xA;        FROM (&#xA;                SELECT GOREMAL_PIDM, GOREMAL_EMAL_CODE, GOREMAL_EMAIL_ADDRESS, &#xA;                        ROW_NUMBER() OVER(PARTITION BY GOREMAL_PIDM, GOREMAL_EMAL_CODE &#xA;                                                ORDER BY GOREMAL_SURROGATE_ID DESC) ORDEN&#xA;                FROM GOREMAL&#xA;                WHERE GOREMAL_STATUS_IND = 'A'&#xA;                AND GOREMAL_EMAL_CODE IN (&#xA;                                            'CIAL', --Correo Institucional Alumno (EPG)&#xA;                                            'CIAU', --Correo Institucional Alumno Pregrado&#xA;                                            'CIAP' --Correo Institucional Alumno Pre universitario&#xA;                                            )&#xA;                ) X&#xA;        WHERE X.ORDEN = 1&#xA;        )&#xA;&#xA;SELECT DISTINCT &#xA;       STDN.SGBSTDN_PIDM,&#xA;       TO_NUMBER(ADID_CODPERSONA_SOC.GORADID_ADDITIONAL_ID) AS COD_PERSONA,&#xA;       CASE WHEN ADID_NRODOCUMENTO_DNI.GORADID_ADDITIONAL_ID IS NOT NULL THEN 1 --DNI&#xA;            WHEN ADID_NRODOCUMENTO_CEX.GORADID_ADDITIONAL_ID IS NOT NULL THEN 2 --CEX&#xA;            WHEN ADID_NRODOCUMENTO_PAS.GORADID_ADDITIONAL_ID IS NOT NULL THEN 3 --PAS&#xA;            WHEN ADID_NRODOCUMENTO_CID.GORADID_ADDITIONAL_ID IS NOT NULL THEN 4 --CID&#xA;            ELSE NULL&#xA;       END AS COD_TIPO_DOCUMENTO,&#xA;       COALESCE(ADID_NRODOCUMENTO_DNI.GORADID_ADDITIONAL_ID, ADID_NRODOCUMENTO_CEX.GORADID_ADDITIONAL_ID, ADID_NRODOCUMENTO_PAS.GORADID_ADDITIONAL_ID, ADID_NRODOCUMENTO_CID.GORADID_ADDITIONAL_ID) AS NRO_DOCUMENTO_IDENTIDAD,&#xA;       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN SUBSTR(ADID_CODALUMNO_U.GORADID_ADDITIONAL_ID, 1,9)&#xA;            ELSE SUBSTR(ADID_CODALUMNO_E.GORADID_ADDITIONAL_ID, 1,9)&#xA;       END AS COD_ALUMNO, --CUANDO SE USA EL PREUNIVERSITARIO?       &#xA;       &#xA;       SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) AS COD_LINEA_NEGOCIO,&#xA;       SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) COD_MODAL_EST,&#xA;       SUBSTR(&#xA;       CASE&#xA;          WHEN LENGTH (CHRT.SGRCHRT_CHRT_CODE) = 4&#xA;          THEN&#xA;            '20' || REPLACE (SGRCHRT_CHRT_CODE, 'V', '') || '1'&#xA;          ELSE&#xA;             SGRCHRT_CHRT_CODE&#xA;       END, 1,6) AS COD_PERIOD_MAT,&#xA;       CASE WHEN LCUR.SOVLCUR_CAMP_CODE = 'MON' THEN 'A'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'SIS' THEN 'B'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'VIL' THEN 'R'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'SMI' THEN 'F'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'SBO' THEN 'J'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'SOP' THEN NULL&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'STD' THEN 'M'&#xA;            WHEN LCUR.SOVLCUR_CAMP_CODE = 'HUB' THEN 'G'&#xA;            ELSE NULL&#xA;       END AS COD_LOCAL,&#xA;       &#xA;       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'E' THEN 'EPG'&#xA;            WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN &#xA;                CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) = 'AC' THEN 'PreGrado'&#xA;                     WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) = 'FC' THEN 'EPE'&#xA;                     WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) = 'UK' THEN 'UK'&#xA;                     ELSE 'OTRO'&#xA;                END&#xA;       END || '-' || SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) || '-' || EQP.COD_PRODUCTO AS COD_PRODUCT_MAT,&#xA;       a.MINIMA_FECHA AS FEC_MATRICULA,&#xA;       LCUR.SOVLCUR_COLL_CODE AS COD_FACULTAD,&#xA;       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN EMAL_U.GOREMAL_EMAIL_ADDRESS&#xA;            WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'E' THEN EMAL_E.GOREMAL_EMAIL_ADDRESS&#xA;       END AS DES_EMAIL, --CUANDO SE USA EL PREUNIVERSITARIO? &#xA;       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN ADID_CODUSUARIO_U.GORADID_ADDITIONAL_ID&#xA;            WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'E' THEN ADID_CODUSUARIO_E.GORADID_ADDITIONAL_ID&#xA;       END AS COD_USUARIO, --CUANDO SE USA EL PREUNIVERSITARIO?        &#xA;        STDN.SGBSTDN_STST_CODE AS COD_ESTADO_ALUMNO,&#xA;        STDN.SGBSTDN_STYP_CODE AS COD_TIPO_ALUMNO,&#xA;        STDN.SGBSTDN_ADMT_CODE AS COD_TIPO_INGRESO,&#xA;       SYSDATE AS FEC_CARGA&#xA;FROM SGBSTDN STDN&#xA;     INNER JOIN SOVLCUR LCUR ON STDN.SGBSTDN_PIDM = LCUR.SOVLCUR_PIDM&#xA;     INNER JOIN SGRSTSP TSP  ON LCUR.SOVLCUR_TERM_CODE = TSP.SGRSTSP_TERM_CODE_EFF&#xA;                            AND LCUR.SOVLCUR_PIDM      = TSP.SGRSTSP_PIDM&#xA;                            AND LCUR.SOVLCUR_KEY_SEQNO = TSP.SGRSTSP_KEY_SEQNO&#xA;     INNER JOIN SGRCHRT CHRT ON CHRT.SGRCHRT_PIDM = STDN.SGBSTDN_PIDM&#xA;     INNER JOIN SMRPRLE PRLE ON PRLE.SMRPRLE_PROGRAM = LCUR.SOVLCUR_PROGRAM&#xA;     INNER JOIN UPC_MIGRACION.EQV_PRODUCTO EQP ON LCUR.SOVLCUR_PROGRAM = EQP.COD_PROGRAMA&#xA;     INNER JOIN (  SELECT SFRSTCR_PIDM,                   &#xA;                         SFRSTCR_STSP_KEY_SEQUENCE,&#xA;                         MIN (SFRSTCR_ACTIVITY_DATE) MINIMA_FECHA&#xA;                    FROM SFRSTCR&#xA;                  GROUP BY SFRSTCR_PIDM,SFRSTCR_STSP_KEY_SEQUENCE) A ON LCUR.SOVLCUR_PIDM      = A.SFRSTCR_PIDM &#xA;                                                                    AND LCUR.SOVLCUR_KEY_SEQNO = A.SFRSTCR_STSP_KEY_SEQUENCE&#xA;                                                                    AND A.MINIMA_FECHA &gt; TO_DATE('2024-01-01','YYYY-MM-DD')--'FECHA PARAMETRO'                                                                    &#xA;    &#xA;     LEFT JOIN GORADID_FILTRADO ADID_CODALUMNO_U ON ADID_CODALUMNO_U.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_CODALUMNO_U.GORADID_ADID_CODE = 8 &#xA;     LEFT JOIN GORADID_FILTRADO ADID_CODALUMNO_E ON ADID_CODALUMNO_E.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_CODALUMNO_E.GORADID_ADID_CODE = 9 &#xA;     LEFT JOIN GORADID_FILTRADO ADID_CODALUMNO_PREU ON ADID_CODALUMNO_PREU.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_CODALUMNO_PREU.GORADID_ADID_CODE = 33 &#xA;     LEFT JOIN GORADID_FILTRADO ADID_CODPERSONA_SOC ON ADID_CODPERSONA_SOC.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_CODPERSONA_SOC.GORADID_ADID_CODE = 6 &#xA;     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_DNI ON ADID_NRODOCUMENTO_DNI.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_NRODOCUMENTO_DNI.GORADID_ADID_CODE = 1 &#xA;     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_CEX ON ADID_NRODOCUMENTO_CEX.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_NRODOCUMENTO_CEX.GORADID_ADID_CODE = 2 &#xA;     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_PAS ON ADID_NRODOCUMENTO_PAS.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_NRODOCUMENTO_PAS.GORADID_ADID_CODE = 3 &#xA;     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_CID ON ADID_NRODOCUMENTO_CID.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_NRODOCUMENTO_CID.GORADID_ADID_CODE = 32 &#xA;     LEFT JOIN GORADID_FILTRADO ADID_CODUSUARIO_PREU ON ADID_CODUSUARIO_PREU.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_CODUSUARIO_PREU.GORADID_ADID_CODE = 34 &#xA;     LEFT JOIN GORADID_FILTRADO ADID_CODUSUARIO_U ON ADID_CODUSUARIO_U.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_CODUSUARIO_U.GORADID_ADID_CODE = 14 &#xA;     LEFT JOIN GORADID_FILTRADO ADID_CODUSUARIO_E ON ADID_CODUSUARIO_E.GORADID_PIDM = STDN.SGBSTDN_PIDM &#xA;                                                    AND ADID_CODUSUARIO_E.GORADID_ADID_CODE = 15 &#xA;     LEFT JOIN GOREMAL_FILTRADO EMAL_PREU ON EMAL_PREU.GOREMAL_PIDM = STDN.SGBSTDN_PIDM &#xA;                                            AND EMAL_PREU.GOREMAL_EMAL_CODE = 'CIAP'&#xA;     LEFT JOIN GOREMAL_FILTRADO EMAL_U ON EMAL_U.GOREMAL_PIDM = STDN.SGBSTDN_PIDM &#xA;                                            AND EMAL_U.GOREMAL_EMAL_CODE = 'CIAU'&#xA;     LEFT JOIN GOREMAL_FILTRADO EMAL_E ON EMAL_E.GOREMAL_PIDM = STDN.SGBSTDN_PIDM &#xA;                                            AND EMAL_E.GOREMAL_EMAL_CODE = 'CIAL'&#xA;    &#xA;WHERE STDN.SGBSTDN_TERM_CODE_EFF =  (SELECT MAX (STDN2.SGBSTDN_TERM_CODE_EFF)&#xA;                                       FROM SGBSTDN STDN2&#xA;                                      WHERE STDN2.SGBSTDN_PIDM = STDN.SGBSTDN_PIDM)&#xA;AND LCUR.SOVLCUR_LMOD_CODE = 'LEARNER'&#xA;AND LCUR.SOVLCUR_CACT_CODE = 'ACTIVE'&#xA;AND LCUR.SOVLCUR_CURRENT_IND = 'Y'&#xA;AND CHRT.SGRCHRT_TERM_CODE_EFF =   (SELECT MAX (SGRCHRT_TERM_CODE_EFF)&#xA;                                   FROM SGRCHRT CHRT2&#xA;                                  WHERE CHRT2.SGRCHRT_PIDM = CHRT.SGRCHRT_PIDM)&#xA;AND SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) IN ('U','E')&#xA;&#xA;&#xA;&quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="v_SelectMatriculaBanner_E">
       <DTS:VariableValue
         DTS:DataType="8">
+
+WITH GORADID_FILTRADO (GORADID_PIDM, GORADID_ADID_CODE, GORADID_ADDITIONAL_ID) AS
+        ( 
+        SELECT X.GORADID_PIDM, X.GORADID_ADID_CODE, X.GORADID_ADDITIONAL_ID
+        FROM (
+                SELECT GORADID_PIDM, GORADID_ADID_CODE, GORADID_ADDITIONAL_ID, 
+                        ROW_NUMBER() OVER(PARTITION BY GORADID_PIDM, GORADID_ADID_CODE 
+                                                ORDER BY GORADID_SURROGATE_ID DESC) ORDEN
+                FROM GORADID
+                WHERE GORADID_ADID_CODE IN (
+                                            1, --Documento Identidad (DNI)
+                                            2, --Carnet de Extranjería (CEX)
+                                            3, --Pasaporte (PASS)
+                                            32, --CID
+                                            6, --Cód. Persona (Sócrates)
+                                            12, --Cód. Persona (CRM)
+                                            8, --Cód. Alumno Pregrado
+                                            9, --Cód. Alumno Postgrado
+                                            33, --Cód. alumno Preuniversitario
+                                            34, --Cód. usuario alumno Preunivers
+                                            14, --Cód. Usuario Alumno Pregrado
+                                            15 --Cód. Usuario Alumno Postgrado
+                                            )
+                ) X
+        WHERE X.ORDEN = 1
+        ),
+    GOREMAL_FILTRADO (GOREMAL_PIDM, GOREMAL_EMAL_CODE, GOREMAL_EMAIL_ADDRESS) AS
+        ( 
+        SELECT X.GOREMAL_PIDM, X.GOREMAL_EMAL_CODE, X.GOREMAL_EMAIL_ADDRESS
+        FROM (
+                SELECT GOREMAL_PIDM, GOREMAL_EMAL_CODE, GOREMAL_EMAIL_ADDRESS, 
+                        ROW_NUMBER() OVER(PARTITION BY GOREMAL_PIDM, GOREMAL_EMAL_CODE 
+                                                ORDER BY GOREMAL_SURROGATE_ID DESC) ORDEN
+                FROM GOREMAL
+                WHERE GOREMAL_STATUS_IND = 'A'
+                AND GOREMAL_EMAL_CODE IN (
+                                            'CIAL', --Correo Institucional Alumno (EPG)
+                                            'CIAU', --Correo Institucional Alumno Pregrado
+                                            'CIAP' --Correo Institucional Alumno Pre universitario
+                                            )
+                ) X
+        WHERE X.ORDEN = 1
+        )
+
 SELECT DISTINCT 
-       TO_NUMBER(ADI2.GORADID_ADDITIONAL_ID) AS COD_PERSONA,
-       SUBSTR(ADID.GORADID_ADDITIONAL_ID, 1,9) AS COD_ALUMNO, 
+       STDN.SGBSTDN_PIDM,
+       TO_NUMBER(ADID_CODPERSONA_SOC.GORADID_ADDITIONAL_ID) AS COD_PERSONA,
+       CASE WHEN ADID_NRODOCUMENTO_DNI.GORADID_ADDITIONAL_ID IS NOT NULL THEN 1 --DNI
+            WHEN ADID_NRODOCUMENTO_CEX.GORADID_ADDITIONAL_ID IS NOT NULL THEN 2 --CEX
+            WHEN ADID_NRODOCUMENTO_PAS.GORADID_ADDITIONAL_ID IS NOT NULL THEN 3 --PAS
+            WHEN ADID_NRODOCUMENTO_CID.GORADID_ADDITIONAL_ID IS NOT NULL THEN 4 --CID
+            ELSE NULL
+       END AS COD_TIPO_DOCUMENTO,
+       COALESCE(ADID_NRODOCUMENTO_DNI.GORADID_ADDITIONAL_ID, ADID_NRODOCUMENTO_CEX.GORADID_ADDITIONAL_ID, ADID_NRODOCUMENTO_PAS.GORADID_ADDITIONAL_ID, ADID_NRODOCUMENTO_CID.GORADID_ADDITIONAL_ID) AS NRO_DOCUMENTO_IDENTIDAD,
+       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN SUBSTR(ADID_CODALUMNO_U.GORADID_ADDITIONAL_ID, 1,9)
+            ELSE SUBSTR(ADID_CODALUMNO_E.GORADID_ADDITIONAL_ID, 1,9)
+       END AS COD_ALUMNO, --CUANDO SE USA EL PREUNIVERSITARIO?       
+       
        SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) AS COD_LINEA_NEGOCIO,
        SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) COD_MODAL_EST,
        SUBSTR(
@@ -362,8 +518,26 @@ SELECT DISTINCT
             WHEN LCUR.SOVLCUR_CAMP_CODE = 'HUB' THEN 'G'
             ELSE NULL
        END AS COD_LOCAL,
-       'EPG' || '-' || SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) || '-' || EQP.COD_PRODUCTO AS COD_PRODUCT_MAT,
+       
+       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'E' THEN 'EPG'
+            WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN 
+                CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) = 'AC' THEN 'PreGrado'
+                     WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) = 'FC' THEN 'EPE'
+                     WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) = 'UK' THEN 'UK'
+                     ELSE 'OTRO'
+                END
+       END || '-' || SUBSTR(LCUR.SOVLCUR_PROGRAM, 2, 2) || '-' || EQP.COD_PRODUCTO AS COD_PRODUCT_MAT,
        a.MINIMA_FECHA AS FEC_MATRICULA,
+       LCUR.SOVLCUR_COLL_CODE AS COD_FACULTAD,
+       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN EMAL_U.GOREMAL_EMAIL_ADDRESS
+            WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'E' THEN EMAL_E.GOREMAL_EMAIL_ADDRESS
+       END AS DES_EMAIL, --CUANDO SE USA EL PREUNIVERSITARIO? 
+       CASE WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'U' THEN ADID_CODUSUARIO_U.GORADID_ADDITIONAL_ID
+            WHEN SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) = 'E' THEN ADID_CODUSUARIO_E.GORADID_ADDITIONAL_ID
+       END AS COD_USUARIO, --CUANDO SE USA EL PREUNIVERSITARIO?        
+        STDN.SGBSTDN_STST_CODE AS COD_ESTADO_ALUMNO,
+        STDN.SGBSTDN_STYP_CODE AS COD_TIPO_ALUMNO,
+        STDN.SGBSTDN_ADMT_CODE AS COD_TIPO_INGRESO,
        SYSDATE AS FEC_CARGA
 FROM SGBSTDN STDN
      INNER JOIN SOVLCUR LCUR ON STDN.SGBSTDN_PIDM = LCUR.SOVLCUR_PIDM
@@ -371,17 +545,45 @@ FROM SGBSTDN STDN
                             AND LCUR.SOVLCUR_PIDM      = TSP.SGRSTSP_PIDM
                             AND LCUR.SOVLCUR_KEY_SEQNO = TSP.SGRSTSP_KEY_SEQNO
      INNER JOIN SGRCHRT CHRT ON CHRT.SGRCHRT_PIDM = STDN.SGBSTDN_PIDM
-     INNER JOIN GORADID ADID ON ADID.GORADID_PIDM = STDN.SGBSTDN_PIDM
-     INNER JOIN GORADID ADI2 ON ADI2.GORADID_PIDM = STDN.SGBSTDN_PIDM
      INNER JOIN SMRPRLE PRLE ON PRLE.SMRPRLE_PROGRAM = LCUR.SOVLCUR_PROGRAM
      INNER JOIN UPC_MIGRACION.EQV_PRODUCTO EQP ON LCUR.SOVLCUR_PROGRAM = EQP.COD_PROGRAMA
-     LEFT JOIN (  SELECT SFRSTCR_PIDM,                   
+     INNER JOIN (  SELECT SFRSTCR_PIDM,                   
                          SFRSTCR_STSP_KEY_SEQUENCE,
-                         MIN (SFRSTCR_ACTIVITY_DATE) MINIMA_FECHA,
-                         MIN(SFRSTCR_USER_ID) USUARIO
+                         MIN (SFRSTCR_ACTIVITY_DATE) MINIMA_FECHA
                     FROM SFRSTCR
                   GROUP BY SFRSTCR_PIDM,SFRSTCR_STSP_KEY_SEQUENCE) A ON LCUR.SOVLCUR_PIDM      = A.SFRSTCR_PIDM 
                                                                     AND LCUR.SOVLCUR_KEY_SEQNO = A.SFRSTCR_STSP_KEY_SEQUENCE
+                                                                    AND A.MINIMA_FECHA &gt; TO_DATE('2024-01-01','YYYY-MM-DD')--'FECHA PARAMETRO'                                                                    
+    
+     LEFT JOIN GORADID_FILTRADO ADID_CODALUMNO_U ON ADID_CODALUMNO_U.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODALUMNO_U.GORADID_ADID_CODE = 8 
+     LEFT JOIN GORADID_FILTRADO ADID_CODALUMNO_E ON ADID_CODALUMNO_E.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODALUMNO_E.GORADID_ADID_CODE = 9 
+     LEFT JOIN GORADID_FILTRADO ADID_CODALUMNO_PREU ON ADID_CODALUMNO_PREU.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODALUMNO_PREU.GORADID_ADID_CODE = 33 
+     LEFT JOIN GORADID_FILTRADO ADID_CODPERSONA_SOC ON ADID_CODPERSONA_SOC.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODPERSONA_SOC.GORADID_ADID_CODE = 6 
+     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_DNI ON ADID_NRODOCUMENTO_DNI.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_NRODOCUMENTO_DNI.GORADID_ADID_CODE = 1 
+     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_CEX ON ADID_NRODOCUMENTO_CEX.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_NRODOCUMENTO_CEX.GORADID_ADID_CODE = 2 
+     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_PAS ON ADID_NRODOCUMENTO_PAS.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_NRODOCUMENTO_PAS.GORADID_ADID_CODE = 3 
+     LEFT JOIN GORADID_FILTRADO ADID_NRODOCUMENTO_CID ON ADID_NRODOCUMENTO_CID.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_NRODOCUMENTO_CID.GORADID_ADID_CODE = 32 
+     LEFT JOIN GORADID_FILTRADO ADID_CODUSUARIO_PREU ON ADID_CODUSUARIO_PREU.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODUSUARIO_PREU.GORADID_ADID_CODE = 34 
+     LEFT JOIN GORADID_FILTRADO ADID_CODUSUARIO_U ON ADID_CODUSUARIO_U.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODUSUARIO_U.GORADID_ADID_CODE = 14 
+     LEFT JOIN GORADID_FILTRADO ADID_CODUSUARIO_E ON ADID_CODUSUARIO_E.GORADID_PIDM = STDN.SGBSTDN_PIDM 
+                                                    AND ADID_CODUSUARIO_E.GORADID_ADID_CODE = 15 
+     LEFT JOIN GOREMAL_FILTRADO EMAL_PREU ON EMAL_PREU.GOREMAL_PIDM = STDN.SGBSTDN_PIDM 
+                                            AND EMAL_PREU.GOREMAL_EMAL_CODE = 'CIAP'
+     LEFT JOIN GOREMAL_FILTRADO EMAL_U ON EMAL_U.GOREMAL_PIDM = STDN.SGBSTDN_PIDM 
+                                            AND EMAL_U.GOREMAL_EMAL_CODE = 'CIAU'
+     LEFT JOIN GOREMAL_FILTRADO EMAL_E ON EMAL_E.GOREMAL_PIDM = STDN.SGBSTDN_PIDM 
+                                            AND EMAL_E.GOREMAL_EMAL_CODE = 'CIAL'
+    
 WHERE STDN.SGBSTDN_TERM_CODE_EFF =  (SELECT MAX (STDN2.SGBSTDN_TERM_CODE_EFF)
                                        FROM SGBSTDN STDN2
                                       WHERE STDN2.SGBSTDN_PIDM = STDN.SGBSTDN_PIDM)
@@ -391,9 +593,9 @@ AND LCUR.SOVLCUR_CURRENT_IND = 'Y'
 AND CHRT.SGRCHRT_TERM_CODE_EFF =   (SELECT MAX (SGRCHRT_TERM_CODE_EFF)
                                    FROM SGRCHRT CHRT2
                                   WHERE CHRT2.SGRCHRT_PIDM = CHRT.SGRCHRT_PIDM)
-AND ADID.GORADID_ADID_CODE = 9
-AND ADI2.GORADID_ADID_CODE = 6
-AND SUBSTR (LCUR.SOVLCUR_PROGRAM, 2, 2)  IN ('MA','DG','ES','PG')
+AND SUBSTR(LCUR.SOVLCUR_PROGRAM, 1, 1) IN ('U','E')
+
+
 </DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
@@ -418,35 +620,12 @@ FROM integraciones.STGA_BAN_MATRICULA b
       DTS:CreationName=""
       DTS:DTSID="{5EF4EA66-76E2-4046-BFDE-32F69F5F3180}"
       DTS:EvaluateAsExpression="True"
-      DTS:Expression="@[User::v_SelectMatriculaSocrates_U] + &#xA;&quot; AND m.FECHA_MATRICULA &gt; TO_DATE('&quot; + @[User::v_ParametroFechaInicio] + &quot;','YYYYMMDD HH24:MI:SS') UNION &quot; +&#xA;&#xA; @[User::v_SelectMatriculaSocrates_C] +&#xA;&quot; AND m.FECHA_MATRICULA &gt; TO_DATE('&quot; + @[User::v_ParametroFechaInicio]  + &quot;','YYYYMMDD HH24:MI:SS') UNION &quot; +&#xA;&#xA; @[User::v_SelectMatriculaSocrates_E] +&#xA;&quot; AND m.FECHA_MATRICULA &gt; TO_DATE('&quot; + @[User::v_ParametroFechaInicio] + &quot;','YYYYMMDD HH24:MI:SS')&quot;"
+      DTS:Expression="@[User::v_SelectMatriculaSocrates_C] +&#xA;&quot; AND m.FECHA_MATRICULA &gt; TO_DATE('&quot; + @[User::v_ParametroFechaInicio]  + &quot;','YYYYMMDD HH24:MI:SS') &quot;"
       DTS:IncludeInDebugDump="2345"
       DTS:Namespace="User"
       DTS:ObjectName="v_SelectMatriculaSocrates">
       <DTS:VariableValue
         DTS:DataType="8">
-Select p.COD_PERSONA, 
-        CASE WHEN p.TIPO_DOCUMENTO = 'DNI' THEN 1
-             WHEN p.TIPO_DOCUMENTO = 'PAS' THEN 2
-             WHEN p.TIPO_DOCUMENTO = 'CEX' THEN 3
-             WHEN p.TIPO_DOCUMENTO = 'CID' THEN 4
-             ELSE NULL
-        END AS COD_TIPO_DOCUMENTO,
-        p.DOCUMEN_IDENTIDA AS NRO_DOCUMENTO_IDENTIDAD,
-        m.COD_ALUMNO, 
-        m.COD_LINEA_NEGOCIO, 
-        m.COD_MODAL_EST, 
-        m.COD_PERIOD_MAT, 
-        m.COD_LOCAL, 
-        CASE WHEN m.COD_MODAL_EST = 'AC' THEN 'PreGrado' ELSE 'EPE' END || '-' || m.COD_MODAL_EST || '-' || m.COD_PRODUC_MAT AS COD_PRODUCT_MAT,
-        u.Email AS DES_EMAIL,
-		m.FECHA_MATRICULA AS FEC_MATRICULA,
-        SYSDATE AS FEC_CARGA
-From Matricula m
-        INNER JOIN Alumno a On m.COD_LINEA_NEGOCIO = a.COD_LINEA_NEGOCIO AND m.COD_ALUMNO = a.COD_ALUMNO
-        INNER JOIN Usuario u On a.COD_USUARIO = u.COD_USUARIO AND ESTADO_USUARIO = 'AC'
-        INNER JOIN Persona p  On a.COD_PERSONA = p.COD_PERSONA
-where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
- AND m.FECHA_MATRICULA &gt; TO_DATE('','YYYYMMDD HH24:MI:SS') UNION 
 Select u.COD_PERSONA, 
         CASE WHEN p.TIPO_DOCUMENTO = 'DNI' THEN 1
              WHEN p.TIPO_DOCUMENTO = 'PAS' THEN 2
@@ -468,30 +647,7 @@ From I_Matricula m
         INNER JOIN I_USUARIO u On m.COD_USUARIO = u.COD_USUARIO AND ESTADO_USUARIO = 'AC'
         INNER JOIN Persona p  On u.COD_PERSONA = p.COD_PERSONA
 where m.COD_LINEA_NEGOCIO = 'C' AND m.COD_MODAL_EST IN ('CI') 
- AND m.FECHA_MATRICULA &gt; TO_DATE('','YYYYMMDD HH24:MI:SS') UNION 
-Select p.COD_PERSONA, 
-        CASE WHEN p.TIPO_DOCUMENTO = 'DNI' THEN 1
-             WHEN p.TIPO_DOCUMENTO = 'PAS' THEN 2
-             WHEN p.TIPO_DOCUMENTO = 'CEX' THEN 3
-             WHEN p.TIPO_DOCUMENTO = 'CID' THEN 4
-             ELSE NULL
-        END AS COD_TIPO_DOCUMENTO,
-        p.DOCUMEN_IDENTIDA AS NRO_DOCUMENTO_IDENTIDAD,
-        m.COD_ALUMNO, 
-        m.COD_LINEA_NEGOCIO, 
-        m.COD_MODAL_EST, 
-        m.COD_PERIOD_MAT, 
-        m.COD_LOCAL, 
-        CASE WHEN m.COD_MODAL_EST = 'AC' THEN 'PreGrado' ELSE 'EPE' END || '-' || m.COD_MODAL_EST || '-' || m.COD_PRODUC_MAT AS COD_PRODUCT_MAT,
-        u.Email AS DES_EMAIL,
-		m.FECHA_MATRICULA AS FEC_MATRICULA,
-        SYSDATE AS FEC_CARGA
-From Matricula@PRODSI2 m
-        INNER JOIN Alumno@PRODSI2 a On m.COD_LINEA_NEGOCIO = a.COD_LINEA_NEGOCIO AND m.COD_ALUMNO = a.COD_ALUMNO
-        INNER JOIN Usuario@PRODSI2 u On a.COD_USUARIO = u.COD_USUARIO AND ESTADO_USUARIO = 'AC'
-        INNER JOIN Persona@PRODSI2 p  On a.COD_PERSONA = p.COD_PERSONA
-where m.COD_LINEA_NEGOCIO = 'E' AND m.COD_MODAL_EST NOT IN ('MA','DG','ES','PG')
- AND m.FECHA_MATRICULA &gt; TO_DATE('','YYYYMMDD HH24:MI:SS')</DTS:VariableValue>
+ AND m.FECHA_MATRICULA &gt; TO_DATE('','YYYYMMDD HH24:MI:SS') </DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -852,6 +1008,7 @@ where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
       DTS:refId="Package\Log Fin de Ejecución - Ejecución Exitosa"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
       DTS:DTSID="{EA5291BB-9610-4E7E-8B9B-239248A34C1C}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
@@ -979,6 +1136,7 @@ where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
       DTS:refId="Package\Log Fin de Ejecución - Error en Servicio"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
       DTS:DTSID="{436b1c2d-0148-44da-88b2-2f9baf36df3a}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
@@ -1507,7 +1665,7 @@ AND SUBSTR (LCUR.SOVLCUR_PROGRAM, 2, 2)  IN ('MA','DG','ES','PG')</property>
                     <property
                       dataType="System.String"
                       description="The variable that contains the SQL command to be executed."
-                      name="SqlCommandVariable">User::v_SelectMatriculaBanner</property>
+                      name="SqlCommandVariable">User::v_SelectMatriculaBanner_E</property>
                     <property
                       dataType="System.Int32"
                       description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -1515,7 +1673,7 @@ AND SUBSTR (LCUR.SOVLCUR_PROGRAM, 2, 2)  IN ('MA','DG','ES','PG')</property>
                     <property
                       dataType="System.Boolean"
                       description="Forces the use of the DefaultCodePage property value when describing character data."
-                      name="AlwaysUseDefaultCodePage">false</property>
+                      name="AlwaysUseDefaultCodePage">true</property>
                     <property
                       dataType="System.Int32"
                       description="Specifies the mode used to access the database."
@@ -1770,6 +1928,7 @@ AND SUBSTR (LCUR.SOVLCUR_PROGRAM, 2, 2)  IN ('MA','DG','ES','PG')</property>
           DTS:CreationName="Microsoft.Pipeline"
           DTS:DelayValidation="True"
           DTS:Description="Data Flow Task"
+          DTS:Disabled="True"
           DTS:DTSID="{A9D882BA-B6AF-444F-A068-E2E59C39D100}"
           DTS:ExecutableType="Microsoft.Pipeline"
           DTS:LocaleID="-1"
@@ -2510,12 +2669,12 @@ where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
                         <externalMetadataColumn
                           refId="Package\Sequence Container\DFT - STGA_SOC_MATRICULA SOCRATES\Lee MATRICULA.Outputs[OLE DB Source Output].ExternalColumns[COD_LOCAL]"
                           dataType="wstr"
-                          length="1"
+                          length="2"
                           name="COD_LOCAL" />
                         <externalMetadataColumn
                           refId="Package\Sequence Container\DFT - STGA_SOC_MATRICULA SOCRATES\Lee MATRICULA.Outputs[OLE DB Source Output].ExternalColumns[COD_PRODUCT_MAT]"
                           dataType="wstr"
-                          length="20"
+                          length="8"
                           name="COD_PRODUCT_MAT" />
                         <externalMetadataColumn
                           refId="Package\Sequence Container\DFT - STGA_SOC_MATRICULA SOCRATES\Lee MATRICULA.Outputs[OLE DB Source Output].ExternalColumns[DES_EMAIL]"
@@ -2582,13 +2741,13 @@ where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
                         <outputColumn
                           refId="Package\Sequence Container\DFT - STGA_SOC_MATRICULA SOCRATES\Lee MATRICULA.Outputs[OLE DB Source Error Output].Columns[COD_LOCAL]"
                           dataType="wstr"
-                          length="1"
+                          length="2"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_MATRICULA SOCRATES\Lee MATRICULA.Outputs[OLE DB Source Error Output].Columns[COD_LOCAL]"
                           name="COD_LOCAL" />
                         <outputColumn
                           refId="Package\Sequence Container\DFT - STGA_SOC_MATRICULA SOCRATES\Lee MATRICULA.Outputs[OLE DB Source Error Output].Columns[COD_PRODUCT_MAT]"
                           dataType="wstr"
-                          length="20"
+                          length="8"
                           lineageId="Package\Sequence Container\DFT - STGA_SOC_MATRICULA SOCRATES\Lee MATRICULA.Outputs[OLE DB Source Error Output].Columns[COD_PRODUCT_MAT]"
                           name="COD_PRODUCT_MAT" />
                         <outputColumn
@@ -2641,13 +2800,14 @@ where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA"
+          DTS:refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)"
           DTS:CreationName="Microsoft.Pipeline"
           DTS:Description="Data Flow Task"
+          DTS:Disabled="True"
           DTS:DTSID="{425C7EB0-C3C0-4D58-AFF9-09B124DBCAE9}"
           DTS:ExecutableType="Microsoft.Pipeline"
           DTS:LocaleID="-1"
-          DTS:ObjectName="DFT - STGA_SOC_SI_PERSONA"
+          DTS:ObjectName="DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)"
           DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
           <DTS:Variables />
           <DTS:LoggingOptions
@@ -2657,7 +2817,7 @@ where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
               version="1">
               <components>
                 <component
-                  refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA"
+                  refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA"
                   componentClassID="Microsoft.ManagedComponentHost"
                   contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
                   description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
@@ -2692,7 +2852,7 @@ where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
                   </properties>
                   <connections>
                     <connection
-                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Connections[IDbConnection]"
+                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Connections[IDbConnection]"
                       connectionManagerID="Package.ConnectionManagers[Conn_REPINTETL]"
                       connectionManagerRefId="Package.ConnectionManagers[Conn_REPINTETL]"
                       description="Managed connection manager"
@@ -2700,118 +2860,118 @@ where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
                   </connections>
                   <inputs>
                     <input
-                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input]"
+                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input]"
                       errorRowDisposition="FailComponent"
                       hasSideEffects="true"
                       name="ADO NET Destination Input">
                       <inputColumns>
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[COD_PERSONA]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[COD_PERSONA]"
                           cachedDataType="numeric"
                           cachedName="COD_PERSONA"
                           cachedPrecision="15"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_PERSONA]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_PERSONA]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_PERSONA]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_PERSONA]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[COD_TIPO_DOCUMENTO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[COD_TIPO_DOCUMENTO]"
                           cachedDataType="wstr"
                           cachedLength="38"
                           cachedName="COD_TIPO_DOCUMENTO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_TIPO_DOCUMENTO]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_TIPO_DOCUMENTO]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_TIPO_DOCUMENTO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_TIPO_DOCUMENTO]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[NRO_DOCUMENTO_IDENTIDAD]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[NRO_DOCUMENTO_IDENTIDAD]"
                           cachedDataType="wstr"
                           cachedLength="50"
                           cachedName="NRO_DOCUMENTO_IDENTIDAD"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[NRO_DOCUMENTO_IDENTIDAD]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[NRO_DOCUMENTO_IDENTIDAD]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[NRO_DOCUMENTO_IDENTIDAD]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[NRO_DOCUMENTO_IDENTIDAD]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[COD_LINEA_NEGOCIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[COD_LINEA_NEGOCIO]"
                           cachedDataType="wstr"
                           cachedLength="1"
                           cachedName="COD_LINEA_NEGOCIO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_LINEA_NEGOCIO]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_LINEA_NEGOCIO]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_LINEA_NEGOCIO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_LINEA_NEGOCIO]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[COD_ALUMNO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[COD_ALUMNO]"
                           cachedDataType="wstr"
                           cachedLength="9"
                           cachedName="COD_ALUMNO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_ALUMNO]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_ALUMNO]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_ALUMNO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_ALUMNO]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[FECHA_CREACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[FECHA_CREACION]"
                           cachedDataType="dbTimeStamp"
                           cachedName="FECHA_CREACION"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_CREACION]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_CREACION]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_CREACION]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_CREACION]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[FECHA_MODIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[FECHA_MODIFICACION]"
                           cachedDataType="dbTimeStamp"
                           cachedName="FECHA_MODIFICACION"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_MODIFICACION]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_MODIFICACION]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_MODIFICACION]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_MODIFICACION]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[COD_USUARIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[COD_USUARIO]"
                           cachedDataType="wstr"
                           cachedLength="10"
                           cachedName="COD_USUARIO"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_USUARIO]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_USUARIO]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_USUARIO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_USUARIO]" />
                         <inputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[DES_EMAIL]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].Columns[DES_EMAIL]"
                           cachedDataType="wstr"
                           cachedLength="30"
                           cachedName="DES_EMAIL"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[DES_EMAIL]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[DES_EMAIL]" />
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[DES_EMAIL]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[DES_EMAIL]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_PERSONA]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_PERSONA]"
                           dataType="i4"
                           name="COD_PERSONA" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_TIPO_DOCUMENTO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_TIPO_DOCUMENTO]"
                           dataType="i4"
                           name="COD_TIPO_DOCUMENTO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[NRO_DOCUMENTO_IDENTIDAD]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[NRO_DOCUMENTO_IDENTIDAD]"
                           dataType="wstr"
                           length="50"
                           name="NRO_DOCUMENTO_IDENTIDAD" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_LINEA_NEGOCIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_LINEA_NEGOCIO]"
                           dataType="wstr"
                           length="1"
                           name="COD_LINEA_NEGOCIO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_ALUMNO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_ALUMNO]"
                           dataType="wstr"
                           length="9"
                           name="COD_ALUMNO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_CREACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_CREACION]"
                           dataType="dbTimeStamp"
                           name="FECHA_CREACION" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_MODIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[FECHA_MODIFICACION]"
                           dataType="dbTimeStamp"
                           name="FECHA_MODIFICACION" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_USUARIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[COD_USUARIO]"
                           dataType="wstr"
                           length="10"
                           name="COD_USUARIO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[DES_EMAIL]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[DES_EMAIL]"
                           dataType="wstr"
                           length="30"
                           name="DES_EMAIL" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[FEC_CARGA]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input].ExternalColumns[FEC_CARGA]"
                           dataType="dbTimeStamp"
                           name="FEC_CARGA" />
                       </externalMetadataColumns>
@@ -2819,22 +2979,22 @@ where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
                   </inputs>
                   <outputs>
                     <output
-                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Outputs[ADO NET Destination Error Output]"
+                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Outputs[ADO NET Destination Error Output]"
                       exclusionGroup="1"
                       isErrorOut="true"
                       name="ADO NET Destination Error Output"
-                      synchronousInputId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input]">
+                      synchronousInputId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input]">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
                           name="ErrorCode"
                           specialFlags="1" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                       </outputColumns>
@@ -2843,7 +3003,7 @@ where m.COD_LINEA_NEGOCIO = 'U' AND m.COD_MODAL_EST IN ('AC','FC')
                   </outputs>
                 </component>
                 <component
-                  refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA"
+                  refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA"
                   componentClassID="Microsoft.OLEDBSource"
                   contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
                   description="OLE DB Source"
@@ -2905,7 +3065,7 @@ FROM PERSONA@PRODSI2 p
                   </properties>
                   <connections>
                     <connection
-                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Connections[OleDbConnection]"
+                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Connections[OleDbConnection]"
                       connectionManagerID="Package.ConnectionManagers[Conn_SOCRATES_MO]"
                       connectionManagerRefId="Package.ConnectionManagers[Conn_SOCRATES_MO]"
                       description="The OLE DB runtime connection used to access the database."
@@ -2913,212 +3073,212 @@ FROM PERSONA@PRODSI2 p
                   </connections>
                   <outputs>
                     <output
-                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output]"
+                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output]"
                       name="OLE DB Source Output">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_PERSONA]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_PERSONA]"
                           dataType="numeric"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_PERSONA]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_PERSONA]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_PERSONA]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_PERSONA]"
                           name="COD_PERSONA"
                           precision="15"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_TIPO_DOCUMENTO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_TIPO_DOCUMENTO]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_TIPO_DOCUMENTO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_TIPO_DOCUMENTO]"
                           length="38"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_TIPO_DOCUMENTO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_TIPO_DOCUMENTO]"
                           name="COD_TIPO_DOCUMENTO"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[NRO_DOCUMENTO_IDENTIDAD]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[NRO_DOCUMENTO_IDENTIDAD]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[NRO_DOCUMENTO_IDENTIDAD]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[NRO_DOCUMENTO_IDENTIDAD]"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[NRO_DOCUMENTO_IDENTIDAD]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[NRO_DOCUMENTO_IDENTIDAD]"
                           name="NRO_DOCUMENTO_IDENTIDAD"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_LINEA_NEGOCIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_LINEA_NEGOCIO]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_LINEA_NEGOCIO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_LINEA_NEGOCIO]"
                           length="1"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_LINEA_NEGOCIO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_LINEA_NEGOCIO]"
                           name="COD_LINEA_NEGOCIO"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_ALUMNO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_ALUMNO]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_ALUMNO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_ALUMNO]"
                           length="9"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_ALUMNO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_ALUMNO]"
                           name="COD_ALUMNO"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_CREACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_CREACION]"
                           dataType="dbTimeStamp"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[FECHA_CREACION]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_CREACION]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[FECHA_CREACION]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_CREACION]"
                           name="FECHA_CREACION"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_MODIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_MODIFICACION]"
                           dataType="dbTimeStamp"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[FECHA_MODIFICACION]"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_MODIFICACION]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[FECHA_MODIFICACION]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[FECHA_MODIFICACION]"
                           name="FECHA_MODIFICACION"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_USUARIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_USUARIO]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_USUARIO]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_USUARIO]"
                           length="10"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_USUARIO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[COD_USUARIO]"
                           name="COD_USUARIO"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[DES_EMAIL]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[DES_EMAIL]"
                           dataType="wstr"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[DES_EMAIL]"
+                          externalMetadataColumnId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[DES_EMAIL]"
                           length="30"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].Columns[DES_EMAIL]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].Columns[DES_EMAIL]"
                           name="DES_EMAIL"
                           truncationRowDisposition="FailComponent" />
                       </outputColumns>
                       <externalMetadataColumns
                         isUsed="True">
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_PERSONA]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_PERSONA]"
                           dataType="numeric"
                           name="COD_PERSONA"
                           precision="15" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_TIPO_DOCUMENTO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_TIPO_DOCUMENTO]"
                           dataType="wstr"
                           length="38"
                           name="COD_TIPO_DOCUMENTO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[NRO_DOCUMENTO_IDENTIDAD]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[NRO_DOCUMENTO_IDENTIDAD]"
                           dataType="wstr"
                           length="50"
                           name="NRO_DOCUMENTO_IDENTIDAD" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_LINEA_NEGOCIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_LINEA_NEGOCIO]"
                           dataType="wstr"
                           length="1"
                           name="COD_LINEA_NEGOCIO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_ALUMNO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_ALUMNO]"
                           dataType="wstr"
                           length="9"
                           name="COD_ALUMNO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[FECHA_CREACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[FECHA_CREACION]"
                           dataType="dbTimeStamp"
                           name="FECHA_CREACION" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[FECHA_MODIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[FECHA_MODIFICACION]"
                           dataType="dbTimeStamp"
                           name="FECHA_MODIFICACION" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_USUARIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[COD_USUARIO]"
                           dataType="wstr"
                           length="10"
                           name="COD_USUARIO" />
                         <externalMetadataColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[DES_EMAIL]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output].ExternalColumns[DES_EMAIL]"
                           dataType="wstr"
                           length="30"
                           name="DES_EMAIL" />
                       </externalMetadataColumns>
                     </output>
                     <output
-                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output]"
+                      refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output]"
                       isErrorOut="true"
                       name="OLE DB Source Error Output">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_PERSONA]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_PERSONA]"
                           dataType="numeric"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_PERSONA]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_PERSONA]"
                           name="COD_PERSONA"
                           precision="15" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_TIPO_DOCUMENTO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_TIPO_DOCUMENTO]"
                           dataType="wstr"
                           length="38"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_TIPO_DOCUMENTO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_TIPO_DOCUMENTO]"
                           name="COD_TIPO_DOCUMENTO" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[NRO_DOCUMENTO_IDENTIDAD]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[NRO_DOCUMENTO_IDENTIDAD]"
                           dataType="wstr"
                           length="50"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[NRO_DOCUMENTO_IDENTIDAD]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[NRO_DOCUMENTO_IDENTIDAD]"
                           name="NRO_DOCUMENTO_IDENTIDAD" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_LINEA_NEGOCIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_LINEA_NEGOCIO]"
                           dataType="wstr"
                           length="1"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_LINEA_NEGOCIO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_LINEA_NEGOCIO]"
                           name="COD_LINEA_NEGOCIO" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_ALUMNO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_ALUMNO]"
                           dataType="wstr"
                           length="9"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_ALUMNO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_ALUMNO]"
                           name="COD_ALUMNO" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[FECHA_CREACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[FECHA_CREACION]"
                           dataType="dbTimeStamp"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[FECHA_CREACION]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[FECHA_CREACION]"
                           name="FECHA_CREACION" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[FECHA_MODIFICACION]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[FECHA_MODIFICACION]"
                           dataType="dbTimeStamp"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[FECHA_MODIFICACION]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[FECHA_MODIFICACION]"
                           name="FECHA_MODIFICACION" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_USUARIO]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_USUARIO]"
                           dataType="wstr"
                           length="10"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_USUARIO]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[COD_USUARIO]"
                           name="COD_USUARIO" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[DES_EMAIL]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[DES_EMAIL]"
                           dataType="wstr"
                           length="30"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[DES_EMAIL]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[DES_EMAIL]"
                           name="DES_EMAIL" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                           name="ErrorCode"
                           specialFlags="1" />
                         <outputColumn
-                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                           dataType="i4"
-                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          lineageId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                       </outputColumns>
@@ -3129,10 +3289,10 @@ FROM PERSONA@PRODSI2 p
               </components>
               <paths>
                 <path
-                  refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA.Paths[OLE DB Source Output]"
-                  endId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input]"
+                  refId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona).Paths[OLE DB Source Output]"
+                  endId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA.Inputs[ADO NET Destination Input]"
                   name="OLE DB Source Output"
-                  startId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA.Outputs[OLE DB Source Output]" />
+                  startId="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA.Outputs[OLE DB Source Output]" />
               </paths>
             </pipeline>
           </DTS:ObjectData>
@@ -3141,6 +3301,7 @@ FROM PERSONA@PRODSI2 p
           DTS:refId="Package\Sequence Container\INVOCACION SERVICIO CRM 365"
           DTS:CreationName="Microsoft.ScriptTask"
           DTS:Description="Script Task"
+          DTS:Disabled="True"
           DTS:DTSID="{C9D7B5E1-2611-4782-A07D-7F3D066D0A92}"
           DTS:ExecutableType="Microsoft.ScriptTask"
           DTS:LocaleID="-1"
@@ -3157,36 +3318,6 @@ FROM PERSONA@PRODSI2 p
               Language="CSharp"
               ReadOnlyVariables="System::ExecutionInstanceGUID,System::PackageName,User::v_SelectMatriculaFinal,User::v_UrlServicioActualizaCorreoMatricula,User::v_UrlServicioLoginPassword,User::v_UrlServicioLoginUsuario"
               ReadWriteVariables="User::v_Des_Error,User::v_Es_EjecucionExitosa">
-              <ProjectItem
-                Name="Properties\AssemblyInfo.cs"
-                Encoding="UTF8"><![CDATA[using System.Reflection;
-using System.Runtime.CompilerServices;
-
-//
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-//
-[assembly: AssemblyTitle("ST_ecca213c88e54e558da9ab4d63c155c8")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ST_ecca213c88e54e558da9ab4d63c155c8")]
-[assembly: AssemblyCopyright("Copyright @  2022")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-//
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-
-[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
               <ProjectItem
                 Name="Properties\Resources.resx"
                 Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
@@ -3306,6 +3437,35 @@ using System.Runtime.CompilerServices;
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
 </root>]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\Settings.Designer.cs"
+                Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_ecca213c88e54e558da9ab4d63c155c8.Properties.Settings.get_Default():ST_ecca213c88e54e558da9ab4d63c155c8.Properties.Sett" +
+    "ings")]
+
+namespace ST_ecca213c88e54e558da9ab4d63c155c8.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
               <ProjectItem
                 Name="ScriptMain.cs"
                 Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
@@ -3675,34 +3835,35 @@ namespace ST_ecca213c88e54e558da9ab4d63c155c8
   </msb:ItemGroup>
 </c:Project>]]></ProjectItem>
               <ProjectItem
-                Name="Properties\Settings.Designer.cs"
-                Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
-// <auto-generated>
-//     This code was generated by a tool.
+                Name="Properties\AssemblyInfo.cs"
+                Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
 //
-//     Changes to this file may cause incorrect behavior and will be lost if
-//     the code is regenerated.
-// </auto-generated>
-//------------------------------------------------------------------------------
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_ecca213c88e54e558da9ab4d63c155c8")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ST_ecca213c88e54e558da9ab4d63c155c8")]
+[assembly: AssemblyCopyright("Copyright @  2022")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
 
-[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_ecca213c88e54e558da9ab4d63c155c8.Properties.Settings.get_Default():ST_ecca213c88e54e558da9ab4d63c155c8.Properties.Sett" +
-    "ings")]
-
-namespace ST_ecca213c88e54e558da9ab4d63c155c8.Properties {
-    
-    
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
-        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-        private static Settings defaultInstance = new Settings();
-        
-        public static Settings Default {
-            get {
-                return defaultInstance;
-            }
-        }
-    }
-}]]></ProjectItem>
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
               <ProjectItem
                 Name="ST_ecca213c88e54e558da9ab4d63c155c8.csproj"
                 Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
@@ -4172,7 +4333,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</BinaryItem>
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{4467F564-DD90-4DEA-8705-68BE5D7C01F2}"
-              SQLTask:SqlStatementSource="TRUNCATE TABLE INTEGRACIONES.STGA_SOC_MATRICULA&#xA;&#xA;TRUNCATE TABLE INTEGRACIONES.STGA_BAN_MATRICULA&#xA;&#xA;TRUNCATE TABLE INTEGRACIONES.STGA_SOC_SI_PERSONA" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="TRUNCATE TABLE INTEGRACIONES.STGA_SOC_MATRICULA&#xA;&#xA;TRUNCATE TABLE INTEGRACIONES.STGA_BAN_MATRICULA&#xA;&#xA;/*&#xA;TRUNCATE TABLE INTEGRACIONES.STGA_SOC_SI_PERSONA&#xA;*/" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
@@ -4200,12 +4361,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</BinaryItem>
           DTS:From="Package\Sequence Container\DFT - STGA_BAN_MATRICULA BANNER"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 2"
-          DTS:To="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA" />
+          DTS:To="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)" />
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
           DTS:CreationName=""
           DTS:DTSID="{F2CA224A-C137-45B0-AE50-B2CB433EAD2C}"
-          DTS:From="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA"
+          DTS:From="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 3"
           DTS:To="Package\Sequence Container\INVOCACION SERVICIO CRM 365" />
@@ -4215,6 +4376,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</BinaryItem>
       DTS:refId="Package\SQLT - UPDATE PARAMETRO FECHA INICIO"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
       DTS:DTSID="{dc589812-5f33-4b1d-8c3a-344378c14ab0}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
@@ -4315,14 +4477,35 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</BinaryItem>
               Language="CSharp"
               ReadOnlyVariables="System::ErrorCode,System::ErrorDescription,System::PackageName,System::StartTime,User::v_EmailFrom,User::v_EmailPassword,User::v_EmailPort,User::v_EmailServer,User::v_EmailTo,User::v_EmailUserName">
               <ProjectItem
-                Name="Properties\Settings.settings"
-                Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
-</SettingsFile>]]></ProjectItem>
+                Name="Properties\AssemblyInfo.cs"
+                Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
+[assembly: AssemblyCopyright("Copyright @  2020")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
               <ProjectItem
                 Name="Properties\Resources.resx"
                 Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
@@ -4442,35 +4625,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</BinaryItem>
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
 </root>]]></ProjectItem>
-              <ProjectItem
-                Name="Properties\Settings.Designer.cs"
-                Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
-// <auto-generated>
-//     This code was generated by a tool.
-//
-//     Changes to this file may cause incorrect behavior and will be lost if
-//     the code is regenerated.
-// </auto-generated>
-//------------------------------------------------------------------------------
-
-[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Settings.get_Default():ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Sett" +
-    "ings")]
-
-namespace ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties {
-    
-    
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
-        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-        private static Settings defaultInstance = new Settings();
-        
-        public static Settings Default {
-            get {
-                return defaultInstance;
-            }
-        }
-    }
-}]]></ProjectItem>
               <ProjectItem
                 Name="ScriptMain.cs"
                 Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
@@ -4626,59 +4780,6 @@ namespace ST_98d1ec56638e441cbf98e98c3cabfa7e
 	}
 }]]></ProjectItem>
               <ProjectItem
-                Name="Project"
-                Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
-<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
-  <msb:PropertyGroup>
-    <msb:CodeName>ST_980b082b80f84ded8c77db20cc2f4677</msb:CodeName>
-    <msb:Language>msBuild</msb:Language>
-    <msb:DisplayName>ST_980b082b80f84ded8c77db20cc2f4677</msb:DisplayName>
-    <msb:ProjectId>{FE999FBC-7CB8-4CD2-97EE-A0DFB749D427}</msb:ProjectId>
-  </msb:PropertyGroup>
-  <msb:ItemGroup>
-    <msb:Project Include="ST_69d6d152e5144e64810aa18473465210.csproj" />
-    <msb:File Include="Properties\Settings.settings" />
-    <msb:File Include="Properties\AssemblyInfo.cs" />
-    <msb:File Include="Properties\Resources.resx" />
-    <msb:File Include="Properties\Resources.Designer.cs" />
-    <msb:File Include="Properties\Settings.Designer.cs" />
-    <msb:File Include="ScriptMain.cs" />
-  </msb:ItemGroup>
-</c:Project>]]></ProjectItem>
-              <ProjectItem
-                Name="ST_69d6d152e5144e64810aa18473465210.csproj"
-                Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?><Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProductVersion>8.0.30703</ProductVersion><SchemaVersion>2.0</SchemaVersion><ProjectGuid>{f26050a9-b30a-4374-993f-1ce54c5a6675}</ProjectGuid><OutputType>Library</OutputType><AppDesignerFolder>Properties</AppDesignerFolder><RootNamespace>ST_98d1ec56638e441cbf98e98c3cabfa7e</RootNamespace><AssemblyName>ST_69d6d152e5144e64810aa18473465210</AssemblyName><TargetFrameworkVersion>v4.7</TargetFrameworkVersion><FileAlignment>512</FileAlignment><ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch><TargetFrameworkProfile></TargetFrameworkProfile></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Debug' "><DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>.\bin\Debug\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>DEBUG;TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Release' "><DebugSymbols>false</DebugSymbols><Optimize>true</Optimize><OutputPath>.\bin\Release\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><ItemGroup><Reference Include="System" /><Reference Include="System.Data" /><Reference Include="System.Windows.Forms" /><Reference Include="System.Xml" /><Reference Include="Microsoft.SqlServer.ManagedDTS, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.ScriptTask, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /></ItemGroup><ItemGroup><AppDesigner Include="Properties\" /><Compile Include="Properties\AssemblyInfo.cs"><SubType>Code</SubType></Compile><EmbeddedResource Include="Properties\Resources.resx"><Generator>ResXFileCodeGenerator</Generator><LastGenOutput>Resources.Designer.cs</LastGenOutput></EmbeddedResource><Compile Include="Properties\Resources.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Resources.resx</DependentUpon></Compile><None Include="Properties\Settings.settings"><Generator>SettingsSingleFileGenerator</Generator><LastGenOutput>Settings.Designer.cs</LastGenOutput></None><Compile Include="Properties\Settings.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Settings.settings</DependentUpon></Compile><Compile Include="ScriptMain.cs"><SubType>Code</SubType></Compile></ItemGroup><!-- Include the build rules for a C# project.--><Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /><ProjectExtensions><VisualStudio><FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}"><ProjectProperties HostName="ScriptTask" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" /><Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex=""></Host><ProjectClient><HostIdentifier>SSIS_ST150</HostIdentifier></ProjectClient></FlavorProperties></VisualStudio></ProjectExtensions></Project>]]></ProjectItem>
-              <ProjectItem
-                Name="Properties\AssemblyInfo.cs"
-                Encoding="UTF8"><![CDATA[using System.Reflection;
-using System.Runtime.CompilerServices;
-
-//
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-//
-[assembly: AssemblyTitle("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ST_98d1ec56638e441cbf98e98c3cabfa7e")]
-[assembly: AssemblyCopyright("Copyright @  2020")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-//
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Revision and Build Numbers 
-// by using the '*' as shown below:
-
-[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
-              <ProjectItem
                 Name="Properties\Resources.Designer.cs"
                 Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
 // <auto-generated>
@@ -4746,6 +4847,67 @@ namespace ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties {
         }
     }
 }]]></ProjectItem>
+              <ProjectItem
+                Name="Project"
+                Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:CodeName>ST_980b082b80f84ded8c77db20cc2f4677</msb:CodeName>
+    <msb:Language>msBuild</msb:Language>
+    <msb:DisplayName>ST_980b082b80f84ded8c77db20cc2f4677</msb:DisplayName>
+    <msb:ProjectId>{FE999FBC-7CB8-4CD2-97EE-A0DFB749D427}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="ST_69d6d152e5144e64810aa18473465210.csproj" />
+    <msb:File Include="Properties\Settings.settings" />
+    <msb:File Include="Properties\AssemblyInfo.cs" />
+    <msb:File Include="Properties\Resources.resx" />
+    <msb:File Include="Properties\Resources.Designer.cs" />
+    <msb:File Include="Properties\Settings.Designer.cs" />
+    <msb:File Include="ScriptMain.cs" />
+  </msb:ItemGroup>
+</c:Project>]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\Settings.Designer.cs"
+                Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Settings.get_Default():ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties.Sett" +
+    "ings")]
+
+namespace ST_98d1ec56638e441cbf98e98c3cabfa7e.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\Settings.settings"
+                Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
+              <ProjectItem
+                Name="ST_69d6d152e5144e64810aa18473465210.csproj"
+                Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?><Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids><Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration><Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform><ProductVersion>8.0.30703</ProductVersion><SchemaVersion>2.0</SchemaVersion><ProjectGuid>{f26050a9-b30a-4374-993f-1ce54c5a6675}</ProjectGuid><OutputType>Library</OutputType><AppDesignerFolder>Properties</AppDesignerFolder><RootNamespace>ST_98d1ec56638e441cbf98e98c3cabfa7e</RootNamespace><AssemblyName>ST_69d6d152e5144e64810aa18473465210</AssemblyName><TargetFrameworkVersion>v4.7</TargetFrameworkVersion><FileAlignment>512</FileAlignment><ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch><TargetFrameworkProfile></TargetFrameworkProfile></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Debug' "><DebugSymbols>true</DebugSymbols><DebugType>full</DebugType><Optimize>false</Optimize><OutputPath>.\bin\Debug\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>DEBUG;TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><PropertyGroup Condition=" '$(Configuration)' == 'Release' "><DebugSymbols>false</DebugSymbols><Optimize>true</Optimize><OutputPath>.\bin\Release\</OutputPath><EnableUnmanagedDebugging>false</EnableUnmanagedDebugging><DefineConstants>TRACE</DefineConstants><ErrorReport>prompt</ErrorReport><WarningLevel>4</WarningLevel></PropertyGroup><ItemGroup><Reference Include="System" /><Reference Include="System.Data" /><Reference Include="System.Windows.Forms" /><Reference Include="System.Xml" /><Reference Include="Microsoft.SqlServer.ManagedDTS, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /><Reference Include="Microsoft.SqlServer.ScriptTask, Version=15.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" /></ItemGroup><ItemGroup><AppDesigner Include="Properties\" /><Compile Include="Properties\AssemblyInfo.cs"><SubType>Code</SubType></Compile><EmbeddedResource Include="Properties\Resources.resx"><Generator>ResXFileCodeGenerator</Generator><LastGenOutput>Resources.Designer.cs</LastGenOutput></EmbeddedResource><Compile Include="Properties\Resources.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Resources.resx</DependentUpon></Compile><None Include="Properties\Settings.settings"><Generator>SettingsSingleFileGenerator</Generator><LastGenOutput>Settings.Designer.cs</LastGenOutput></None><Compile Include="Properties\Settings.Designer.cs"><AutoGen>True</AutoGen><DependentUpon>Settings.settings</DependentUpon></Compile><Compile Include="ScriptMain.cs"><SubType>Code</SubType></Compile></ItemGroup><!-- Include the build rules for a C# project.--><Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /><ProjectExtensions><VisualStudio><FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}"><ProjectProperties HostName="ScriptTask" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" /><Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex=""></Host><ProjectClient><HostIdentifier>SSIS_ST150</HostIdentifier></ProjectClient></FlavorProperties></VisualStudio></ProjectExtensions></Project>]]></ProjectItem>
               <BinaryItem
                 Name="ST_980b082b80f84ded8c77db20cc2f4677.dll">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
@@ -4964,14 +5126,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         <NodeLayout
           Size="287,42"
           Id="Package\Sequence Container\DFT - STGA_BAN_MATRICULA BANNER"
-          TopLeft="85,176" />
+          TopLeft="85,174" />
         <NodeLayout
           Size="303,42"
           Id="Package\Sequence Container\DFT - STGA_SOC_MATRICULA SOCRATES"
           TopLeft="83,87" />
         <NodeLayout
-          Size="246,42"
-          Id="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA"
+          Size="438,42"
+          Id="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)"
           TopLeft="94,256" />
         <NodeLayout
           Size="253,42"
@@ -4980,21 +5142,21 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         <NodeLayout
           Size="210,42"
           Id="Package\Sequence Container\SQLT - TRUNCATE STGA"
-          TopLeft="126,6" />
+          TopLeft="126,5" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint]"
-          TopLeft="232.75,48">
+          TopLeft="232.75,47">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,39"
+              EndConnector="0,40"
               Start="0,0"
-              End="0,31.5">
+              End="0,32.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,31.5" />
+                    End="0,32.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5009,14 +5171,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,47"
+              EndConnector="0,45"
               Start="0,0"
-              End="0,39.5">
+              End="0,37.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,39.5" />
+                    End="0,37.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5027,30 +5189,30 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 2]"
-          TopLeft="228.5,218">
+          TopLeft="228.5,216">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-11.5,38"
+              EndConnector="84.5,40"
               Start="0,0"
-              End="-11.5,30.5">
+              End="84.5,32.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,15" />
+                    End="0,16" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,15"
-                    Point2="0,19"
-                    Point3="-4,19" />
+                    Point1="0,16"
+                    Point2="0,20"
+                    Point3="4,20" />
                   <mssgle:LineSegment
-                    End="-7.5,19" />
+                    End="80.5,20" />
                   <mssgle:CubicBezierSegment
-                    Point1="-7.5,19"
-                    Point2="-11.5,19"
-                    Point3="-11.5,23" />
+                    Point1="80.5,20"
+                    Point2="84.5,20"
+                    Point3="84.5,24" />
                   <mssgle:LineSegment
-                    End="-11.5,30.5" />
+                    End="84.5,32.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5061,13 +5223,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
-          TopLeft="217,298">
+          TopLeft="313,298">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="25.5,46"
+              EndConnector="-70.5,46"
               Start="0,0"
-              End="25.5,38.5">
+              End="-70.5,38.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -5076,15 +5238,15 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
                   <mssgle:CubicBezierSegment
                     Point1="0,19"
                     Point2="0,23"
-                    Point3="4,23" />
+                    Point3="-4,23" />
                   <mssgle:LineSegment
-                    End="21.5,23" />
+                    End="-66.5,23" />
                   <mssgle:CubicBezierSegment
-                    Point1="21.5,23"
-                    Point2="25.5,23"
-                    Point3="25.5,27" />
+                    Point1="-66.5,23"
+                    Point2="-70.5,23"
+                    Point3="-70.5,27" />
                   <mssgle:LineSegment
-                    End="25.5,38.5" />
+                    End="-70.5,38.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5150,61 +5312,61 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="495.416666666667,699">
+          TopLeft="495.416666666667,729">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,71"
+              EndConnector="0,41"
               Start="0,0"
-              End="0,63.5">
+              End="0,33.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,63.5" />
+                    End="0,33.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-8,23.75,16,16"
+              BoundingBox="-8,8.75,16,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="760.666666666667,699">
+          TopLeft="760.666666666667,729">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="52.8333333333334,79"
+              EndConnector="52.8333333333334,49"
               Start="0,0"
-              End="52.8333333333334,71.5">
+              End="52.8333333333334,41.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,27.6931009084213" />
+                    End="0,15.6577461330714" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,27.6931009084213"
-                    Point2="0,31.6931009084213"
-                    Point3="4,31.6931009084213" />
+                    Point1="0,15.6577461330714"
+                    Point2="0,19.6577461330714"
+                    Point3="4,19.6577461330714" />
                   <mssgle:LineSegment
-                    End="48.8333333333334,31.6931009084213" />
+                    End="48.8333333333334,19.6577461330714" />
                   <mssgle:CubicBezierSegment
-                    Point1="48.8333333333334,31.6931009084213"
-                    Point2="52.8333333333334,31.6931009084213"
-                    Point3="52.8333333333334,35.6931009084213" />
+                    Point1="48.8333333333334,19.6577461330714"
+                    Point2="52.8333333333334,19.6577461330714"
+                    Point3="52.8333333333334,23.6577461330714" />
                   <mssgle:LineSegment
-                    End="52.8333333333334,71.5" />
+                    End="52.8333333333334,41.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="18.4166666666667,36.6931009084213,16,16"
+              BoundingBox="18.4166666666667,24.6577461330714,16,16"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -5277,7 +5439,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         <NodeLayout
           Size="213,42"
           Id="Package\Sequence Container\DFT - STGA_BAN_MATRICULA BANNER\Lee MATRICULA BANNER"
-          TopLeft="370,106" />
+          TopLeft="367,104" />
         <NodeLayout
           Size="238,42"
           Id="Package\Sequence Container\DFT - STGA_BAN_MATRICULA BANNER\Insert STGA_BAN_MATRICULA"
@@ -5310,18 +5472,18 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\DFT - STGA_BAN_MATRICULA BANNER.Paths[OLE DB Source Output]"
-          TopLeft="474,148">
+          TopLeft="472.5,146">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,79"
+              EndConnector="0,81"
               Start="0,0"
-              End="0,71.5">
+              End="0,73.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,71.5" />
+                    End="0,73.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5442,20 +5604,20 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     </Properties>
   </PipelineComponentMetadata>
   <TaskHost
-    design-time-name="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA">
+    design-time-name="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)">
     <LayoutInfo>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="154,42"
-          Id="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA"
+          Id="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA"
           TopLeft="330,81" />
         <NodeLayout
           Size="252,42"
-          Id="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA"
+          Id="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA"
           TopLeft="288,285" />
         <EdgeLayout
-          Id="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA.Paths[OLE DB Source Output]"
+          Id="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona).Paths[OLE DB Source Output]"
           TopLeft="410.5,123">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -5482,7 +5644,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Inserta STGA_SOC_SI_PERSONA">
+    design-time-name="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Inserta STGA_SOC_SI_PERSONA">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -5490,7 +5652,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA\Lee PERSONA">
+    design-time-name="Package\Sequence Container\DFT - STGA_SOC_SI_PERSONA (se anula no se necesita cod_persona)\Lee PERSONA">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
