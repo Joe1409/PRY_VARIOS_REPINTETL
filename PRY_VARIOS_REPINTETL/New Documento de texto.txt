@@ -1,0 +1,8 @@
+
+svrcerservcrm15.upc.edu.pe:9016/Services/DevXrmService.asmx
+svrcerservcrm15.upc.edu.pe:9014/Services/DevXrmService.asmx
+
+
+https://api.upc.edu.pe/v1.0/Contacto/Academico?tipoBusqueda=2&valorBusqueda=44218638&linea=U
+
+
